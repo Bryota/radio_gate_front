@@ -1,13 +1,13 @@
-import Top from './Top'
-import { Route, Routes, BrowserRouter } from 'react-router-dom';
+import { BrowserRouter } from 'react-router-dom';
+import { AppRoutes } from './routes';
 
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route index element={<Top />} />
-      </Routes>
-    </BrowserRouter>
+    <>
+      <BrowserRouter>
+        <AppRoutes />
+      </BrowserRouter>
+    </>
   );
 }
 

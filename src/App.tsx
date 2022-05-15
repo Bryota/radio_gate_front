@@ -1,4 +1,3 @@
-import './App.css';
 import Top from './Top'
 import { Route, Routes, BrowserRouter } from 'react-router-dom';
 

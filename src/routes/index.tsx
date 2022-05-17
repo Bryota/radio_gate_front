@@ -2,7 +2,7 @@ import { useRoutes } from 'react-router-dom';
 
 import { Top } from '../features/top';
 import { RadioStations } from '../features/radio_station';
-import { Register, ForgotPassword } from '../features/auth';
+import { Register, Login, ForgotPassword } from '../features/auth';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -13,6 +13,7 @@ export const AppRoutes = () => {
     // 認証関連
     const auth = [
         { path: '/register', element: <Register /> },
+        { path: '/login', element: <Login /> },
         { path: 'forgot_password', element: <ForgotPassword /> }
     ]
 

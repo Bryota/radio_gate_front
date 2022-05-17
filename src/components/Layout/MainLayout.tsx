@@ -1,5 +1,6 @@
 import React from 'react';
 import "normalize.css";
+import '../../assets/css/common.css';
 
 export const MainLayout = ({ children }: { children?: React.ReactNode }): JSX.Element => {
     return (

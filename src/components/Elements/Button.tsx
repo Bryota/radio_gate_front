@@ -26,5 +26,4 @@ export const Button = ({ text, type, click_action }: ButtonType): JSX.Element =>
             </div>
         )
     }
-
 }

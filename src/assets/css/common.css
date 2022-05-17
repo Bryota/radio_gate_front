@@ -1,0 +1,16 @@
+.bg-base {
+    background-color: #FFFCE7;
+}
+
+.bg-full {
+    min-height: 100vh;
+}
+
+.container {
+    margin: 0 auto;
+    width: 80%;
+}
+
+p {
+    margin: 0;
+}

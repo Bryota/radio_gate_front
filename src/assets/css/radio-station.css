@@ -1,0 +1,17 @@
+.radio_station-item {
+    background-color: #fff;
+    border: 2px solid #A8CE30;
+    box-shadow: inset 6px 6px 5px rgba(0, 0, 0, 0.25);
+    border-radius: 30px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.radio_station-name {
+    font-size: 25px;
+}
+
+.radio_station-btn {
+    border-radius: 30px;
+    background-color: #E34B2D;
+}

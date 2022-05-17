@@ -6,10 +6,10 @@ export const Pagination = (): JSX.Element => {
     return (
         <div className='pagination-items'>
             <button className='pagination-item'>
-                <img src={ArrowLeft} alt="" />
+                <img src={ArrowLeft} alt="＜" />
             </button>
             <button className='pagination-item'>
-                <img src={ArrowRight} alt="" />
+                <img src={ArrowRight} alt="＞" />
             </button>
         </div>
     )

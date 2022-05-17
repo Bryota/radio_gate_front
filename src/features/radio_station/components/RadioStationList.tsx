@@ -4,7 +4,7 @@ type RadioStationType = {
     name: string
 }
 
-export const RadioStationList = (props: RadioStationType) => {
+export const RadioStationList = (props: RadioStationType): JSX.Element => {
     return (
         <>
             <div className='radio_station-item row'>

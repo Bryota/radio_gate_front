@@ -19,6 +19,7 @@ export const Register = () => {
                     <Input
                         key='email'
                         text='メールアドレス'
+                        is_first_item={true}
                     />
                     <Input
                         key='password'

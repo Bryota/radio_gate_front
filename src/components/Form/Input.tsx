@@ -5,11 +5,12 @@ type FormInputType = {
     text: string,
     type?: string
     is_post_code?: boolean
+    is_first_item?: boolean
 }
 
-export const Input = ({ key, text, type = 'text', is_post_code = false }: FormInputType): JSX.Element => {
+export const Input = ({ key, text, type = 'text', is_post_code = false, is_first_item = false }: FormInputType): JSX.Element => {
     return (
-        <div className="form-input_item row">
+        <div className={is_first_item ? 'form-input_item row mt-0' : 'form-input_item row'}>
             <div className='col-3'>
                 <label htmlFor={key}>{text}</label>
             </div>

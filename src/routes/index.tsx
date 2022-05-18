@@ -3,6 +3,7 @@ import { useRoutes } from 'react-router-dom';
 import { Top } from '../features/top';
 import { RadioStations } from '../features/radio_station';
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset } from '../features/auth';
+import { Profile } from '../features/listener';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -19,7 +20,12 @@ export const AppRoutes = () => {
         { path: 'password_reset', element: <PasswordReset /> }
     ]
 
-    const element = useRoutes([...commonRoutes, ...radioStations, ...auth]);
+    // リスナー関連
+    const listerner = [
+        { path: '/listener', element: <Profile /> }
+    ]
+
+    const element = useRoutes([...commonRoutes, ...radioStations, ...auth, ...listerner]);
 
     return <>{element}</>
 }

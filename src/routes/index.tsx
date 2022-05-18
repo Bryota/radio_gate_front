@@ -2,7 +2,7 @@ import { useRoutes } from 'react-router-dom';
 
 import { Top } from '../features/top';
 import { RadioStations } from '../features/radio_station';
-import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset } from '../features/auth';
+import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
 
 export const AppRoutes = () => {
@@ -17,7 +17,8 @@ export const AppRoutes = () => {
         { path: '/login', element: <Login /> },
         { path: 'forgot_password', element: <ForgotPassword /> },
         { path: 'forgot_password_complete', element: <ForgotPasswordComplete /> },
-        { path: 'password_reset', element: <PasswordReset /> }
+        { path: 'password_reset', element: <PasswordReset /> },
+        { path: 'password_update', element: <PasswordUpdate /> }
     ]
 
     // リスナー関連

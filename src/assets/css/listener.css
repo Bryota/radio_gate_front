@@ -1,0 +1,9 @@
+.profile-item {
+    border-bottom: 3px solid #A8CE30;
+    font-size: 25px;
+    margin-top: 30px;
+}
+
+.profile-item-value.no-value {
+    color: #E34B2D;
+}

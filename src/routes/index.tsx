@@ -3,7 +3,7 @@ import { useRoutes } from 'react-router-dom';
 import { Top } from '../features/top';
 import { RadioStations } from '../features/radio_station';
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset } from '../features/auth';
-import { Profile } from '../features/listener';
+import { Profile, ProfileEdit } from '../features/listener';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -22,7 +22,8 @@ export const AppRoutes = () => {
 
     // リスナー関連
     const listerner = [
-        { path: '/listener', element: <Profile /> }
+        { path: '/listener', element: <Profile /> },
+        { path: '/listener/edit', element: <ProfileEdit /> }
     ]
 
     const element = useRoutes([...commonRoutes, ...radioStations, ...auth, ...listerner]);

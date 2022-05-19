@@ -1,4 +1,4 @@
-.radio_station-item {
+.radio-item {
     background-color: #fff;
     border: 2px solid #A8CE30;
     box-shadow: inset 6px 6px 5px rgba(0, 0, 0, 0.25);
@@ -7,11 +7,24 @@
     margin-top: 2rem;
 }
 
-.radio_station-name {
+.radio-name {
     font-size: 25px;
 }
 
-.radio_station-btn {
+.radio-btn {
     border-radius: 30px;
     background-color: #E34B2D;
+    height: 2.5rem;
+}
+
+.radio-btn.btn-get {
+    background-color: #A8CE30;
+}
+
+.radio_programs-radio_station {
+    border-bottom: 4px solid #A8CE30;
+}
+
+.radio_programs-radio_station-name {
+    font-size: 30px;
 }

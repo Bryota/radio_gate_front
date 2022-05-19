@@ -5,6 +5,7 @@ import { RadioStations } from '../features/radio_station';
 import { RadioPrograms } from '../features/radio_program';
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
+import { MessagePost } from '../features/message';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -12,6 +13,7 @@ export const AppRoutes = () => {
     //ラジオ関連
     const radioStations = [{ path: '/radio_stations', element: <RadioStations /> }];
     const radioPrograms = [{ path: '/radio_programs', element: <RadioPrograms /> }];
+    const message = [{ path: '/message_post', element: <MessagePost /> }];
 
     // 認証関連
     const auth = [
@@ -30,7 +32,7 @@ export const AppRoutes = () => {
         { path: '/listener/edit', element: <ProfileEdit /> }
     ]
 
-    const element = useRoutes([...commonRoutes, ...radioStations, ...radioPrograms, ...auth, ...listerner]);
+    const element = useRoutes([...commonRoutes, ...radioStations, ...radioPrograms, ...auth, ...listerner, ...message]);
 
     return <>{element}</>
 }

@@ -15,6 +15,10 @@
     width: 100%;
 }
 
+.form-input_item textarea {
+    border: 3px solid #A8CE30;
+}
+
 .form-input_item button {
     background-color: #A8CE30;
     border: none;

@@ -2,6 +2,7 @@ import { useRoutes } from 'react-router-dom';
 
 import { Top } from '../features/top';
 import { RadioStations } from '../features/radio_station';
+import { RadioPrograms } from '../features/radio_program';
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
 
@@ -10,6 +11,7 @@ export const AppRoutes = () => {
 
     //ラジオ関連
     const radioStations = [{ path: '/radio_stations', element: <RadioStations /> }];
+    const radioPrograms = [{ path: '/radio_programs', element: <RadioPrograms /> }];
 
     // 認証関連
     const auth = [
@@ -28,7 +30,7 @@ export const AppRoutes = () => {
         { path: '/listener/edit', element: <ProfileEdit /> }
     ]
 
-    const element = useRoutes([...commonRoutes, ...radioStations, ...auth, ...listerner]);
+    const element = useRoutes([...commonRoutes, ...radioStations, ...radioPrograms, ...auth, ...listerner]);
 
     return <>{element}</>
 }

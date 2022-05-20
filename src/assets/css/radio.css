@@ -58,3 +58,8 @@
     border-bottom: 4px solid #A8CE30;
     padding: 1rem;
 }
+
+.my_radio_program-corner-delete-btn {
+    font-size: 20px;
+    width: 100%;
+}

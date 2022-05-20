@@ -4,6 +4,7 @@ import { Top } from '../features/top';
 import { RadioStations } from '../features/radio_station';
 import { RadioPrograms } from '../features/radio_program';
 import { MyRadioPrograms, MyRadioProgram, CreateMyRadioProgram, EditMyRadioProgram } from '../features/my_radio_program';
+import { MessageTemplates } from '../features/message_template';
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete } from '../features/message';
@@ -20,6 +21,7 @@ export const AppRoutes = () => {
         { path: '/my_radio_program/create', element: <CreateMyRadioProgram /> },
         { path: '/my_radio_program/edit', element: <EditMyRadioProgram /> },
     ];
+    const messageTemplates = [{ path: 'message_templates', element: <MessageTemplates /> }]
     const message = [
         { path: '/message_post', element: <MessagePost /> },
         { path: '/message_post/complete', element: <MessagePostComplete /> },
@@ -42,7 +44,7 @@ export const AppRoutes = () => {
         { path: '/listener/edit', element: <ProfileEdit /> }
     ]
 
-    const element = useRoutes([...commonRoutes, ...radioStations, ...radioPrograms, ...myRadioPrograms, ...auth, ...listerner, ...message]);
+    const element = useRoutes([...commonRoutes, ...radioStations, ...radioPrograms, ...myRadioPrograms, ...messageTemplates, ...auth, ...listerner, ...message]);
 
     return <>{element}</>
 }

@@ -3,7 +3,7 @@ import { useRoutes } from 'react-router-dom';
 import { Top } from '../features/top';
 import { RadioStations } from '../features/radio_station';
 import { RadioPrograms } from '../features/radio_program';
-import { MyRadioPrograms } from '../features/my_radio_program';
+import { MyRadioPrograms, MyRadioProgram } from '../features/my_radio_program';
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete } from '../features/message';
@@ -14,7 +14,10 @@ export const AppRoutes = () => {
     //ラジオ関連
     const radioStations = [{ path: '/radio_stations', element: <RadioStations /> }];
     const radioPrograms = [{ path: '/radio_programs', element: <RadioPrograms /> }];
-    const myRadioPrograms = [{ path: '/my_radio_programs', element: <MyRadioPrograms /> }];
+    const myRadioPrograms = [
+        { path: '/my_radio_programs', element: <MyRadioPrograms /> },
+        { path: '/my_radio_program', element: <MyRadioProgram /> }
+    ];
     const message = [
         { path: '/message_post', element: <MessagePost /> },
         { path: '/message_post/complete', element: <MessagePostComplete /> },

@@ -16,13 +16,13 @@
 }
 
 .element-btn-post {
-    background-color: #E34B2D;
+    background-color: #E34B2D !important;
 }
 
 .element-btn-get {
-    background-color: #A8CE30;
+    background-color: #A8CE30 !important;
 }
 
 .element-btn-delete {
-    background-color: #3079CE;
+    background-color: #3079CE !important;
 }

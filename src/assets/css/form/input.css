@@ -17,6 +17,8 @@
 
 .form-input_item textarea {
     border: 3px solid #A8CE30;
+    border-radius: 30px;
+    width: 100%;
 }
 
 .form-input_item button {

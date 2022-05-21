@@ -63,3 +63,16 @@
     font-size: 20px;
     width: 100%;
 }
+
+.message-radio_info {
+    font-size: 20px;
+}
+
+.message-post_date {
+    font-size: 20px;
+}
+
+.message-show-btn {
+    text-align: center;
+    padding: 0.5rem;
+}

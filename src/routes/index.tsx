@@ -4,7 +4,7 @@ import { Top } from '../features/top';
 import { RadioStations } from '../features/radio_station';
 import { RadioPrograms } from '../features/radio_program';
 import { MyRadioPrograms, MyRadioProgram, CreateMyRadioProgram, EditMyRadioProgram } from '../features/my_radio_program';
-import { MessageTemplates, MessageTemplate, CreateMessageTemplate } from '../features/message_template';
+import { MessageTemplates, MessageTemplate, CreateMessageTemplate, EditMessageTemplate } from '../features/message_template';
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete, Messages, Message } from '../features/message';
@@ -25,6 +25,7 @@ export const AppRoutes = () => {
         { path: 'message_templates', element: <MessageTemplates /> },
         { path: 'message_template', element: <MessageTemplate /> },
         { path: 'message_template/create', element: <CreateMessageTemplate /> },
+        { path: 'message_template/edit', element: <EditMessageTemplate /> },
     ]
     const message = [
         { path: '/message_post', element: <MessagePost /> },

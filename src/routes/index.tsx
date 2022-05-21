@@ -7,7 +7,7 @@ import { MyRadioPrograms, MyRadioProgram, CreateMyRadioProgram, EditMyRadioProgr
 import { MessageTemplates } from '../features/message_template';
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
-import { MessagePost, MessagePostComplete, Messages } from '../features/message';
+import { MessagePost, MessagePostComplete, Messages, Message } from '../features/message';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -26,6 +26,7 @@ export const AppRoutes = () => {
         { path: '/message_post', element: <MessagePost /> },
         { path: '/message_post/complete', element: <MessagePostComplete /> },
         { path: '/messages', element: <Messages /> },
+        { path: '/message', element: <Message /> },
     ];
 
     // 認証関連

@@ -1,4 +1,4 @@
-import '../../../assets/css/radio.css';
+import '../../../assets/css/elements/radio.css';
 import MailIcon from '../../../assets/images/mail_icon.svg';
 
 type HowToUseType = {

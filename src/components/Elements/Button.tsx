@@ -1,4 +1,4 @@
-import '../../assets/css/element/button.css';
+import '../../assets/css/components/button.css';
 
 type ButtonType = {
     text: string

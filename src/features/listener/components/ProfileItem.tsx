@@ -1,4 +1,4 @@
-import '../../../assets/css/listener.css';
+import '../../../assets/css/elements/listener.css';
 
 type ProfileItemType = {
     label: string

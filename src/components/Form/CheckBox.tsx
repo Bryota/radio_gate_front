@@ -1,4 +1,4 @@
-import '../../assets/css/form/checkbox.css'
+import '../../assets/css/elements/form.css'
 
 type FormCheckType = {
     label: string,

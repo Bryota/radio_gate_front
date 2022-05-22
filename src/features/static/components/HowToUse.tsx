@@ -1,7 +1,7 @@
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { HowToUseItem } from './HowToUseItem';
-import '../../../assets/css/how_to_use.css'
+import '../../../assets/css/components/how_to_use.css'
 
 export const HowToUse = () => {
     return (

@@ -3,7 +3,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements';
 import { MessageItem } from './MessageItem';
 import { SelectedMessage } from './SelectedMessage';
-import '../../../assets/css/radio.css';
+import '../../../assets/css/elements/radio.css';
 
 export const Message = () => {
     const click_handler = () => {

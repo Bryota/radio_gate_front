@@ -3,7 +3,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 import { Input } from '../../../components/Form';
 import { SelectedRequestFunction } from './SelectedRequestFunction';
-import '../../../assets/css/radio.css';
+import '../../../assets/css/elements/radio.css';
 
 export const VoteRequestFunction = () => {
     const click_handler = () => {

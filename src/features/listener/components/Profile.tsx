@@ -2,7 +2,7 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements';
 import { ProfileItem } from './ProfileItem';
-import '../../../assets/css/pagination.css';
+import '../../../assets/css/components/pagination.css';
 
 export const Profile = () => {
     const click_handler = () => {

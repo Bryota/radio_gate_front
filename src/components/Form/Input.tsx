@@ -1,4 +1,4 @@
-import '../../assets/css/form/input.css'
+import '../../assets/css/elements/form.css'
 
 type FormInputType = {
     key: string,

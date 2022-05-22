@@ -3,8 +3,8 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 import { Pagination } from '../../../components/Pagination';
 import { RequestFunctionList } from './RequestFunctionList';
-import '../../../assets/css/radio.css';
-import '../../../assets/css/pagination.css';
+import '../../../assets/css/elements/radio.css';
+import '../../../assets/css/components/pagination.css';
 
 export const RequestFunctions = () => {
     const click_handler = () => {

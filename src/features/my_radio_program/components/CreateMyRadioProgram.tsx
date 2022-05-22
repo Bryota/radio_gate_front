@@ -2,8 +2,8 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Input } from '../../../components/Form';
 import { Button } from '../../../components/Elements';
-import '../../../assets/css/radio.css';
-import '../../../assets/css/pagination.css';
+import '../../../assets/css/elements/radio.css';
+import '../../../assets/css/components/pagination.css';
 
 export const CreateMyRadioProgram = () => {
     const click_handler = () => {

@@ -1,4 +1,4 @@
-import '../../../assets/css/radio.css';
+import '../../../assets/css/elements/radio.css';
 
 export const AddCornerBtn = (): JSX.Element => {
     return (

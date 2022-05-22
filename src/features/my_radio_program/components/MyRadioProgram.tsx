@@ -4,8 +4,8 @@ import { Pagination } from '../../../components/Pagination';
 import { CornerList } from './CornerList';
 import { AddCornerBtn } from './AddCornerBtn';
 import { SelectedMyRadioProgram } from './SelectedMyRadioProgram';
-import '../../../assets/css/radio.css';
-import '../../../assets/css/pagination.css';
+import '../../../assets/css/elements/radio.css';
+import '../../../assets/css/components/pagination.css';
 
 export const MyRadioProgram = () => {
     const click_handler = () => {

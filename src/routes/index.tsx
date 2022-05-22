@@ -9,6 +9,7 @@ import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset,
 import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete, Messages, Message } from '../features/message';
 import { RequestFunctions, RequestFunction, CreateRequestFunction, VoteRequestFunction } from '../features/request_function';
+import { Inquiry } from '../features/static';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -60,7 +61,12 @@ export const AppRoutes = () => {
         { path: '/request_function/vote', element: <VoteRequestFunction /> },
     ]
 
-    const element = useRoutes([...commonRoutes, ...radioStations, ...radioPrograms, ...myRadioPrograms, ...messageTemplates, ...auth, ...listerner, ...message, ...requestFunction]);
+    // 静的ページ
+    const staticPage = [
+        { path: '/inquery', element: <Inquiry /> },
+    ];
+
+    const element = useRoutes([...commonRoutes, ...radioStations, ...radioPrograms, ...myRadioPrograms, ...messageTemplates, ...auth, ...listerner, ...message, ...requestFunction, ...staticPage]);
 
     return <>{element}</>
 }

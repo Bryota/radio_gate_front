@@ -8,7 +8,7 @@ import { MessageTemplates, MessageTemplate, CreateMessageTemplate, EditMessageTe
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete, Messages, Message } from '../features/message';
-import { RequestFunctions } from '../features/request_function';
+import { RequestFunctions, RequestFunction } from '../features/request_function';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -54,7 +54,8 @@ export const AppRoutes = () => {
 
     //機能リクエスト関連
     const requestFunction = [
-        { path: '/request_functions', element: <RequestFunctions /> }
+        { path: '/request_functions', element: <RequestFunctions /> },
+        { path: '/request_function', element: <RequestFunction /> }
     ]
 
     const element = useRoutes([...commonRoutes, ...radioStations, ...radioPrograms, ...myRadioPrograms, ...messageTemplates, ...auth, ...listerner, ...message, ...requestFunction]);

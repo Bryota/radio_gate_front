@@ -1,10 +1,9 @@
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements/Button';
 import { Pagination } from '../../../components/Pagination';
 import { MessageList } from './MessageList';
-import '../../../assets/css/radio.css';
-import '../../../assets/css/pagination.css';
+import '../../../assets/css/elements/radio.css';
+import '../../../assets/css/components/pagination.css';
 
 export const Messages = () => {
     return (

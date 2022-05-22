@@ -3,8 +3,8 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
 import { RadioStation } from './RadioStation';
 import { RadioProgramList } from './RadioProgramList';
-import '../../../assets/css/radio.css';
-import '../../../assets/css/pagination.css';
+import '../../../assets/css/elements/radio.css';
+import '../../../assets/css/components/pagination.css';
 
 export const RadioPrograms = () => {
     return (

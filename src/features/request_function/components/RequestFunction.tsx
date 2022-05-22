@@ -2,7 +2,7 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 import { SelectedRequestFunction } from './SelectedRequestFunction';
-import '../../../assets/css/radio.css';
+import '../../../assets/css/elements/radio.css';
 
 export const RequestFunction = () => {
     const click_handler = () => {

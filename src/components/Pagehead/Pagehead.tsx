@@ -1,5 +1,4 @@
-import React from 'react';
-import '../../assets/css/pagehead.css';
+import '../../assets/css/components/pagehead.css';
 
 type PageHeadType = {
     title: string,

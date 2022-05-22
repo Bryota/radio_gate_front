@@ -2,7 +2,7 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 import { SelectedMessageTemplate } from './SelectedMessageTemplate';
-import '../../../assets/css/radio.css';
+import '../../../assets/css/elements/radio.css';
 
 export const MessageTemplate = () => {
     const click_handler = () => {

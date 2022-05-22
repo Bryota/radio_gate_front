@@ -2,7 +2,7 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements';
 import { Input, CheckBox, Textarea } from '../../../components/Form';
-import '../../../assets/css/pagination.css';
+import '../../../assets/css/components/pagination.css';
 
 export const MessagePost = () => {
     const click_handler = () => {

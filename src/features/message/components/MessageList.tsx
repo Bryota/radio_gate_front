@@ -1,4 +1,4 @@
-import '../../../assets/css/radio.css';
+import '../../../assets/css/elements/radio.css';
 
 type MessageListType = {
     radio_program: string

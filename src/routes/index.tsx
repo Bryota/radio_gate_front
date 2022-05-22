@@ -9,7 +9,7 @@ import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset,
 import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete, Messages, Message } from '../features/message';
 import { RequestFunctions, RequestFunction, CreateRequestFunction, VoteRequestFunction } from '../features/request_function';
-import { Inquiry, DeveloperContact } from '../features/static';
+import { Inquiry, DeveloperContact, HowToUse } from '../features/static';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -65,6 +65,7 @@ export const AppRoutes = () => {
     const staticPage = [
         { path: '/inquery', element: <Inquiry /> },
         { path: '/developer_contact', element: <DeveloperContact /> },
+        { path: '/how_to_use', element: <HowToUse /> },
     ];
 
     const element = useRoutes([...commonRoutes, ...radioStations, ...radioPrograms, ...myRadioPrograms, ...messageTemplates, ...auth, ...listerner, ...message, ...requestFunction, ...staticPage]);

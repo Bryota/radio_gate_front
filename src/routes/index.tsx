@@ -8,7 +8,7 @@ import { MessageTemplates, MessageTemplate, CreateMessageTemplate, EditMessageTe
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete, Messages, Message } from '../features/message';
-import { RequestFunctions, RequestFunction, CreateRequestFunction } from '../features/request_function';
+import { RequestFunctions, RequestFunction, CreateRequestFunction, VoteRequestFunction } from '../features/request_function';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -56,7 +56,8 @@ export const AppRoutes = () => {
     const requestFunction = [
         { path: '/request_functions', element: <RequestFunctions /> },
         { path: '/request_function', element: <RequestFunction /> },
-        { path: '/request_function/create', element: <CreateRequestFunction /> }
+        { path: '/request_function/create', element: <CreateRequestFunction /> },
+        { path: '/request_function/vote', element: <VoteRequestFunction /> },
     ]
 
     const element = useRoutes([...commonRoutes, ...radioStations, ...radioPrograms, ...myRadioPrograms, ...messageTemplates, ...auth, ...listerner, ...message, ...requestFunction]);

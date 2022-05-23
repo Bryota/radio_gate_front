@@ -1,4 +1,4 @@
-import { MainLayout, InnerBox } from '../../../components/Layout';
+import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements';
 import { MessageItem } from './MessageItem';

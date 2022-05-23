@@ -1,5 +1,3 @@
-import '../../../assets/css/elements/radio.css';
-
 type MessageListType = {
     radio_program: string
     corner: string
@@ -9,15 +7,15 @@ type MessageListType = {
 export const MessageList = ({ radio_program, corner, post_date }: MessageListType): JSX.Element => {
     return (
         <>
-            <div className='radio-item row align-items-center'>
-                <div className="col-7 row message-radio_info">
+            <div className='row align-items-center mt-4 p-2rem list-item'>
+                <div className="col-7 row font-20">
                     <p>{radio_program}</p>
                     <p>{corner}</p>
                 </div>
-                <p className="col-3 message-post_date">
+                <p className="col-3 font-20">
                     {post_date}
                 </p>
-                <a href="#" className='col-2 radio-btn element-btn-get message-show-btn'>
+                <a href="#" className='col-2 text-center p-2 list-btn bg-main'>
                     詳細
                 </a>
             </div>

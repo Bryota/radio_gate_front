@@ -7,12 +7,12 @@ type MyRadioProgramType = {
 export const MyRadioProgramList = ({ name }: MyRadioProgramType): JSX.Element => {
     return (
         <>
-            <div className='radio-item row'>
-                <p className='col-7 radio-name'>{name}</p>
-                <a href="#" className='col-2 radio-btn btn btn-get'>
+            <div className='row mt-4 p-2rem list-item'>
+                <p className='col-7 font-25'>{name}</p>
+                <a href="#" className='col-2 btn bg-main list-btn'>
                     メールを送る
                 </a>
-                <a href="#" className='col-2 offset-1 radio-btn btn'>
+                <a href="#" className='col-2 offset-1 btn list-btn'>
                     コーナー一覧
                 </a>
             </div>

@@ -8,8 +8,8 @@ export const SelectedMessageTemplate = ({ name }: SelectedMessageTemplateType): 
     return (
         <>
             <div className='mb-5'>
-                <div className="selected_my_radio_program row">
-                    <p className='col-7 my_radio_program-name'>{name}</p>
+                <div className="row underline-green">
+                    <p className='col-7 font-40'>{name}</p>
                 </div>
             </div>
         </>

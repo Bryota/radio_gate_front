@@ -7,9 +7,9 @@ type MyRadioProgramType = {
 export const MessageTemplateList = ({ name }: MyRadioProgramType): JSX.Element => {
     return (
         <>
-            <div className='radio-item row'>
-                <p className='col-9 radio-name'>{name}</p>
-                <a href="#" className='col-2 radio-btn btn btn-get'>
+            <div className='row mt-4 p-2rem list-item'>
+                <p className='col-9 font-25'>{name}</p>
+                <a href="#" className='col-2 btn bg-main list-btn'>
                     詳細
                 </a>
             </div>

@@ -19,21 +19,21 @@ export const AppRoutes = () => {
     const radioPrograms = [{ path: '/radio_programs', element: <RadioPrograms /> }];
     const myRadioPrograms = [
         { path: '/my_radio_programs', element: <MyRadioPrograms /> },
-        { path: '/my_radio_program', element: <MyRadioProgram /> },
+        { path: '/my_radio_program/:id', element: <MyRadioProgram /> },
         { path: '/my_radio_program/create', element: <CreateMyRadioProgram /> },
-        { path: '/my_radio_program/edit', element: <EditMyRadioProgram /> },
+        { path: '/my_radio_program/:id/edit', element: <EditMyRadioProgram /> },
     ];
     const messageTemplates = [
         { path: 'message_templates', element: <MessageTemplates /> },
-        { path: 'message_template', element: <MessageTemplate /> },
+        { path: 'message_template/:id', element: <MessageTemplate /> },
         { path: 'message_template/create', element: <CreateMessageTemplate /> },
-        { path: 'message_template/edit', element: <EditMessageTemplate /> },
+        { path: 'message_template/:id/edit', element: <EditMessageTemplate /> },
     ]
     const message = [
         { path: '/message_post', element: <MessagePost /> },
         { path: '/message_post/complete', element: <MessagePostComplete /> },
         { path: '/messages', element: <Messages /> },
-        { path: '/message', element: <Message /> },
+        { path: '/message/:id', element: <Message /> },
     ];
 
     // 認証関連
@@ -41,7 +41,7 @@ export const AppRoutes = () => {
         { path: '/register', element: <Register /> },
         { path: '/login', element: <Login /> },
         { path: 'forgot_password', element: <ForgotPassword /> },
-        { path: 'forgot_password_complete', element: <ForgotPasswordComplete /> },
+        { path: 'forgot_password/complete', element: <ForgotPasswordComplete /> },
         { path: 'password_reset', element: <PasswordReset /> },
         { path: 'password_update', element: <PasswordUpdate /> },
         { path: 'account_delete', element: <AccountDelete /> }
@@ -49,16 +49,16 @@ export const AppRoutes = () => {
 
     // リスナー関連
     const listerner = [
-        { path: '/listener', element: <Profile /> },
-        { path: '/listener/edit', element: <ProfileEdit /> }
+        { path: '/profile', element: <Profile /> },
+        { path: '/profile/edit', element: <ProfileEdit /> }
     ]
 
     //機能リクエスト関連
     const requestFunction = [
         { path: '/request_functions', element: <RequestFunctions /> },
-        { path: '/request_function', element: <RequestFunction /> },
+        { path: '/request_function/:id', element: <RequestFunction /> },
         { path: '/request_function/create', element: <CreateRequestFunction /> },
-        { path: '/request_function/vote', element: <VoteRequestFunction /> },
+        { path: '/request_function/:id/vote', element: <VoteRequestFunction /> },
     ]
 
     // 静的ページ

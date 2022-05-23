@@ -1,5 +1,3 @@
-import '../../assets/css/components/pagehead.css';
-
 type PageHeadType = {
     title: string,
     subtitle: string
@@ -8,9 +6,9 @@ type PageHeadType = {
 export const Pagehead = (props: PageHeadType): JSX.Element => {
     return (
         <div className='d-flex align-items-center'>
-            <h1 className='pagehead-title'>{props.title}</h1>
-            <p className='pagehead-line'>|</p>
-            <p className='pagehead-subtitle'>{props.subtitle}</p>
+            <h1 className='font-40'>{props.title}</h1>
+            <p className='mx-2 mt-2'>|</p>
+            <p className='mt-2 font-25'>{props.subtitle}</p>
         </div>
     )
 }

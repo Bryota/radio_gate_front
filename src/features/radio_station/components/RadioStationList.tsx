@@ -7,12 +7,12 @@ type RadioStationType = {
 export const RadioStationList = (props: RadioStationType): JSX.Element => {
     return (
         <>
-            <div className='radio-item row'>
+            <div className='row mt-4 p-2rem list-item'>
                 <div className='col-2 radio-icon'>
                     アイコン
                 </div>
-                <p className='col-8 radio-name'>{props.name}</p>
-                <a href="#" className='col-2 radio-btn btn'>
+                <p className='col-8 font-25'>{props.name}</p>
+                <a href="#" className='col-2 btn list-btn'>
                     番組一覧
                 </a>
             </div>

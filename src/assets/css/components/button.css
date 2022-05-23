@@ -1,4 +1,4 @@
-.element-btn {
+.button {
     width: 25%;
     border: none;
     border-radius: 30px;
@@ -9,20 +9,12 @@
     padding: 1rem;
 }
 
-.element-btn:active {
+.button:hover {
+    color: #fff;
+}
+
+.button:active {
     box-shadow: none;
     transform: translateX(4px);
     transform: translateY(4px);
-}
-
-.element-btn-post {
-    background-color: #E34B2D !important;
-}
-
-.element-btn-get {
-    background-color: #A8CE30 !important;
-}
-
-.element-btn-delete {
-    background-color: #3079CE !important;
 }

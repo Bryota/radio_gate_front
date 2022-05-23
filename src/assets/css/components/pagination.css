@@ -1,16 +1,6 @@
-.pagination-items {
-    display: flex;
-    text-align: center;
-    margin-top: 2rem;
-    padding-bottom: 3rem;
-    justify-content: space-evenly;
-}
-
 .pagination-item {
-    background-color: #fff;
     border-radius: 50%;
     border: none;
-    padding: 15px;
 }
 
 .pagination-item img {

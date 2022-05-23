@@ -10,7 +10,7 @@ type FormInputType = {
 
 export const Textarea = ({ key, value = undefined, text, is_post_code = false, is_first_item = false }: FormInputType): JSX.Element => {
     return (
-        <div className={is_first_item ? 'form-input_item row mt-0' : 'form-input_item row'}>
+        <div className={is_first_item ? 'row mt-0 form-input_item' : 'row form-input_item'}>
             <div className='col-4'>
                 <label htmlFor={key}>{text}</label>
             </div>

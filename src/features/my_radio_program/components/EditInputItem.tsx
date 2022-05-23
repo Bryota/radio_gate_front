@@ -14,15 +14,15 @@ export const EditInputItem = ({ key, value = '', text, type = 'text', is_post_co
         return '';
     }
     return (
-        <div className={is_first_item ? 'form-input_item row mt-0' : 'form-input_item row'}>
+        <div className={is_first_item ? 'row mt-0 form-input_item' : 'row form-input_item'}>
             <div className='col-4'>
                 <label htmlFor={key}>{text}</label>
             </div>
             <div className='col-5 position-relative'>
-                <input type={type} id={key} className='position-absolute' value={value} />
+                <input type={type} id={key} className='position-absolute underline-green' value={value} />
             </div>
             <div className="col-3">
-                <button className='my_radio_program-corner-delete-btn element-btn-delete' onClick={click_handler}>コーナーを削除</button>
+                <button className='bg-delete font-20 my_radio_program-corner-delete-btn' onClick={click_handler}>コーナーを削除</button>
             </div>
         </div>
     )

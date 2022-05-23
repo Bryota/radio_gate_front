@@ -7,11 +7,11 @@ type RadioStationType = {
 export const RadioStation = ({ name }: RadioStationType): JSX.Element => {
     return (
         <>
-            <div className='radio_programs-radio_station row'>
+            <div className='row underline-green'>
                 <div className='col-2'>
                     アイコン
                 </div>
-                <p className='radio_programs-radio_station-name col-10'>{name}の番組一覧</p>
+                <p className='col-10 font-30'>{name}の番組一覧</p>
             </div>
         </>
     )

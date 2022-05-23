@@ -8,8 +8,8 @@ export const SelectedRequestFunction = ({ name }: SelectedRequestFunctionType): 
     return (
         <>
             <div className='mb-5'>
-                <div className="selected_my_radio_program row">
-                    <p className='my_radio_program-name'>{name}</p>
+                <div className="row underline-green p-1rem">
+                    <p className='font-40'>{name}</p>
                 </div>
             </div>
         </>

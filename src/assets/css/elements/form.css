@@ -8,8 +8,6 @@
 }
 
 .form-input_item input {
-    border: none;
-    border-bottom: 3px solid #A8CE30;
     bottom: 0;
     font-size: 20px;
     width: 100%;
@@ -34,10 +32,6 @@
 
 .radio-checkbox {
     margin-top: 45px
-}
-
-.radio-checkbox p {
-    font-size: 20px;
 }
 
 .checkbox input[type="checkbox"] {

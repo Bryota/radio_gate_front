@@ -11,7 +11,7 @@ type FormInputType = {
 
 export const AdminInput = ({ key, value = '', text, type = 'text' }: FormInputType): JSX.Element => {
     return (
-        <div className='m-auto admin-input'>
+        <div className='m-auto mt-4 admin-input'>
             <div className='mb-2 font-30'>
                 <label htmlFor={key}>{text}</label>
             </div>

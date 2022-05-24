@@ -12,6 +12,7 @@ import { RequestFunctions, RequestFunction, CreateRequestFunction, VoteRequestFu
 import { Inquiry, DeveloperContact, HowToUse } from '../features/static';
 
 import { AdminForgotPassword, AdminLogin, AdminPasswordReset, AdminPasswordUpdate } from '../features/admin/auth';
+import { AdminRequestFunctions } from '../features/admin/request_function';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -77,7 +78,11 @@ export const AppRoutes = () => {
         { path: 'admin/login', element: <AdminLogin /> },
         { path: 'admin/password_reset', element: <AdminPasswordReset /> },
         { path: 'admin/password_update', element: <AdminPasswordUpdate /> },
-    ]
+    ];
+
+    const adminRequestFunction = [
+        { path: 'admin/request_functions', element: <AdminRequestFunctions /> },
+    ];
 
     const element = useRoutes([
         ...commonRoutes,
@@ -90,7 +95,8 @@ export const AppRoutes = () => {
         ...message,
         ...requestFunction,
         ...staticPage,
-        ...adminAuth
+        ...adminAuth,
+        ...adminRequestFunction
     ]);
 
     return <>{element}</>

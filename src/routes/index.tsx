@@ -11,7 +11,7 @@ import { MessagePost, MessagePostComplete, Messages, Message } from '../features
 import { RequestFunctions, RequestFunction, CreateRequestFunction, VoteRequestFunction } from '../features/request_function';
 import { Inquiry, DeveloperContact, HowToUse } from '../features/static';
 
-import { AdminForgotPassword } from '../features/admin/auth';
+import { AdminForgotPassword, AdminLogin } from '../features/admin/auth';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -74,6 +74,7 @@ export const AppRoutes = () => {
     // 認証関連
     const adminAuth = [
         { path: 'admin/forgot_password', element: <AdminForgotPassword /> },
+        { path: 'admin/login', element: <AdminLogin /> },
     ]
 
     const element = useRoutes([

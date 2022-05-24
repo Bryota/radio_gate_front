@@ -28,6 +28,10 @@ input {
     background-color: #E34B2D !important;
 }
 
+.bg-admin {
+    background-color: #F2F2F2;
+}
+
 .bg-delete {
     background-color: #3079CE !important;
 }

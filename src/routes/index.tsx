@@ -13,7 +13,7 @@ import { Inquiry, DeveloperContact, HowToUse } from '../features/static';
 
 import { AdminForgotPassword, AdminLogin, AdminPasswordReset, AdminPasswordUpdate } from '../features/admin/auth';
 import { AdminRequestFunctions, AdminRequestFunction, AdminCreateRequestFunction, AdminEditRequestFunction } from '../features/admin/request_function';
-import { AdminRadioStations } from '../features/admin/radio_station';
+import { AdminRadioStations, AdminCreateRadioStation } from '../features/admin/radio_station';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -92,6 +92,7 @@ export const AppRoutes = () => {
     // ラジオ関連
     const adminRadioStation = [
         { path: 'admin/radio_stations', element: <AdminRadioStations /> },
+        { path: 'admin/radio_station/create', element: <AdminCreateRadioStation /> },
     ]
 
     const element = useRoutes([

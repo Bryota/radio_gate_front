@@ -13,6 +13,7 @@ import { Inquiry, DeveloperContact, HowToUse } from '../features/static';
 
 import { AdminForgotPassword, AdminLogin, AdminPasswordReset, AdminPasswordUpdate } from '../features/admin/auth';
 import { AdminRequestFunctions, AdminRequestFunction, AdminCreateRequestFunction, AdminEditRequestFunction } from '../features/admin/request_function';
+import { AdminRadioStations } from '../features/admin/radio_station';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -88,6 +89,11 @@ export const AppRoutes = () => {
         { path: 'admin/request_function/:id/edit', element: <AdminEditRequestFunction /> },
     ];
 
+    // ラジオ関連
+    const adminRadioStation = [
+        { path: 'admin/radio_stations', element: <AdminRadioStations /> },
+    ]
+
     const element = useRoutes([
         ...commonRoutes,
         ...radioStations,
@@ -100,7 +106,8 @@ export const AppRoutes = () => {
         ...requestFunction,
         ...staticPage,
         ...adminAuth,
-        ...adminRequestFunction
+        ...adminRequestFunction,
+        ...adminRadioStation,
     ]);
 
     return <>{element}</>

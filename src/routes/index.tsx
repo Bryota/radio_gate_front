@@ -14,7 +14,7 @@ import { Inquiry, DeveloperContact, HowToUse } from '../features/static';
 import { AdminForgotPassword, AdminLogin, AdminPasswordReset, AdminPasswordUpdate } from '../features/admin/auth';
 import { AdminRequestFunctions, AdminRequestFunction, AdminCreateRequestFunction, AdminEditRequestFunction } from '../features/admin/request_function';
 import { AdminRadioStations, AdminCreateRadioStation, AdminEditRadioStation } from '../features/admin/radio_station';
-import { AdminRadioPrograms, AdminRadioProgram, AdminCreateRadioProgram, AdminEditRadioProgram } from '../features/admin/radio_program';
+import { AdminRadioPrograms, AdminRadioProgram, AdminCreateRadioProgram, AdminEditRadioProgram, AdminCreateCorner } from '../features/admin/radio_program';
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
@@ -94,13 +94,14 @@ export const AppRoutes = () => {
     const adminRadioStation = [
         { path: 'admin/radio_stations', element: <AdminRadioStations /> },
         { path: 'admin/radio_station/create', element: <AdminCreateRadioStation /> },
-        { path: 'admin/radio_station/1/edit', element: <AdminEditRadioStation /> },
+        { path: 'admin/radio_station/:id/edit', element: <AdminEditRadioStation /> },
     ]
     const adminRadioProgram = [
         { path: 'admin/radio_programs', element: <AdminRadioPrograms /> },
-        { path: 'admin/radio_program/1', element: <AdminRadioProgram /> },
+        { path: 'admin/radio_program/:id', element: <AdminRadioProgram /> },
         { path: 'admin/radio_program/create', element: <AdminCreateRadioProgram /> },
-        { path: 'admin/radio_program/1/edit', element: <AdminEditRadioProgram /> },
+        { path: 'admin/radio_program/:id/edit', element: <AdminEditRadioProgram /> },
+        { path: 'admin/radio_program/:id/corner/create', element: <AdminCreateCorner /> },
     ]
 
     const element = useRoutes([

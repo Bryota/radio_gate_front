@@ -48,6 +48,10 @@ input {
     color: #E34B2D;
 }
 
+.color-white {
+    color: #fff;
+}
+
 .underline-green {
     border-bottom: 3px solid #A8CE30;
 }
@@ -111,6 +115,10 @@ input {
 
 .font-40 {
     font-size: 40px;
+}
+
+.w-80 {
+    width: 80%;
 }
 
 .list-item {

@@ -21,7 +21,7 @@ export const AppRoutes = () => {
 
     //ラジオ関連
     const radioStations = [{ path: '/radio_stations', element: <RadioStations /> }];
-    const radioPrograms = [{ path: '/radio_programs', element: <RadioPrograms /> }];
+    const radioPrograms = [{ path: '/radio_programs/:radio_station_id', element: <RadioPrograms /> }];
     const myRadioPrograms = [
         { path: '/my_radio_programs', element: <MyRadioPrograms /> },
         { path: '/my_radio_program/:id', element: <MyRadioProgram /> },

@@ -1,7 +1,7 @@
 import '../../../assets/css/elements/radio.css';
 
 type RadioStationType = {
-    name: string
+    name?: string
 }
 
 export const RadioStation = ({ name }: RadioStationType): JSX.Element => {

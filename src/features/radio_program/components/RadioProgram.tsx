@@ -1,3 +1,7 @@
+import axios from 'axios';
+import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
@@ -6,10 +10,47 @@ import { SelectedRadioProgram } from './SelectedRadioProgram';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
+type UrlParamsType = {
+    id: string
+}
+
+type RadioProgramType = {
+    id: number
+    name: string
+    email: string
+    created_at: string
+    updated_at: string
+}
+
+type ProgramCornersType = {
+    id: number
+    radio_program_id: number
+    name: string
+}
+
 export const RadioProgram = () => {
+    const urlParams = useParams<UrlParamsType>();
+    const [radioProgram, setRadioProgram] = useState<RadioProgramType>();
+    const [programCorners, setProgramCorners] = useState<ProgramCornersType[]>([]);
+
     const click_handler = () => {
         return '';
     }
+
+    useEffect(() => {
+        const fetchRadioProgram = async () => {
+            try {
+                const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs/${urlParams.id}`);
+                setRadioProgram(RadioProgramResponse.data.radio_program);
+                const ProgramConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program_corners?radio_program=${urlParams.id}`);
+                setProgramCorners(ProgramConrernsResponse.data.program_corners);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchRadioProgram();
+    }, []);
+
     return (
         <>
             <MainLayout>
@@ -18,34 +59,20 @@ export const RadioProgram = () => {
                     subtitle='ラジオ番組'
                 />
                 <SelectedRadioProgram
-                    name='ダレハナ'
-                    email='test@example.com'
+                    id={radioProgram?.id}
+                    name={radioProgram?.name}
+                    email={radioProgram?.email}
                 />
                 <div>
-                    <CornerList
-                        name="オードリーのオールナイトニッポン"
-                    />
-                    <CornerList
-                        name="佐久間宣行のオールナイトニッポン0"
-                    />
-                    <CornerList
-                        name="乃木坂のオールナイトニッポン"
-                    />
-                    <CornerList
-                        name="CreepyNutsのオールナイトニッポン"
-                    />
-                    <CornerList
-                        name="星野源のオールナイトニッポン"
-                    />
-                    <CornerList
-                        name="日向坂46松田好花の日向坂高校放送部"
-                    />
-                    <CornerList
-                        name="上柳昌彦　あさぼらけ"
-                    />
-                    <CornerList
-                        name="土田晃之　日曜のへそ"
-                    />
+                    {programCorners.map(programCorner => {
+                        return (
+                            <CornerList
+                                id={programCorner.id}
+                                name={programCorner.name}
+                                radio_program_id={programCorner.radio_program_id}
+                            />
+                        )
+                    })}
                 </div>
                 <Pagination />
             </MainLayout>

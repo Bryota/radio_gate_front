@@ -22,16 +22,19 @@ type RadioProgramsType = {
     updated_at: string
 }
 
-
 export const RadioPrograms = () => {
     const urlParams = useParams<UrlParamsType>();
     const [radioPrograms, setRadioPrograms] = useState<RadioProgramsType[]>([]);
+    const [radioStationName, setRadioStationName] = useState<string>();
 
     useEffect(() => {
         const fetchRadioPrograms = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs?radio_station=${urlParams.radio_station_id}`);
-                setRadioPrograms(response.data.radio_programs)
+                const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_station_name/${urlParams.radio_station_id}`);
+                setRadioStationName(RadioStationNameResponse.data.radio_station_name);
+
+                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs?radio_station=${urlParams.radio_station_id}`);
+                setRadioPrograms(RadioProgramsResponse.data.radio_programs);
             } catch (err) {
                 console.log(err);
             }
@@ -46,7 +49,7 @@ export const RadioPrograms = () => {
                     subtitle='ラジオ番組一覧'
                 />
                 <RadioStation
-                    name='ニッポン放送'
+                    name={radioStationName}
                 />
                 <div>
                     {radioPrograms.map(radioProgram => {
@@ -58,7 +61,6 @@ export const RadioPrograms = () => {
                             />
                         )
                     })}
-
                 </div>
                 <Pagination />
             </MainLayout>

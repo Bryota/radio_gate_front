@@ -1,3 +1,7 @@
+import axios from '../../../settings/Axios';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
@@ -6,10 +10,34 @@ import { MyRadioProgramList } from './MyRadioProgramList';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
+type MyRadioProgramsType = {
+    id: number
+    name: string
+    email: string
+    created_at: string
+    updated_at: string
+}
+
 export const MyRadioPrograms = () => {
+    const [myRadioPrograms, setMyRadioPrograms] = useState<MyRadioProgramsType[]>([]);
+    const navigation = useNavigate();
+
+    useEffect(() => {
+        const fetchMyRadioPrograms = async () => {
+            try {
+                const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
+                setMyRadioPrograms(RadioStationNameResponse.data.listener_my_programs);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchMyRadioPrograms();
+    }, []);
+
     const click_handler = () => {
-        return '';
+        navigation('/my_radio_program/create')
     }
+
     return (
         <>
             <MainLayout>
@@ -24,30 +52,15 @@ export const MyRadioPrograms = () => {
                     click_action={click_handler}
                 />
                 <div>
-                    <MyRadioProgramList
-                        name="オードリーのオールナイトニッポン"
-                    />
-                    <MyRadioProgramList
-                        name="佐久間宣行のオールナイトニッポン0"
-                    />
-                    <MyRadioProgramList
-                        name="乃木坂のオールナイトニッポン"
-                    />
-                    <MyRadioProgramList
-                        name="CreepyNutsのオールナイトニッポン"
-                    />
-                    <MyRadioProgramList
-                        name="星野源のオールナイトニッポン"
-                    />
-                    <MyRadioProgramList
-                        name="日向坂46松田好花の日向坂高校放送部"
-                    />
-                    <MyRadioProgramList
-                        name="上柳昌彦　あさぼらけ"
-                    />
-                    <MyRadioProgramList
-                        name="土田晃之　日曜のへそ"
-                    />
+                    {myRadioPrograms.map(myRadioProgram => {
+                        return (
+                            <MyRadioProgramList
+                                key={myRadioProgram.id}
+                                id={myRadioProgram.id}
+                                name={myRadioProgram.name}
+                            />
+                        )
+                    })}
                 </div>
                 <Pagination />
             </MainLayout>

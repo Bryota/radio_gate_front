@@ -1,8 +1,11 @@
 import Axios from 'axios'
 
 const axios = Axios.create({
-    headers: { 'X-Requested-With': 'XMLHttpRequest' },
-    withCredentials: true
+    xsrfHeaderName: 'X-CSRF-Token',
+    withCredentials: true,
+    headers: {
+        'content-type': 'application/json'
+    }
 })
 
 export default axios

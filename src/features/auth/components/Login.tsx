@@ -10,17 +10,17 @@ import { Button } from '../../../components/Elements/Button';
 export const Login = () => {
     const [email, setEmail] = useState<string>();
     const [password, setPassword] = useState<string>();
-    const navigation = useNavigate()
+    const navigation = useNavigate();
 
-    const click_handler = () => {
-        axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`)
-            .then(() => {
-                axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/login`, {
+    const click_handler = async () => {
+        await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`)
+            .then(async () => {
+                await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/login`, {
                     email,
                     password
                 }).then(res => {
                     // TODO: エラー時の処理追加
-                    if (res.status == 200) {
+                    if (res.status === 200) {
                         return (
                             navigation('/message_post')
                         )

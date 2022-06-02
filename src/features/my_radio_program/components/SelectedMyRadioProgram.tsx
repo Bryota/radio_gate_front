@@ -1,20 +1,21 @@
 import '../../../assets/css/elements/radio.css';
 
 type SelectedMyRadioProgramType = {
-    name: string
-    email: string
+    id?: number
+    name?: string
+    email?: string
 }
 
-export const SelectedMyRadioProgram = ({ name, email }: SelectedMyRadioProgramType): JSX.Element => {
+export const SelectedMyRadioProgram = ({ id, name, email }: SelectedMyRadioProgramType): JSX.Element => {
     return (
         <>
             <div className='mb-5'>
                 <div className="row underline-green p-1rem">
                     <p className='col-7 font-40'>{name}</p>
-                    <a href="#" className='col-2 btn bg-main list-btn'>
+                    <a href={`/message_post?my_radio_program=${id}`} className='col-2 btn bg-main list-btn'>
                         メールを送る
                     </a>
-                    <a href="#" className='col-2 offset-1 btn list-btn'>
+                    <a href={`/my_radio_program/${id}/edit`} className='col-2 offset-1 btn list-btn'>
                         編集
                     </a>
                 </div>

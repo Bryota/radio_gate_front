@@ -1,16 +1,56 @@
+import axios from '../../../settings/Axios';
+import { useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
 import { CornerList } from './CornerList';
-import { AddCornerBtn } from './AddCornerBtn';
 import { SelectedMyRadioProgram } from './SelectedMyRadioProgram';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
+type UrlParamsType = {
+    id: string
+}
+
+type MyRadioProgramType = {
+    id: number
+    name: string
+    email: string
+    created_at: string
+    updated_at: string
+}
+
+type CornerType = {
+    id: number
+    listener_my_program_id: number
+    name: string
+}
+
 export const MyRadioProgram = () => {
+    const urlParams = useParams<UrlParamsType>();
+    const [myRadioProgram, setMyRadioProgram] = useState<MyRadioProgramType>();
+    const [corners, setCorners] = useState<CornerType[]>([]);
+
     const click_handler = () => {
         return '';
     }
+
+    useEffect(() => {
+        const fetchRadioProgram = async () => {
+            try {
+                const MyRadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`);
+                setMyRadioProgram(MyRadioProgramResponse.data.listener_my_program);
+                const CornerResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${urlParams.id}`);
+                setCorners(CornerResponse.data.my_program_corners);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchRadioProgram();
+    }, []);
+
     return (
         <>
             <MainLayout>
@@ -19,35 +59,24 @@ export const MyRadioProgram = () => {
                     subtitle='マイラジオ番組'
                 />
                 <SelectedMyRadioProgram
-                    name='ダレハナ'
-                    email='test@example.com'
+                    id={myRadioProgram?.id}
+                    name={myRadioProgram?.name}
+                    email={myRadioProgram?.email}
                 />
-                <AddCornerBtn />
+                <div className="row">
+                    <h2>コーナー一覧</h2>
+                </div>
                 <div>
-                    <CornerList
-                        name="オードリーのオールナイトニッポン"
-                    />
-                    <CornerList
-                        name="佐久間宣行のオールナイトニッポン0"
-                    />
-                    <CornerList
-                        name="乃木坂のオールナイトニッポン"
-                    />
-                    <CornerList
-                        name="CreepyNutsのオールナイトニッポン"
-                    />
-                    <CornerList
-                        name="星野源のオールナイトニッポン"
-                    />
-                    <CornerList
-                        name="日向坂46松田好花の日向坂高校放送部"
-                    />
-                    <CornerList
-                        name="上柳昌彦　あさぼらけ"
-                    />
-                    <CornerList
-                        name="土田晃之　日曜のへそ"
-                    />
+                    {corners.map(corner => {
+                        return (
+                            <CornerList
+                                key={corner.id}
+                                id={corner.id}
+                                my_radio_program_id={corner.listener_my_program_id}
+                                name={corner.name}
+                            />
+                        )
+                    })}
                 </div>
                 <Pagination />
             </MainLayout>

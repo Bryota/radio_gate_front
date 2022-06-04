@@ -42,11 +42,6 @@ export const CreateMyRadioProgram = () => {
     }
 
     const changeCorner = (value: string, i: number): void => {
-        let test = corners.map((corner, index): CornerType => {
-            return {
-                name: i === index ? value : corner.name
-            }
-        })
         setCorners(
             corners.map((corner, index): CornerType => {
                 return {

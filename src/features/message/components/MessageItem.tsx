@@ -2,7 +2,7 @@ import '../../../assets/css/elements/radio.css';
 
 type MessageItemType = {
     item_name: string
-    value: string
+    value?: string
 }
 
 export const MessageItem = ({ item_name, value }: MessageItemType): JSX.Element => {

@@ -1,8 +1,8 @@
 import '../../../assets/css/elements/radio.css';
 
 type SelectedMessageType = {
-    name: string
-    post_date: string
+    name?: string
+    post_date?: string
 }
 
 export const SelectedMessage = ({ name, post_date }: SelectedMessageType): JSX.Element => {

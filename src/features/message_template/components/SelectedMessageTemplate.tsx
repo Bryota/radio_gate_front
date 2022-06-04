@@ -1,7 +1,7 @@
 import '../../../assets/css/elements/radio.css';
 
 type SelectedMessageTemplateType = {
-    name: string
+    name?: string
 }
 
 export const SelectedMessageTemplate = ({ name }: SelectedMessageTemplateType): JSX.Element => {

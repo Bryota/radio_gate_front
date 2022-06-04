@@ -1,11 +1,29 @@
+import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
+import axios from '../../../settings/Axios';
+
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 
 export const AccountDelete = () => {
+    const navigation = useNavigate();
 
-    const click_handler = () => {
-        return '';
+    const click_handler = async () => {
+        try {
+            await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`)
+                .then((res) => {
+                    if (res.status === 200) {
+                        return (
+                            navigation('/login')
+                        );
+                    } else {
+                        alert(res.data.message)
+                    }
+                })
+        } catch (err) {
+            console.log(err)
+        }
     }
     return (
         <>

@@ -2,7 +2,7 @@ import '../../../assets/css/elements/listener.css';
 
 type ProfileItemType = {
     label: string
-    value: string
+    value?: string
     is_first_item?: boolean
     no_value?: boolean
 }

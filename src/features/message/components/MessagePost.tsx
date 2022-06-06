@@ -19,6 +19,8 @@ type SelectItemType = {
 export const MessagePost = () => {
     const [isMyRadioProgram, setIsMyRadioProgram] = useState<boolean>(false);
     const [isusedMessageTemplate, setIsUsedMessageTemplate] = useState<boolean>(false);
+    const [isSentListenerinfo, setIsSentListenerinfo] = useState<boolean>(false);
+    const [isSentTel, setIsSentTel] = useState<boolean>(false);
     const [radioStations, setRadioStations] = useState<SelectItemType[]>();
     const [radioPrograms, setRadioPrograms] = useState<SelectItemType[]>();
     const [corners, setCorners] = useState<SelectItemType[]>();
@@ -111,7 +113,9 @@ export const MessagePost = () => {
                     my_program_corner_id: programCornerId,
                     subject: subject,
                     content: content,
-                    radio_name: radioName
+                    radio_name: radioName,
+                    listener_info_flag: isSentListenerinfo,
+                    tel_flag: isSentTel
                 });
             } else {
                 MessagePostResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages`, {
@@ -119,7 +123,9 @@ export const MessagePost = () => {
                     program_corner_id: programCornerId,
                     subject: subject,
                     content: content,
-                    radio_name: radioName
+                    radio_name: radioName,
+                    listener_info_flag: isSentListenerinfo,
+                    tel_flag: isSentTel
                 });
             }
             if (MessagePostResponse.status === 201) {
@@ -219,10 +225,12 @@ export const MessagePost = () => {
                     <CheckBox
                         label='is_sent_userifno'
                         text='本名・住所を記載する'
+                        change_action={() => setIsSentListenerinfo(!isSentListenerinfo)}
                     />
                     <CheckBox
                         label='is_sent_tel'
                         text='電話番号を記載する'
+                        change_action={() => setIsSentTel(!isSentTel)}
                     />
                 </InnerBox>
                 <Button

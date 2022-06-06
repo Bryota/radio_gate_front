@@ -16,12 +16,6 @@ type SelectItemType = {
     updated_at: string
 }
 
-type MessageTemplatesType = {
-    id: number
-    name: string
-
-}
-
 export const MessagePost = () => {
     const [isMyRadioProgram, setIsMyRadioProgram] = useState<boolean>(false);
     const [isusedMessageTemplate, setIsUsedMessageTemplate] = useState<boolean>(false);
@@ -37,14 +31,29 @@ export const MessagePost = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
-        const fetchRadioStation = async () => {
-            try {
-                const RadioStationsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_stations`);
-                setRadioStations(RadioStationsResponse.data.radio_stations);
-            } catch (err) {
-                console.log(err);
+        if (isMyRadioProgram) {
+            const fetchMyRadioProgram = async () => {
+                try {
+                    const MessageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
+                    setRadioPrograms(MessageTemplatesResponse.data.listener_my_programs);
+                } catch (err) {
+                    console.log(err);
+                }
             }
+            fetchMyRadioProgram();
+        } else {
+            const fetchRadioStation = async () => {
+                setRadioPrograms([]);
+                try {
+                    const RadioStationsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_stations`);
+                    setRadioStations(RadioStationsResponse.data.radio_stations);
+                } catch (err) {
+                    console.log(err);
+                }
+            }
+            fetchRadioStation();
         }
+        setCorners([]);
         const fetchMessageTemplates = async () => {
             try {
                 const MessageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates`);
@@ -53,7 +62,6 @@ export const MessagePost = () => {
                 console.log(err);
             }
         }
-        fetchRadioStation();
         fetchMessageTemplates();
     }, [isMyRadioProgram]);
 
@@ -70,11 +78,16 @@ export const MessagePost = () => {
     }
 
     const set_corner = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setRadioProgramId(e.target.value)
+        setRadioProgramId(e.target.value);
         const fetchCorner = async () => {
             try {
-                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program_corners?radio_program=${e.target.value}`);
-                setCorners(ConrernsResponse.data.program_corners);
+                if (isMyRadioProgram) {
+                    const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${e.target.value}`);
+                    setCorners(ConrernsResponse.data.my_program_corners);
+                } else {
+                    const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program_corners?radio_program=${e.target.value}`);
+                    setCorners(ConrernsResponse.data.program_corners);
+                }
             } catch (err) {
                 console.log(err);
             }
@@ -91,19 +104,29 @@ export const MessagePost = () => {
 
     const send_handler = async () => {
         try {
-            await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages`, {
-                radio_program_id: radioProgramId,
-                program_corner_id: programCornerId,
-                subject: subject,
-                content: content,
-                radio_name: radioName
-            }).then((res) => {
-                if (res.status === 201) {
-                    navigation('/message_post/complete', { state: { radio_program_id: radioProgramId } })
-                } else {
-                    alert(res.data.message)
-                }
-            })
+            let MessagePostResponse;
+            if (isMyRadioProgram) {
+                MessagePostResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages`, {
+                    listener_my_program_id: radioProgramId,
+                    my_program_corner_id: programCornerId,
+                    subject: subject,
+                    content: content,
+                    radio_name: radioName
+                });
+            } else {
+                MessagePostResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages`, {
+                    radio_program_id: radioProgramId,
+                    program_corner_id: programCornerId,
+                    subject: subject,
+                    content: content,
+                    radio_name: radioName
+                });
+            }
+            if (MessagePostResponse.status === 201) {
+                navigation('/message_post/complete', { state: { radio_program_id: radioProgramId, is_my_radio_program: isMyRadioProgram } })
+            } else {
+                alert(MessagePostResponse.data.message)
+            }
         } catch (err) {
             console.log(err)
         }
@@ -125,13 +148,21 @@ export const MessagePost = () => {
                         label='is_used_my_radio_program'
                         text='マイラジオ番組を使用する'
                         is_first_item={true}
+                        change_action={() => setIsMyRadioProgram(!isMyRadioProgram)}
                     />
-                    <Select
-                        key='radio_station'
-                        items={radioStations}
-                        text='ラジオ局'
-                        change_action={e => set_radio_program(e)}
-                    />
+                    {
+                        isMyRadioProgram
+                            ?
+                            <></>
+                            :
+                            <Select
+                                key='radio_station'
+                                items={radioStations}
+                                text='ラジオ局'
+                                change_action={e => set_radio_program(e)}
+                            />
+                    }
+
                     <Select
                         key='radio_program'
                         items={radioPrograms}

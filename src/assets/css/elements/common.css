@@ -53,7 +53,7 @@ input {
 }
 
 .underline-green {
-    border-bottom: 3px solid #A8CE30;
+    border-bottom: 3px solid #A8CE30 !important;
 }
 
 .container {

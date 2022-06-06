@@ -1,12 +1,12 @@
-import { useState } from "react"
-import { useLocation, useNavigate } from "react-router-dom"
+import { useState } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 
 export const ForgotPasswordComplete = () => {
-    const location = useLocation()
+    const location = useLocation();
     const [email, setEmail] = useState<{ email: string }>(location.state as { email: string })
     const navigation = useNavigate();
 

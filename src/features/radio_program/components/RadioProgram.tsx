@@ -33,10 +33,6 @@ export const RadioProgram = () => {
     const [radioProgram, setRadioProgram] = useState<RadioProgramType>();
     const [programCorners, setProgramCorners] = useState<ProgramCornersType[]>([]);
 
-    const click_handler = () => {
-        return '';
-    }
-
     useEffect(() => {
         const fetchRadioProgram = async () => {
             try {

@@ -1,7 +1,7 @@
 import '../../../assets/css/elements/radio.css';
 
 type SelectedRequestFunctionType = {
-    name: string
+    name?: string
 }
 
 export const SelectedRequestFunction = ({ name }: SelectedRequestFunctionType): JSX.Element => {

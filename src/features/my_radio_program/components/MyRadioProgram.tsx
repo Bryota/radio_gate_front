@@ -1,5 +1,5 @@
 import axios from '../../../settings/Axios';
-import { useParams } from 'react-router-dom'
+import { useParams } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';

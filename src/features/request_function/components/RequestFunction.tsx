@@ -1,10 +1,41 @@
+import axios from '../../../settings/Axios';
+import { useNavigate, useParams } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 import { SelectedRequestFunction } from './SelectedRequestFunction';
 import '../../../assets/css/elements/radio.css';
 
+type UrlParamsType = {
+    id: string
+}
+
+type RequestFunctionType = {
+    id: number
+    name: string
+    detail: string
+    point: number
+}
+
 export const RequestFunction = () => {
+    const [requestFunction, setRequestFunction] = useState<RequestFunctionType>();
+    const navigation = useNavigate();
+    const urlParams = useParams<UrlParamsType>();
+
+    useEffect(() => {
+        const fetchRequestFunction = async () => {
+            try {
+                const RequestFunctionResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${urlParams.id}`);
+                setRequestFunction(RequestFunctionResponse.data.request_function);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchRequestFunction();
+    }, []);
+
     const click_handler = () => {
         return '';
     }
@@ -16,24 +47,25 @@ export const RequestFunction = () => {
                     subtitle='機能リクエスト'
                 />
                 <SelectedRequestFunction
-                    name='住所を複数設定できる'
+                    name={requestFunction?.name}
                 />
                 <div>
                     <p className='h3 mb-4'>詳細</p>
-                    <InnerBox>
-                        メッセージを投稿する際に、アカウントに設定された住所以外の住所も設定できるようにしたい。
-                        また、アカウントの住所設定の段階で複数の住所を設定できるようにしたい。
-                    </InnerBox>
+                    <InnerBox>{requestFunction?.detail}</InnerBox>
                 </div>
                 <Button
                     text='投票する'
                     type='post'
-                    click_action={click_handler}
+                    click_action={() => {
+                        return navigation(`/request_function/${requestFunction?.id}/vote`)
+                    }}
                 />
                 <Button
                     text='機能リクエスト一覧'
                     type='get'
-                    click_action={click_handler}
+                    click_action={() => {
+                        return navigation(`/request_functions`)
+                    }}
                 />
             </MainLayout>
         </>

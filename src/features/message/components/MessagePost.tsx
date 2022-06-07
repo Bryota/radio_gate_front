@@ -138,8 +138,38 @@ export const MessagePost = () => {
         }
     }
 
-    const click_handler = () => {
-        return '';
+    const save_handler = async () => {
+        try {
+            let MessageSaveResponse;
+            if (isMyRadioProgram) {
+                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/save`, {
+                    listener_my_program_id: radioProgramId,
+                    my_program_corner_id: programCornerId,
+                    subject: subject,
+                    content: content,
+                    radio_name: radioName,
+                    listener_info_flag: isSentListenerinfo,
+                    tel_flag: isSentTel
+                });
+            } else {
+                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/save`, {
+                    radio_program_id: radioProgramId,
+                    program_corner_id: programCornerId,
+                    subject: subject,
+                    content: content,
+                    radio_name: radioName,
+                    listener_info_flag: isSentListenerinfo,
+                    tel_flag: isSentTel
+                });
+            }
+            if (MessageSaveResponse.status === 201) {
+                navigation('/messages');
+            } else {
+                alert(MessageSaveResponse.data.message);
+            }
+        } catch (err) {
+            console.log(err)
+        }
     }
 
     return (
@@ -168,7 +198,6 @@ export const MessagePost = () => {
                                 change_action={e => set_radio_program(e)}
                             />
                     }
-
                     <Select
                         key='radio_program'
                         items={radioPrograms}
@@ -241,7 +270,7 @@ export const MessagePost = () => {
                 <Button
                     text='一時保存'
                     type='get'
-                    click_action={click_handler}
+                    click_action={save_handler}
                 />
             </MainLayout>
         </>

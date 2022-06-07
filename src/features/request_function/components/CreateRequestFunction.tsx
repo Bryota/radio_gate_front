@@ -1,3 +1,7 @@
+import axios from '../../../settings/Axios';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
@@ -6,8 +10,22 @@ import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
 export const CreateRequestFunction = () => {
-    const click_handler = () => {
-        return '';
+    const [name, setName] = useState<string>();
+    const [detail, setDetail] = useState<string>();
+    const navigation = useNavigate();
+
+    const click_handler = async () => {
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions`, {
+            name,
+            detail
+        }).then(res => {
+            // TODO: エラー時の処理追加
+            if (res.status === 201) {
+                navigation('/request_functions');
+            } else {
+                console.log(res.data.message);
+            }
+        });
     }
     return (
         <>
@@ -20,10 +38,12 @@ export const CreateRequestFunction = () => {
                     <Input
                         key='name'
                         text='タイトル'
+                        change_action={e => setName(e.target.value)}
                     />
                     <Textarea
                         key='detail'
                         text='詳細'
+                        change_action={e => setDetail(e.target.value)}
                     />
                 </InnerBox>
                 <Button

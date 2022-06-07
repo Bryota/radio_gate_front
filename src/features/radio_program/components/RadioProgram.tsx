@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../../settings/Axios';
 import { useParams } from 'react-router-dom'
 import { useState, useEffect } from 'react';
 

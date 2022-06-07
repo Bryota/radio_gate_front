@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from '../../../settings/Axios';
 import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';

@@ -8,9 +8,10 @@ type FormInputType = {
     is_post_code?: boolean
     is_first_item?: boolean
     is_disable?: boolean
+    change_action?: (event: React.ChangeEvent<HTMLInputElement>) => void
 }
 
-export const AdminInput = ({ key, value = '', text, type = 'text', is_disable = false }: FormInputType): JSX.Element => {
+export const AdminInput = ({ key, value = '', text, type = 'text', is_disable = false, change_action = () => { } }: FormInputType): JSX.Element => {
     return (
         <div className='m-auto mt-4 admin-input'>
             <div className='mb-2 font-30'>
@@ -22,7 +23,7 @@ export const AdminInput = ({ key, value = '', text, type = 'text', is_disable = 
                         ?
                         <input type={type} id={key} defaultValue={value} className='px-3' readOnly />
                         :
-                        <input type={type} id={key} defaultValue={value} className='px-3' />
+                        <input type={type} id={key} defaultValue={value} className='px-3' onChange={e => change_action(e)} />
                 }
 
             </div>

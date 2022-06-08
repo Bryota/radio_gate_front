@@ -24,7 +24,6 @@ export const EditMessageTemplate = () => {
     const [messageTemplate, setMessageTemplate] = useState<MessageTemplateType>();
     const [name, setName] = useState<string>();
     const [content, setContent] = useState<string>();
-    const navigation = useNavigate();
 
     useEffect(() => {
         const fetchRadioProgram = async () => {

@@ -121,6 +121,10 @@ input {
     width: 80%;
 }
 
+.cursor-pointer {
+    cursor: pointer;
+}
+
 .list-item {
     background-color: #fff;
     border: 2px solid #A8CE30;

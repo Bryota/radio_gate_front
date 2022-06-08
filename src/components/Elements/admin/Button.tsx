@@ -4,7 +4,7 @@ type ButtonType = {
     text: string
     type: string
     line_left?: boolean
-    click_action: () => {}
+    click_action: () => void
 }
 
 export const AdminButton = ({ text, type, line_left = false, click_action }: ButtonType): JSX.Element => {

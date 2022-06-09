@@ -1,6 +1,6 @@
 import axios from '../../../../settings/Axios';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { AdminMainLayout, AdminSidebar } from '../../../../components/Layout';
 import { AdminPagehead } from '../../../../components/Pagehead';

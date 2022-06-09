@@ -6,7 +6,6 @@ import { AdminMainLayout, AdminSidebar } from '../../../../components/Layout';
 import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements';
 import { AdminRadioStationList } from './RadioStationList';
-import { RadioStations } from '../../../radio_station';
 
 type RadioStationsType = {
     id: number

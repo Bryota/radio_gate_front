@@ -100,7 +100,7 @@ export const AppRoutes = () => {
         { path: 'admin/radio_station/:id/edit', element: <AdminEditRadioStation /> },
     ]
     const adminRadioProgram = [
-        { path: 'admin/radio_programs', element: <AdminRadioPrograms /> },
+        { path: 'admin/radio_programs/:radio_station_id', element: <AdminRadioPrograms /> },
         { path: 'admin/radio_program/:id', element: <AdminRadioProgram /> },
         { path: 'admin/radio_program/create', element: <AdminCreateRadioProgram /> },
         { path: 'admin/radio_program/:id/edit', element: <AdminEditRadioProgram /> },

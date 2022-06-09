@@ -1,13 +1,59 @@
+import axios from '../../../../settings/Axios';
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
 import { AdminMainLayout, AdminSidebar } from '../../../../components/Layout';
 import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements/admin/Button';
 import { AdminInput } from '../../../../components/Form/admin/Input';
+import { AdminSelect } from '../../../../components/Form/admin/Select';
+
+type RadioStationsType = {
+    id: number
+    name: string
+    created_at: string
+    updated_at: string
+}
 
 export const AdminCreateRadioProgram = () => {
+    const [radioStations, setRadioStations] = useState<RadioStationsType[]>([]);
+    const [radioStationId, setRadioStationId] = useState<string>();
+    const [name, setName] = useState<string>();
+    const [email, setEmail] = useState<string>();
+    const navigation = useNavigate();
 
-    const click_handler = () => {
-        return '';
+    useEffect(() => {
+        const fetchRadioStations = async () => {
+            try {
+                const RadioStationsresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_stations`);
+                setRadioStations(RadioStationsresponse.data.radio_stations)
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchRadioStations();
+    }, []);
+
+    const set_radio_station = async (e: React.ChangeEvent<HTMLSelectElement>) => {
+        setRadioStationId(e.target.value);
     }
+
+    const click_handler = async () => {
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_programs`, {
+            radio_station_id: radioStationId,
+            name,
+            email
+        }).then(res => {
+            // TODO: エラー時の処理追加
+            if (res.status === 201) {
+                navigation(`/admin/radio_programs/${radioStationId}`)
+            } else {
+                console.log(res.data.message);
+            }
+        });
+    }
+
     return (
         <>
             <AdminMainLayout>
@@ -19,18 +65,21 @@ export const AdminCreateRadioProgram = () => {
                         <AdminSidebar />
                     </div>
                     <div className="col-8">
-                        <AdminInput
+                        <AdminSelect
                             key='radio_station'
                             text='radio_station'
-                            is_first_item={true}
+                            items={radioStations}
+                            change_action={e => set_radio_station(e)}
                         />
                         <AdminInput
                             key='name'
                             text='name'
+                            change_action={e => setName(e.target.value)}
                         />
                         <AdminInput
                             key='email'
                             text='email'
+                            change_action={e => setEmail(e.target.value)}
                         />
                         <AdminButton
                             text='作成'

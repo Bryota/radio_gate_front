@@ -1,5 +1,4 @@
 import axios from '../../../../settings/Axios';
-import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 

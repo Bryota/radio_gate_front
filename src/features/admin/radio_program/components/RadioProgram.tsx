@@ -109,6 +109,7 @@ export const AdminRadioProgram = () => {
                                             <Corners
                                                 key={programCorner.id}
                                                 id={programCorner.id}
+                                                radio_program_id={radioProgram?.id}
                                                 name={programCorner.name}
                                                 click_action={() => delete_corner(programCorner.id)}
                                             />

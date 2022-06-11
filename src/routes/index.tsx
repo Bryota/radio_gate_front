@@ -8,7 +8,7 @@ import { MessageTemplates, MessageTemplate, CreateMessageTemplate, EditMessageTe
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete, Messages, Message } from '../features/message';
-import { RequestFunctions, RequestFunction, CreateRequestFunction, VoteRequestFunction } from '../features/request_function';
+import { RequestFunctions, RequestFunction, CreateRequestFunctionRequest, VoteRequestFunction } from '../features/request_function';
 import { Inquiry, DeveloperContact, HowToUse } from '../features/static';
 
 import { AdminForgotPassword, AdminLogin, AdminPasswordReset, AdminPasswordUpdate } from '../features/admin/auth';
@@ -65,7 +65,7 @@ export const AppRoutes = () => {
     const requestFunction = [
         { path: '/request_functions', element: <RequestFunctions /> },
         { path: '/request_function/:id', element: <RequestFunction /> },
-        { path: '/request_function/create', element: <CreateRequestFunction /> },
+        { path: '/request_function/request', element: <CreateRequestFunctionRequest /> },
         { path: '/request_function/:id/vote', element: <VoteRequestFunction /> },
     ]
 

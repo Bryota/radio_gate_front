@@ -45,7 +45,7 @@ export const RequestFunctions = () => {
                     type='get'
                     line_left={true}
                     click_action={() => {
-                        navigation('/request_function/create')
+                        navigation('/request_function/request')
                     }}
                 />
                 <div>

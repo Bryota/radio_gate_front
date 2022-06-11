@@ -9,18 +9,19 @@ import { Input, Textarea } from '../../../components/Form';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
-export const CreateRequestFunction = () => {
+export const CreateRequestFunctionRequest = () => {
     const [name, setName] = useState<string>();
     const [detail, setDetail] = useState<string>();
     const navigation = useNavigate();
 
     const click_handler = async () => {
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions`, {
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_function_requests`, {
             name,
             detail
         }).then(res => {
             // TODO: エラー時の処理追加
             if (res.status === 201) {
+                alert('機能リクエストを申請しました');
                 navigation('/request_functions');
             } else {
                 console.log(res.data.message);

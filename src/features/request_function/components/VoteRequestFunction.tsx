@@ -30,6 +30,9 @@ export const VoteRequestFunction = () => {
         const fetchRequestFunction = async () => {
             try {
                 const RequestFunctionResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${urlParams.id}`);
+                if (RequestFunctionResponse.data.status === 'failed') {
+                    return navigation('/not_fount');
+                }
                 setRequestFunction(RequestFunctionResponse.data.request_function);
             } catch (err) {
                 console.log(err);

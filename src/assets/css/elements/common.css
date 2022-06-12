@@ -36,6 +36,11 @@ input {
     background-color: #3079CE !important;
 }
 
+.bg-disable {
+    background-color: #b0b0b0 !important;
+    cursor: auto;
+}
+
 .bg-full {
     min-height: 100vh;
 }

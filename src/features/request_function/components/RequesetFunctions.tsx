@@ -33,7 +33,7 @@ export const RequestFunctions = () => {
         }
         fetchRequestFunctions();
     }, []);
-    console.log(requestFunctions)
+
     return (
         <>
             <MainLayout>

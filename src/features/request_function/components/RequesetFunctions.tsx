@@ -15,6 +15,7 @@ type RequestFunctionsType = {
     name: string
     detail: string
     point: number
+    is_voted: boolean
 }
 
 export const RequestFunctions = () => {
@@ -57,6 +58,7 @@ export const RequestFunctions = () => {
                                     id={requestFunction.id}
                                     name={requestFunction.name}
                                     point={requestFunction.point}
+                                    is_voted={requestFunction.is_voted}
                                 />
                             )
                         })

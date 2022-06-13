@@ -1,4 +1,5 @@
 import axios from '../../../../settings/Axios';
+import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { AdminMainLayout } from '../../../../components/Layout';
@@ -17,6 +18,7 @@ type RequestFunctionType = {
 
 export const AdminRequestFunctions = () => {
     const [requestFunctions, setRequestFunctions] = useState<RequestFunctionType[]>([]);
+    const navigation = useNavigate();
 
     useEffect(() => {
         const fetchRequestFunctions = async () => {
@@ -31,7 +33,7 @@ export const AdminRequestFunctions = () => {
     }, []);
 
     const click_handler = () => {
-        return '';
+        return navigation('/admin/request_function/create')
     }
 
     const delete_request_function = async (id: number) => {

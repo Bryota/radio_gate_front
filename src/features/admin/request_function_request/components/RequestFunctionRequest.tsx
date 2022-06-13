@@ -39,6 +39,11 @@ export const AdminRequestFunctionRequest = () => {
         return navigation('/admin/request_function_requests');
     }
 
+
+    const to_create_request_function = () => {
+        return navigation('/admin/request_function/create', { state: { request_function_request_id: urlParams.id } });
+    }
+
     return (
         <>
             <AdminMainLayout>
@@ -58,6 +63,11 @@ export const AdminRequestFunctionRequest = () => {
                     text='一覧'
                     type='get'
                     click_action={click_handler}
+                />
+                <AdminButton
+                    text='機能リクエスト作成'
+                    type='post'
+                    click_action={to_create_request_function}
                 />
             </AdminMainLayout>
         </>

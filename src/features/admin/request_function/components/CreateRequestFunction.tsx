@@ -1,12 +1,54 @@
+import axios from '../../../../settings/Axios';
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+
 import { AdminMainLayout } from '../../../../components/Layout';
 import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements';
-import { AdminInput, AdminTextarea } from '../../../../components/Form';
+import { AdminInput, AdminTextarea, AdminCheckBox } from '../../../../components/Form';
+
+type RequestFunctionType = {
+    id: number
+    name: string
+    detail: string
+    point: number
+    created_at: string
+    updated_at: string
+}
 
 export const AdminCreateRequestFunction = () => {
+    const location = useLocation();
+    const [requestFunctionRequestId, setRequestFunctionRequestId] = useState<{ request_function_request_id: number }>(location.state as { request_function_request_id: number })
+    const [requestFunction, setRequestFunction] = useState<RequestFunctionType>();
+    const [name, setName] = useState<string>();
+    const [detail, setDetail] = useState<string>();
+    const [isOpen, setIsOpen] = useState<boolean>(false);
+    const navigation = useNavigate();
 
-    const click_handler = () => {
-        return '';
+    useEffect(() => {
+        const fetchRequestFunction = async () => {
+            try {
+                const RequesetFunctionresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_function_requests/${requestFunctionRequestId.request_function_request_id}`);
+                setName(RequesetFunctionresponse.data.request_function_request.name);
+                setDetail(RequesetFunctionresponse.data.request_function_request.detail);
+            } catch (err) {
+                console.log(err);
+            }
+        }
+        fetchRequestFunction();
+    }, []);
+
+    const click_handler = async () => {
+        try {
+            await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_functions`, {
+                name: name,
+                detail: detail,
+                is_open: isOpen
+            });
+            navigation('/admin/request_functions')
+        } catch (err) {
+            console.log(err)
+        }
     }
     return (
         <>
@@ -17,10 +59,19 @@ export const AdminCreateRequestFunction = () => {
                 <AdminInput
                     key='name'
                     text='name'
+                    value={name}
+                    change_action={e => setName(e.target.value)}
                 />
                 <AdminTextarea
                     key='detail'
                     text='detail'
+                    value={detail}
+                    change_action={e => setDetail(e.target.value)}
+                />
+                <AdminCheckBox
+                    label='is_open'
+                    text='公開する'
+                    change_action={() => setIsOpen(!isOpen)}
                 />
                 <AdminButton
                     text='作成'

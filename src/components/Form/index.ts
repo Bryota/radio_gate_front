@@ -5,3 +5,4 @@ export * from './Select';
 export * from './admin/Input';
 export * from './admin/Textarea';
 export * from './admin/Select';
+export * from './admin/CheckBox';

@@ -10,48 +10,47 @@ type UrlParamsType = {
     id: string
 }
 
-type RequestFunctionType = {
+type RequestFunctionRequestType = {
     id: number
     name: string
     detail: string
-    point: number
     created_at: string
     updated_at: string
 }
 
-export const AdminRequestFunction = () => {
+export const AdminRequestFunctionRequest = () => {
     const urlParams = useParams<UrlParamsType>();
-    const [requestFunction, setRequestFunction] = useState<RequestFunctionType>();
+    const [requestFunctionRequest, setRequestFunctionRequest] = useState<RequestFunctionRequestType>();
     const navigation = useNavigate();
 
     useEffect(() => {
-        const fetchRequestFunction = async () => {
+        const fetchRequestFunctionRequest = async () => {
             try {
-                const RequesetFunctionresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_functions/${urlParams.id}`);
-                setRequestFunction(RequesetFunctionresponse.data.request_function)
+                const RequesetFunctionRequestresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_function_requests/${urlParams.id}`);
+                setRequestFunctionRequest(RequesetFunctionRequestresponse.data.request_function_request)
             } catch (err) {
                 console.log(err);
             }
         }
-        fetchRequestFunction();
+        fetchRequestFunctionRequest();
     }, []);
 
     const click_handler = () => {
-        return navigation('/admin/request_functions');
+        return navigation('/admin/request_function_requests');
     }
 
     return (
         <>
             <AdminMainLayout>
                 <AdminPagehead
-                    title="機能リクエスト"
+                    title="機能リクエスト申請"
                 />
                 <div>
-                    <p className='font-30 underline-green'>{requestFunction?.name}</p>
+                    <p className='font-30 underline-green'>{requestFunctionRequest?.name}</p>
                     <div className='mt-4'>
                         <p className='font-25 mb-2'>detail</p>
                         <div className='bg-white p-4'>
-                            {requestFunction?.detail}
+                            {requestFunctionRequest?.detail}
                         </div>
                     </div>
                 </div>

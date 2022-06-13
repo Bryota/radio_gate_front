@@ -13,6 +13,7 @@ import { Inquiry, DeveloperContact, HowToUse, NotFound } from '../features/stati
 
 import { AdminForgotPassword, AdminLogin, AdminPasswordReset, AdminPasswordUpdate } from '../features/admin/auth';
 import { AdminRequestFunctions, AdminRequestFunction, AdminCreateRequestFunction, AdminEditRequestFunction } from '../features/admin/request_function';
+import { AdminRequestFunctionRequests } from '../features/admin/request_function_request';
 import { AdminRadioStations, AdminCreateRadioStation, AdminEditRadioStation } from '../features/admin/radio_station';
 import { AdminRadioPrograms, AdminRadioProgram, AdminCreateRadioProgram, AdminEditRadioProgram, AdminCreateCorner, AdminEditCorner } from '../features/admin/radio_program';
 
@@ -94,6 +95,11 @@ export const AppRoutes = () => {
         { path: 'admin/request_function/:id/edit', element: <AdminEditRequestFunction /> },
     ];
 
+    //機能リクエスト申請関連
+    const adminRequestFunctionRequest = [
+        { path: 'admin/request_function_requests', element: <AdminRequestFunctionRequests /> },
+    ];
+
     // ラジオ関連
     const adminRadioStation = [
         { path: 'admin/radio_stations', element: <AdminRadioStations /> },
@@ -122,6 +128,7 @@ export const AppRoutes = () => {
         ...staticPage,
         ...adminAuth,
         ...adminRequestFunction,
+        ...adminRequestFunctionRequest,
         ...adminRadioStation,
         ...adminRadioProgram
     ]);

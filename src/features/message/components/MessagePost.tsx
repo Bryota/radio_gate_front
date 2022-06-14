@@ -18,7 +18,7 @@ type SelectItemType = {
 
 export const MessagePost = () => {
     const [isMyRadioProgram, setIsMyRadioProgram] = useState<boolean>(false);
-    const [isusedMessageTemplate, setIsUsedMessageTemplate] = useState<boolean>(false);
+    const [isUsedMessageTemplate, setIsUsedMessageTemplate] = useState<boolean>(false);
     const [isSentListenerinfo, setIsSentListenerinfo] = useState<boolean>(false);
     const [isSentTel, setIsSentTel] = useState<boolean>(false);
     const [radioStations, setRadioStations] = useState<SelectItemType[]>();
@@ -95,6 +95,13 @@ export const MessagePost = () => {
             }
         }
         fetchCorner();
+    }
+
+    const switch_message_template = () => {
+        setIsUsedMessageTemplate(!isUsedMessageTemplate);
+        if (isUsedMessageTemplate) {
+            setContent('');
+        }
     }
 
     const set_message_template = (e: React.ChangeEvent<HTMLSelectElement>) => {
@@ -231,10 +238,10 @@ export const MessagePost = () => {
                     <CheckBox
                         label='is_used_message_template'
                         text='メッセージテンプレートを使用する'
-                        change_action={() => setIsUsedMessageTemplate(!isusedMessageTemplate)}
+                        change_action={() => switch_message_template()}
                     />
                     {
-                        isusedMessageTemplate
+                        isUsedMessageTemplate
                             ?
                             <Select
                                 key='message_template'

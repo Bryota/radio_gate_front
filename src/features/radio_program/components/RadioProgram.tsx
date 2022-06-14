@@ -59,6 +59,9 @@ export const RadioProgram = () => {
                     name={radioProgram?.name}
                     email={radioProgram?.email}
                 />
+                <div className="row">
+                    <h2>コーナー一覧</h2>
+                </div>
                 <div>
                     {programCorners.map(programCorner => {
                         return (

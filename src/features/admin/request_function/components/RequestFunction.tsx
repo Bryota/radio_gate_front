@@ -15,6 +15,7 @@ type RequestFunctionType = {
     name: string
     detail: string
     point: number
+    is_open: boolean
     created_at: string
     updated_at: string
 }
@@ -47,7 +48,8 @@ export const AdminRequestFunction = () => {
                     title="機能リクエスト"
                 />
                 <div>
-                    <p className='font-30 underline-green'>{requestFunction?.name}</p>
+                    <p className='font-30 underline-green'>{requestFunction?.name}:{requestFunction?.is_open ? '公開中' : '非公開'}</p>
+                    <p className='mt-4 font-25'>現在:{requestFunction?.point}ポイント</p>
                     <div className='mt-4'>
                         <p className='font-25 mb-2'>detail</p>
                         <div className='bg-white p-4'>

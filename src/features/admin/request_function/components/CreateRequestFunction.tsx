@@ -7,19 +7,9 @@ import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements';
 import { AdminInput, AdminTextarea, AdminCheckBox } from '../../../../components/Form';
 
-type RequestFunctionType = {
-    id: number
-    name: string
-    detail: string
-    point: number
-    created_at: string
-    updated_at: string
-}
-
 export const AdminCreateRequestFunction = () => {
     const location = useLocation();
     const [requestFunctionRequestId, setRequestFunctionRequestId] = useState<{ request_function_request_id: number }>(location.state as { request_function_request_id: number })
-    const [requestFunction, setRequestFunction] = useState<RequestFunctionType>();
     const [name, setName] = useState<string>();
     const [detail, setDetail] = useState<string>();
     const [isOpen, setIsOpen] = useState<boolean>(false);
@@ -45,11 +35,30 @@ export const AdminCreateRequestFunction = () => {
                 detail: detail,
                 is_open: isOpen
             });
+            if (requestFunctionRequestId) {
+                close_request_function_request(requestFunctionRequestId.request_function_request_id)
+            }
             navigation('/admin/request_functions')
         } catch (err) {
             console.log(err)
         }
     }
+
+    const close_request_function_request = async (id: number) => {
+        if (window.confirm('参考にした機能リクエスト申請を非公開にしますか')) {
+            try {
+                const RequesetFunctionRequestsResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_function_requests/close/${id}`);
+                if (RequesetFunctionRequestsResponse.status === 200) {
+                    window.location.reload();
+                } else {
+                    alert(RequesetFunctionRequestsResponse.data.message);
+                }
+            } catch (err) {
+                console.log(err);
+            }
+        }
+    }
+    console.log(isOpen)
     return (
         <>
             <AdminMainLayout>
@@ -71,6 +80,7 @@ export const AdminCreateRequestFunction = () => {
                 <AdminCheckBox
                     label='is_open'
                     text='公開する'
+                    checked={isOpen}
                     change_action={() => setIsOpen(!isOpen)}
                 />
                 <AdminButton

@@ -7,19 +7,9 @@ import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements';
 import { AdminInput, AdminTextarea, AdminCheckBox } from '../../../../components/Form';
 
-type RequestFunctionType = {
-    id: number
-    name: string
-    detail: string
-    point: number
-    created_at: string
-    updated_at: string
-}
-
 export const AdminCreateRequestFunction = () => {
     const location = useLocation();
     const [requestFunctionRequestId, setRequestFunctionRequestId] = useState<{ request_function_request_id: number }>(location.state as { request_function_request_id: number })
-    const [requestFunction, setRequestFunction] = useState<RequestFunctionType>();
     const [name, setName] = useState<string>();
     const [detail, setDetail] = useState<string>();
     const [isOpen, setIsOpen] = useState<boolean>(false);

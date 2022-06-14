@@ -37,16 +37,16 @@ export const AdminRequestFunctions = () => {
     }
 
     const delete_request_function = async (id: number) => {
-        // try {
-        //     const RequestFunctionresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_functions/${id}`);
-        //     if (RequestFunctionresponse.status === 200) {
-        //         window.location.reload();
-        //     } else {
-        //         alert(RequestFunctionresponse.data.message);
-        //     }
-        // } catch (err) {
-        //     console.log(err);
-        // }
+        try {
+            const RequestFunctionresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_functions/${id}`);
+            if (RequestFunctionresponse.status === 200) {
+                window.location.reload();
+            } else {
+                alert(RequestFunctionresponse.data.message);
+            }
+        } catch (err) {
+            console.log(err);
+        }
     }
 
     return (

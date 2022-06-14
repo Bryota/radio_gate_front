@@ -36,7 +36,6 @@ export const AdminRequestFunction = () => {
         }
         fetchRequestFunction();
     }, []);
-    console.log(requestFunction);
 
     const click_handler = () => {
         return navigation('/admin/request_functions');

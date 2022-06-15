@@ -18,22 +18,31 @@ type MessageTemplatesType = {
 
 export const MessageTemplates = () => {
     const [messageTemplates, setMessageTemplates] = useState<MessageTemplatesType[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const navigation = useNavigate();
 
     useEffect(() => {
         const fetchMessageTemplates = async () => {
             try {
-                const MessageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates`);
-                setMessageTemplates(MessageTemplatesResponse.data.message_templates);
+                const MessageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates?page=${currentPage}`);
+                setMessageTemplates(MessageTemplatesResponse.data.message_templates.data);
             } catch (err) {
                 console.log(err);
             }
         }
         fetchMessageTemplates();
-    }, []);
+    }, [currentPage]);
 
     const click_handler = () => {
         navigation('/message_template/create')
+    }
+
+    const prevPagination = () => {
+        setCurrentPage((pre_current_page) => pre_current_page - 1);
+    }
+
+    const nextPagination = () => {
+        setCurrentPage((pre_current_page) => pre_current_page + 1);
     }
 
     return (
@@ -62,7 +71,11 @@ export const MessageTemplates = () => {
                         })
                     }
                 </div>
-                <Pagination />
+                <Pagination
+                    currentPage={currentPage}
+                    prev_action={prevPagination}
+                    next_action={nextPagination}
+                />
             </MainLayout>
         </>
     )

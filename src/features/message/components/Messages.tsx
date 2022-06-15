@@ -37,19 +37,28 @@ type MessagesType = {
 
 export const Messages = () => {
     const [messages, setMessages] = useState<MessagesType[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const navigation = useNavigate();
 
     useEffect(() => {
         const fetchMessages = async () => {
             try {
-                const MessagesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages`);
-                setMessages(MessagesResponse.data.listener_messages);
+                const MessagesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages?page=${currentPage}`);
+                setMessages(MessagesResponse.data.listener_messages.data);
             } catch (err) {
                 console.log(err);
             }
         }
         fetchMessages();
     }, []);
+
+    const prevPagination = () => {
+        setCurrentPage((pre_current_page) => pre_current_page - 1);
+    }
+
+    const nextPagination = () => {
+        setCurrentPage((pre_current_page) => pre_current_page + 1);
+    }
 
     return (
         <>
@@ -83,7 +92,11 @@ export const Messages = () => {
                         })
                     }
                 </div>
-                <Pagination />
+                <Pagination
+                    currentPage={currentPage}
+                    prev_action={prevPagination}
+                    next_action={nextPagination}
+                />
             </MainLayout>
         </>
     )

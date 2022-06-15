@@ -26,6 +26,7 @@ export const RadioPrograms = () => {
     const urlParams = useParams<UrlParamsType>();
     const [radioPrograms, setRadioPrograms] = useState<RadioProgramsType[]>([]);
     const [radioStationName, setRadioStationName] = useState<string>();
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     useEffect(() => {
         const fetchRadioPrograms = async () => {
@@ -33,14 +34,22 @@ export const RadioPrograms = () => {
                 const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_station_name/${urlParams.radio_station_id}`);
                 setRadioStationName(RadioStationNameResponse.data.radio_station_name);
 
-                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs?radio_station=${urlParams.radio_station_id}`);
-                setRadioPrograms(RadioProgramsResponse.data.radio_programs);
+                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs?page=${currentPage}&radio_station=${urlParams.radio_station_id}`);
+                setRadioPrograms(RadioProgramsResponse.data.radio_programs.data);
             } catch (err) {
                 console.log(err);
             }
         }
         fetchRadioPrograms();
-    }, []);
+    }, [currentPage]);
+
+    const prevPagination = () => {
+        setCurrentPage((pre_current_page) => pre_current_page - 1);
+    }
+
+    const nextPagination = () => {
+        setCurrentPage((pre_current_page) => pre_current_page + 1);
+    }
 
     return (
         <>
@@ -53,17 +62,23 @@ export const RadioPrograms = () => {
                     name={radioStationName}
                 />
                 <div>
-                    {radioPrograms.map(radioProgram => {
-                        return (
-                            <RadioProgramList
-                                id={radioProgram.id}
-                                name={radioProgram.name}
-                                key={radioProgram.id}
-                            />
-                        )
-                    })}
+                    {
+                        radioPrograms.map(radioProgram => {
+                            return (
+                                <RadioProgramList
+                                    id={radioProgram.id}
+                                    name={radioProgram.name}
+                                    key={radioProgram.id}
+                                />
+                            )
+                        })
+                    }
                 </div>
-                <Pagination />
+                <Pagination
+                    currentPage={currentPage}
+                    prev_action={prevPagination}
+                    next_action={nextPagination}
+                />
             </MainLayout>
         </>
     )

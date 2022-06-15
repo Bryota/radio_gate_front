@@ -20,19 +20,28 @@ type RequestFunctionsType = {
 
 export const RequestFunctions = () => {
     const [requestFunctions, setRequestFunctions] = useState<RequestFunctionsType[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const navigation = useNavigate();
 
     useEffect(() => {
         const fetchRequestFunctions = async () => {
             try {
-                const RequestFunctionResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions`);
+                const RequestFunctionResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions?page=${currentPage}`);
                 setRequestFunctions(RequestFunctionResponse.data.request_functions);
             } catch (err) {
                 console.log(err);
             }
         }
         fetchRequestFunctions();
-    }, []);
+    }, [currentPage]);
+
+    const prevPagination = () => {
+        setCurrentPage((pre_current_page) => pre_current_page - 1);
+    }
+
+    const nextPagination = () => {
+        setCurrentPage((pre_current_page) => pre_current_page + 1);
+    }
 
     return (
         <>
@@ -64,7 +73,11 @@ export const RequestFunctions = () => {
                         })
                     }
                 </div>
-                <Pagination />
+                <Pagination
+                    currentPage={currentPage}
+                    prev_action={prevPagination}
+                    next_action={nextPagination}
+                />
             </MainLayout>
         </>
     )

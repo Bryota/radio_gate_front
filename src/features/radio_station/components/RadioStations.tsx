@@ -17,18 +17,27 @@ type RadioStationsType = {
 
 export const RadioStations = () => {
     const [radioStations, setRadioStations] = useState<RadioStationsType[]>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
 
     useEffect(() => {
         const fetchRadioStations = async () => {
             try {
-                const response = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_stations`);
-                setRadioStations(response.data.radio_stations)
+                const response = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_stations?page=${currentPage}`);
+                setRadioStations(response.data.radio_stations.data)
             } catch (err) {
                 console.log(err);
             }
         }
         fetchRadioStations();
-    }, []);
+    }, [currentPage]);
+
+    const prevPagination = () => {
+        setCurrentPage((pre_current_page) => pre_current_page - 1);
+    }
+
+    const nextPagination = () => {
+        setCurrentPage((pre_current_page) => pre_current_page + 1);
+    }
 
     return (
         <>
@@ -50,7 +59,11 @@ export const RadioStations = () => {
                         })
                     }
                 </div>
-                <Pagination />
+                <Pagination
+                    currentPage={currentPage}
+                    prev_action={prevPagination}
+                    next_action={nextPagination}
+                />
             </MainLayout>
         </>
     )

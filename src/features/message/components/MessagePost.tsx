@@ -1,5 +1,5 @@
 import axios from '../../../settings/Axios';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, useLocation } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
@@ -17,6 +17,8 @@ type SelectItemType = {
 }
 
 export const MessagePost = () => {
+    const search = useLocation().search;
+    const getParams = new URLSearchParams(search);
     const [isMyRadioProgram, setIsMyRadioProgram] = useState<boolean>(false);
     const [isUsedMessageTemplate, setIsUsedMessageTemplate] = useState<boolean>(false);
     const [isSentListenerinfo, setIsSentListenerinfo] = useState<boolean>(false);
@@ -25,93 +27,139 @@ export const MessagePost = () => {
     const [radioPrograms, setRadioPrograms] = useState<SelectItemType[]>();
     const [corners, setCorners] = useState<SelectItemType[]>();
     const [messageTemplates, setMessageTemplates] = useState<SelectItemType[]>([]);
+    const [radioStationId, setRadioStationId] = useState<string>();
     const [radioProgramId, setRadioProgramId] = useState<string>();
     const [programCornerId, setProgramCornerId] = useState<string>();
     const [subject, setSubject] = useState<string>();
     const [content, setContent] = useState<string>();
     const [radioName, setRadioName] = useState<string>();
+    const [firstRender, setFirstRender] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
         if (isMyRadioProgram) {
-            const fetchMyRadioProgram = async () => {
-                try {
-                    const MessageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
-                    setRadioPrograms(MessageTemplatesResponse.data.listener_my_programs);
-                } catch (err) {
-                    console.log(err);
-                }
-            }
-            fetchMyRadioProgram();
+            fetchMyRadioPrograms();
         } else {
-            const fetchRadioStation = async () => {
-                setRadioPrograms([]);
-                try {
-                    const RadioStationsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_stations`);
-                    setRadioStations(RadioStationsResponse.data.radio_stations);
-                } catch (err) {
-                    console.log(err);
-                }
-            }
-            fetchRadioStation();
+            fetchRadioStations();
         }
         setCorners([]);
-        const fetchMessageTemplates = async () => {
-            try {
-                const MessageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates`);
-                setMessageTemplates(MessageTemplatesResponse.data.message_templates);
-            } catch (err) {
-                console.log(err);
-            }
+
+        // 初回レンダリング時のみ実行
+        if (firstRender) {
+            setRadioInfoFromGetParams();
+            fetchMessageTemplates();
+            setFirstRender(false);
         }
-        fetchMessageTemplates();
     }, [isMyRadioProgram]);
 
-    const set_radio_program = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const fetchRadioProgram = async () => {
-            try {
-                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs?radio_station=${e.target.value}`);
-                setRadioPrograms(RadioProgramsResponse.data.radio_programs);
-            } catch (err) {
-                console.log(err);
+    const setRadioInfoFromGetParams = async () => {
+        if (getParams.get('radio_program')) {
+            fetchRadioProgramFromParams();
+            if (getParams.get('program_corner')) {
+                setProgramCornerId(String(getParams.get('program_corner')));
             }
         }
-        fetchRadioProgram();
-    }
 
-    const set_corner = async (e: React.ChangeEvent<HTMLSelectElement>) => {
-        setRadioProgramId(e.target.value);
-        const fetchCorner = async () => {
-            try {
-                if (isMyRadioProgram) {
-                    const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${e.target.value}`);
-                    setCorners(ConrernsResponse.data.my_program_corners);
-                } else {
-                    const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program_corners?radio_program=${e.target.value}`);
-                    setCorners(ConrernsResponse.data.program_corners);
-                }
-            } catch (err) {
-                console.log(err);
+        if (getParams.get('my_radio_program')) {
+            setIsMyRadioProgram(true);
+            fetchMyRadioProgramFromParams();
+            if (getParams.get('my_program_corner')) {
+                setProgramCornerId(String(getParams.get('my_program_corner')));
             }
         }
-        fetchCorner();
     }
 
-    const switch_message_template = () => {
+    // データ取得関連
+    const fetchRadioStations = async () => {
+        setRadioPrograms([]);
+        try {
+            const radioStationsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_stations`);
+            setRadioStations(radioStationsResponse.data.radio_stations.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const fetchMyRadioPrograms = async () => {
+        try {
+            const radioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
+            setRadioPrograms(radioProgramsResponse.data.listener_my_programs.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const fetchMessageTemplates = async () => {
+        try {
+            const messageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates`);
+            setMessageTemplates(messageTemplatesResponse.data.message_templates);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const fetchRadioProgramFromParams = async () => {
+        try {
+            const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs/${getParams.get('radio_program')}`);
+            fetchRadioProgramRelatedWithRadioStation(RadioProgramsResponse.data.radio_program.radio_station_id);
+            fetchCorner(String(getParams.get('radio_program')))
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const fetchMyRadioProgramFromParams = async () => {
+        try {
+            const MessageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
+            setRadioPrograms(MessageTemplatesResponse.data.listener_my_programs.data);
+            setRadioProgramId(String(getParams.get('my_radio_program')));
+            const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${String(getParams.get('my_radio_program'))}`);
+            setCorners(ConrernsResponse.data.my_program_corners.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const fetchRadioProgramRelatedWithRadioStation = async (radio_station_id: string) => {
+        setRadioStationId(radio_station_id);
+        try {
+            const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs?radio_station=${radio_station_id}`);
+            setRadioPrograms(RadioProgramsResponse.data.radio_programs.data);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const fetchCorner = async (radio_program_id: string) => {
+        setRadioProgramId(radio_program_id);
+        try {
+            if (isMyRadioProgram) {
+                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${radio_program_id}`);
+                setCorners(ConrernsResponse.data.my_program_corners.data);
+            } else {
+                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program_corners?radio_program=${radio_program_id}`);
+                setCorners(ConrernsResponse.data.program_corners.data);
+            }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const toggleMessageTemplate = () => {
         setIsUsedMessageTemplate(!isUsedMessageTemplate);
         if (isUsedMessageTemplate) {
             setContent('');
         }
     }
 
-    const set_message_template = (e: React.ChangeEvent<HTMLSelectElement>) => {
+    const showMessageTemplate = (e: React.ChangeEvent<HTMLSelectElement>) => {
         const messageTemplate = messageTemplates.find(messageTemplate => {
             return (messageTemplate.id === Number(e.target.value))
         });
         setContent(messageTemplate?.content);
     }
 
-    const send_handler = async () => {
+    const sendMessage = async () => {
         try {
             let MessagePostResponse;
             if (isMyRadioProgram) {
@@ -145,7 +193,7 @@ export const MessagePost = () => {
         }
     }
 
-    const save_handler = async () => {
+    const saveMessage = async () => {
         try {
             let MessageSaveResponse;
             if (isMyRadioProgram) {
@@ -191,6 +239,7 @@ export const MessagePost = () => {
                         label='is_used_my_radio_program'
                         text='マイラジオ番組を使用する'
                         is_first_item={true}
+                        checked={isMyRadioProgram}
                         change_action={() => setIsMyRadioProgram(!isMyRadioProgram)}
                     />
                     {
@@ -202,19 +251,22 @@ export const MessagePost = () => {
                                 key='radio_station'
                                 items={radioStations}
                                 text='ラジオ局'
-                                change_action={e => set_radio_program(e)}
+                                selected_id={Number(radioStationId)}
+                                change_action={e => fetchRadioProgramRelatedWithRadioStation(e.target.value)}
                             />
                     }
                     <Select
                         key='radio_program'
                         items={radioPrograms}
                         text='番組'
-                        change_action={e => set_corner(e)}
+                        selected_id={Number(radioProgramId)}
+                        change_action={e => fetchCorner(e.target.value)}
                     />
                     <Select
                         key='corner'
                         items={corners}
                         text='コーナー'
+                        selected_id={Number(programCornerId)}
                         change_action={e => setProgramCornerId(e.target.value)}
                     />
                     <span>※コーナーを選択した場合、コーナー名が件名になります</span>
@@ -238,7 +290,7 @@ export const MessagePost = () => {
                     <CheckBox
                         label='is_used_message_template'
                         text='メッセージテンプレートを使用する'
-                        change_action={() => switch_message_template()}
+                        change_action={() => toggleMessageTemplate()}
                     />
                     {
                         isUsedMessageTemplate
@@ -247,7 +299,7 @@ export const MessagePost = () => {
                                 key='message_template'
                                 items={messageTemplates}
                                 text='テンプレート名'
-                                change_action={e => set_message_template(e)}
+                                change_action={e => showMessageTemplate(e)}
                             />
                             :
                             <></>
@@ -272,12 +324,12 @@ export const MessagePost = () => {
                 <Button
                     text='投稿する'
                     type='post'
-                    click_action={send_handler}
+                    click_action={sendMessage}
                 />
                 <Button
                     text='一時保存'
                     type='get'
-                    click_action={save_handler}
+                    click_action={saveMessage}
                 />
             </MainLayout>
         </>

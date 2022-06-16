@@ -14,10 +14,11 @@ type FormSelectType = {
     value?: string,
     text: string,
     items?: itemType[]
+    selected_id?: number
     change_action?: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-export const Select = ({ key, value = '', items, text, change_action = () => { } }: FormSelectType): JSX.Element => {
+export const Select = ({ key, value = '', items, text, selected_id, change_action = () => { } }: FormSelectType): JSX.Element => {
     return (
         <div className='row form-input_item'>
             <div className='col-4'>
@@ -28,9 +29,15 @@ export const Select = ({ key, value = '', items, text, change_action = () => { }
                     <option hidden>選択してください</option>
                     {
                         items?.map(item => {
-                            return (
-                                <option value={item.id}>{item.name}</option>
-                            )
+                            if (item.id === selected_id) {
+                                return (
+                                    <option value={item.id} selected>{item.name}</option>
+                                )
+                            } else {
+                                return (
+                                    <option value={item.id}>{item.name}</option>
+                                )
+                            }
                         })
                     }
                 </select>

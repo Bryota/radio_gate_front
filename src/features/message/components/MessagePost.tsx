@@ -6,6 +6,7 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements';
 import { Input, CheckBox, Textarea, Select } from '../../../components/Form';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/components/pagination.css';
 
 type SelectItemType = {
@@ -37,6 +38,7 @@ export const MessagePost = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
+        authorized();
         if (isMyRadioProgram) {
             fetchMyRadioPrograms();
         } else {
@@ -51,6 +53,13 @@ export const MessagePost = () => {
             setFirstRender(false);
         }
     }, [isMyRadioProgram]);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const setRadioInfoFromGetParams = async () => {
         if (getParams.get('radio_program')) {

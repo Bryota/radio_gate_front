@@ -1,13 +1,26 @@
-import { useState } from 'react';
+import { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../../settings/Axios';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 
 export const AccountDelete = () => {
     const navigation = useNavigate();
+
+    useEffect(() => {
+        authorized();
+    }, []);
+
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const click_handler = async () => {
         try {
@@ -25,6 +38,7 @@ export const AccountDelete = () => {
             console.log(err)
         }
     }
+
     return (
         <>
             <MainLayout>

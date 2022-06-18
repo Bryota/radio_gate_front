@@ -5,8 +5,8 @@ import { useState, useEffect } from 'react';
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
-import { Select } from '../../../components/Form';
 import { SelectedRequestFunction } from './SelectedRequestFunction';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
@@ -27,6 +27,7 @@ export const VoteRequestFunction = () => {
     const urlParams = useParams<UrlParamsType>();
 
     useEffect(() => {
+        authorized();
         const fetchRequestFunction = async () => {
             try {
                 const RequestFunctionResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${urlParams.id}`);
@@ -40,6 +41,13 @@ export const VoteRequestFunction = () => {
         }
         fetchRequestFunction();
     }, []);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const click_handler = async () => {
         await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/submit_point`, {

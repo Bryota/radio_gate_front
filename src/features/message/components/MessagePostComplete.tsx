@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 
 export const MessagePostComplete = () => {
     const location = useLocation();
@@ -12,6 +13,7 @@ export const MessagePostComplete = () => {
     const [radioProgram, setRadioProgram] = useState<{ radio_program_id: string, is_my_radio_program: boolean }>(location.state as { radio_program_id: string, is_my_radio_program: boolean })
     const [radioProgramName, setRadioProgramName] = useState<string>();
     useEffect(() => {
+        authorized();
         const fetchRadioProgramName = async () => {
             try {
                 if (radioProgram.is_my_radio_program) {
@@ -27,6 +29,13 @@ export const MessagePostComplete = () => {
         }
         fetchRadioProgramName();
     }, []);
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
+
     return (
         <>
             <MainLayout>

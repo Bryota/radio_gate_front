@@ -7,6 +7,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 import { Pagination } from '../../../components/Pagination';
 import { MyRadioProgramList } from './MyRadioProgramList';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
@@ -24,6 +25,7 @@ export const MyRadioPrograms = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
+        authorized();
         const fetchMyRadioPrograms = async () => {
             try {
                 const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs?page=${currentPage}`);
@@ -34,6 +36,13 @@ export const MyRadioPrograms = () => {
         }
         fetchMyRadioPrograms();
     }, [currentPage]);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const click_handler = () => {
         navigation('/my_radio_program/create')

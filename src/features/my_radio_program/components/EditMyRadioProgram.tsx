@@ -1,6 +1,5 @@
 import axios from '../../../settings/Axios';
-import { useParams } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
@@ -15,14 +14,6 @@ type UrlParamsType = {
     id: string
 }
 
-type MyRadioProgramType = {
-    id: number
-    name: string
-    email: string
-    created_at: string
-    updated_at: string
-}
-
 type CornerType = {
     id: string
     name: string
@@ -30,7 +21,7 @@ type CornerType = {
 
 export const EditMyRadioProgram = () => {
     const urlParams = useParams<UrlParamsType>();
-    const [myRadioProgram, setMyRadioProgram] = useState<MyRadioProgramType>();
+    const [Id, setId] = useState<string>();
     const [name, setName] = useState<string>();
     const [email, setEmail] = useState<string>();
     const [corners, setCorners] = useState<CornerType[]>([]);
@@ -40,9 +31,13 @@ export const EditMyRadioProgram = () => {
         const fetchRadioProgram = async () => {
             try {
                 const MyRadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`);
-                setMyRadioProgram(MyRadioProgramResponse.data.listener_my_program);
+                let myRadioProgram = MyRadioProgramResponse.data.listener_my_program;
+                setId(myRadioProgram.id);
+                setName(myRadioProgram.name);
+                setEmail(myRadioProgram.email);
+
                 const CornerResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${urlParams.id}`);
-                setCorners(CornerResponse.data.my_program_corners);
+                setCorners(CornerResponse.data.my_program_corners.data);
             } catch (err) {
                 console.log(err);
             }
@@ -76,6 +71,14 @@ export const EditMyRadioProgram = () => {
         }
     }
 
+    const deleteCornerForm = (i: number) => {
+        setCorners(
+            corners.filter((corner, index) => {
+                return i !== index;
+            })
+        )
+    }
+
     const click_handler = async () => {
         try {
             await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`, {
@@ -84,12 +87,19 @@ export const EditMyRadioProgram = () => {
                 email
             });
             corners.map(async (corner) => {
-                await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners/${corner.id}`, {
-                    'listener_my_program_id': myRadioProgram?.id,
-                    'name': corner.name
-                });
-                alert('更新しました')
+                if (corner.id) {
+                    await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners/${corner.id}`, {
+                        'listener_my_program_id': Id,
+                        'name': corner.name
+                    });
+                } else {
+                    await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners`, {
+                        'listener_my_program_id': Id,
+                        'name': corner.name
+                    })
+                }
             })
+            navigation(`/my_radio_program/${urlParams.id}`)
         } catch (err) {
             console.log(err)
         }
@@ -117,14 +127,14 @@ export const EditMyRadioProgram = () => {
                     <Input
                         key='name'
                         text='ラジオ番組名'
-                        value={myRadioProgram?.name}
+                        value={name}
                         is_first_item={true}
                         change_action={e => setName(e.target.value)}
                     />
                     <Input
                         key='email'
                         text='メールアドレス'
-                        value={myRadioProgram?.email}
+                        value={email}
                         type='email'
                         change_action={e => setEmail(e.target.value)}
                     />
@@ -133,12 +143,13 @@ export const EditMyRadioProgram = () => {
                         corners.map((corner, index) => {
                             return (
                                 <EditInputItem
-                                    my_progeam_conrer_id={Number(corner.id)}
+                                    myProgeamConrerId={Number(corner.id)}
                                     key={`corner${index}`}
                                     text='コーナー'
                                     value={corner.name}
-                                    change_action={e => changeCorner(e.target.value, index)}
-                                    click_action={(id) => { deleteCorner(id) }}
+                                    changeAction={e => changeCorner(e.target.value, index)}
+                                    deleteAction={(id) => { deleteCorner(id) }}
+                                    deleteFormAction={() => { deleteCornerForm(index) }}
                                 />
                             )
                         })

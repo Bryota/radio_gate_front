@@ -1,14 +1,17 @@
 import axios from '../../../settings/Axios';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Input } from '../../../components/Form';
 import { Button } from '../../../components/Elements';
+import { CreateCornerInput } from './CreateCornerInput';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
 type CornerType = {
+    id: string
     name: string
 }
 
@@ -16,6 +19,7 @@ export const CreateMyRadioProgram = () => {
     const [name, setName] = useState<string>();
     const [email, setEmail] = useState<string>();
     const [corners, setCorners] = useState<CornerType[]>([]);
+    const navigation = useNavigate();
 
     const click_handler = async () => {
         await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`, {
@@ -30,7 +34,7 @@ export const CreateMyRadioProgram = () => {
                         'listener_my_program_id': my_radio_program_id,
                         'name': corner.name
                     })
-                })
+                });
             } else {
                 console.log(res.data.message);
             }
@@ -38,18 +42,28 @@ export const CreateMyRadioProgram = () => {
     }
 
     const addCorner = () => {
-        setCorners([...corners, { name: '' }]);
+        setCorners([...corners, { id: '', name: '' }]);
     }
 
     const changeCorner = (value: string, i: number): void => {
         setCorners(
             corners.map((corner, index): CornerType => {
                 return {
+                    id: corner.id,
                     name: i === index ? value : corner.name
                 }
             })
         )
     }
+
+    const deleteCornerForm = (i: number) => {
+        setCorners(
+            corners.filter((corner, index) => {
+                return i !== index;
+            })
+        )
+    }
+
 
     return (
         <>
@@ -75,11 +89,13 @@ export const CreateMyRadioProgram = () => {
                     {
                         corners.map((corner, index) => {
                             return (
-                                <Input
+                                <CreateCornerInput
+                                    myProgeamConrerId={Number(corner.id)}
                                     key={`corner${index}`}
                                     text='コーナー'
                                     value={corner.name}
-                                    change_action={e => changeCorner(e.target.value, index)}
+                                    changeAction={e => changeCorner(e.target.value, index)}
+                                    deleteFormAction={() => { deleteCornerForm(index) }}
                                 />
                             )
                         })

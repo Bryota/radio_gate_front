@@ -1,10 +1,12 @@
 import axios from '../../../settings/Axios';
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
 import { RadioStationList } from './RadioStationList';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
@@ -18,8 +20,10 @@ type RadioStationsType = {
 export const RadioStations = () => {
     const [radioStations, setRadioStations] = useState<RadioStationsType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const navigation = useNavigate();
 
     useEffect(() => {
+        authorized();
         const fetchRadioStations = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_stations?page=${currentPage}`);
@@ -30,6 +34,13 @@ export const RadioStations = () => {
         }
         fetchRadioStations();
     }, [currentPage]);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const prevPagination = () => {
         setCurrentPage((pre_current_page) => pre_current_page - 1);

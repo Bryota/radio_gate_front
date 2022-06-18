@@ -8,6 +8,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements';
 import { MessageItem } from './MessageItem';
 import { SelectedMessage } from './SelectedMessage';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
@@ -46,6 +47,7 @@ export const Message = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
+        authorized();
         const fetchMessage = async () => {
             try {
                 const MessageResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/${urlParams.id}`);
@@ -56,6 +58,13 @@ export const Message = () => {
         }
         fetchMessage();
     }, []);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const click_handler = () => {
         return (

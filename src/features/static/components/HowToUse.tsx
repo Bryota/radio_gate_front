@@ -1,9 +1,27 @@
+import { useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+
+
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { HowToUseItem } from './HowToUseItem';
-import '../../../assets/css/components/how_to_use.css'
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import '../../../assets/css/components/how_to_use.css';
 
 export const HowToUse = () => {
+    const navigation = useNavigate();
+
+    useEffect(() => {
+        authorized();
+    }, []);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
+
     return (
         <>
             <MainLayout>

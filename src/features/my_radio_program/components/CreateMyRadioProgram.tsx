@@ -1,5 +1,5 @@
 import axios from '../../../settings/Axios';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
@@ -7,6 +7,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Input } from '../../../components/Form';
 import { Button } from '../../../components/Elements';
 import { CreateCornerInput } from './CreateCornerInput';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
@@ -20,6 +21,17 @@ export const CreateMyRadioProgram = () => {
     const [email, setEmail] = useState<string>();
     const [corners, setCorners] = useState<CornerType[]>([]);
     const navigation = useNavigate();
+
+    useEffect(() => {
+        authorized();
+    }, []);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const click_handler = async () => {
         await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`, {

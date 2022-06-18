@@ -1,5 +1,5 @@
 import axios from '../../../settings/Axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
@@ -7,6 +7,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
 import { RadioStation } from './RadioStation';
 import { RadioProgramList } from './RadioProgramList';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
@@ -27,8 +28,10 @@ export const RadioPrograms = () => {
     const [radioPrograms, setRadioPrograms] = useState<RadioProgramsType[]>([]);
     const [radioStationName, setRadioStationName] = useState<string>();
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const navigation = useNavigate();
 
     useEffect(() => {
+        authorized();
         const fetchRadioPrograms = async () => {
             try {
                 const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_station_name/${urlParams.radio_station_id}`);
@@ -42,6 +45,13 @@ export const RadioPrograms = () => {
         }
         fetchRadioPrograms();
     }, [currentPage]);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const prevPagination = () => {
         setCurrentPage((pre_current_page) => pre_current_page - 1);

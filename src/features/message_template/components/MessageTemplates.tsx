@@ -7,6 +7,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 import { Pagination } from '../../../components/Pagination';
 import { MessageTemplateList } from './MessageTemplateList';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
@@ -22,6 +23,7 @@ export const MessageTemplates = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
+        authorized();
         const fetchMessageTemplates = async () => {
             try {
                 const MessageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates?page=${currentPage}`);
@@ -32,6 +34,13 @@ export const MessageTemplates = () => {
         }
         fetchMessageTemplates();
     }, [currentPage]);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const click_handler = () => {
         navigation('/message_template/create')

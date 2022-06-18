@@ -6,6 +6,7 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 import { SelectedMessageTemplate } from './SelectedMessageTemplate';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
@@ -24,6 +25,7 @@ export const MessageTemplate = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
+        authorized();
         const fetchMessageTemplate = async () => {
             try {
                 const MessageTemplateResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
@@ -35,6 +37,12 @@ export const MessageTemplate = () => {
         fetchMessageTemplate();
     }, []);
 
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const to_edit_page = () => {
         navigation(`edit`)

@@ -7,6 +7,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Input } from '../../../components/Form';
 import { Button } from '../../../components/Elements';
 import { EditInputItem } from './EditInputItem';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
@@ -28,6 +29,7 @@ export const EditMyRadioProgram = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
+        authorized();
         const fetchRadioProgram = async () => {
             try {
                 const MyRadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`);
@@ -44,6 +46,13 @@ export const EditMyRadioProgram = () => {
         }
         fetchRadioProgram();
     }, []);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const addCorner = () => {
         setCorners([...corners, { id: '', name: '' }]);

@@ -1,11 +1,12 @@
 import axios from '../../../settings/Axios';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 import { Input, Textarea } from '../../../components/Form';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
@@ -23,8 +24,10 @@ export const EditMessageTemplate = () => {
     const [messageTemplate, setMessageTemplate] = useState<MessageTemplateType>();
     const [name, setName] = useState<string>();
     const [content, setContent] = useState<string>();
+    const navigation = useNavigate();
 
     useEffect(() => {
+        authorized();
         const fetchRadioProgram = async () => {
             try {
                 const MessageTemplateResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
@@ -35,6 +38,13 @@ export const EditMessageTemplate = () => {
         }
         fetchRadioProgram();
     }, []);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const update_handler = async () => {
         try {

@@ -1,10 +1,10 @@
-import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../../settings/Axios';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 
 export const AccountDelete = () => {
     const navigation = useNavigate();

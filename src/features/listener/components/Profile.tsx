@@ -6,6 +6,7 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements';
 import { ProfileItem } from './ProfileItem';
+import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/components/pagination.css';
 
 type ProfileType = {
@@ -30,6 +31,7 @@ export const Profile = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
+        authorized();
         const fetchProfile = async () => {
             try {
                 const ProfileResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`);
@@ -40,6 +42,13 @@ export const Profile = () => {
         }
         fetchProfile();
     }, []);
+
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
 
     const click_handler = () => {
         return (

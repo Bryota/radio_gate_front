@@ -1,5 +1,3 @@
-import axios from "axios";
-import { useEffect } from "react";
 import { useRoutes } from 'react-router-dom';
 
 import { Top } from '../features/top';
@@ -12,7 +10,6 @@ import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete, Messages, Message } from '../features/message';
 import { RequestFunctions, RequestFunction, CreateRequestFunctionRequest, VoteRequestFunction } from '../features/request_function';
 import { Inquiry, DeveloperContact, HowToUse, NotFound } from '../features/static';
-import { isAuthorized } from '../modules/auth/isAuthorized';
 
 import { AdminForgotPassword, AdminLogin, AdminPasswordReset, AdminPasswordUpdate } from '../features/admin/auth';
 import { AdminRequestFunctions, AdminRequestFunction, AdminCreateRequestFunction, AdminEditRequestFunction } from '../features/admin/request_function';
@@ -22,7 +19,6 @@ import { AdminRadioPrograms, AdminRadioProgram, AdminCreateRadioProgram, AdminEd
 
 export const AppRoutes = () => {
     const commonRoutes = [{ path: '/', element: <Top /> }];
-    let privateRoutes = [];
 
     //ラジオ関連
     const radioStations = [{ path: '/radio_stations', element: <RadioStations /> }];

@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements/Button';
+import { Button, Loading } from '../../../components/Elements';
 import { Pagination } from '../../../components/Pagination';
 import { RequestFunctionList } from './RequestFunctionList';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
@@ -22,6 +22,7 @@ type RequestFunctionsType = {
 export const RequestFunctions = () => {
     const [requestFunctions, setRequestFunctions] = useState<RequestFunctionsType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -30,6 +31,7 @@ export const RequestFunctions = () => {
             try {
                 const RequestFunctionResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions?page=${currentPage}`);
                 setRequestFunctions(RequestFunctionResponse.data.request_functions);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -55,6 +57,7 @@ export const RequestFunctions = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Request Functions"
                     subtitle='機能リクエスト一覧'

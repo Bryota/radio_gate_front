@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
+import { Loading } from '../../../components/Elements';
 import { RadioStationList } from './RadioStationList';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
@@ -20,6 +21,7 @@ type RadioStationsType = {
 export const RadioStations = () => {
     const [radioStations, setRadioStations] = useState<RadioStationsType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -27,7 +29,8 @@ export const RadioStations = () => {
         const fetchRadioStations = async () => {
             try {
                 const response = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_stations?page=${currentPage}`);
-                setRadioStations(response.data.radio_stations.data)
+                setRadioStations(response.data.radio_stations.data);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -53,6 +56,7 @@ export const RadioStations = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Radio Station"
                     subtitle='ラジオ局一覧'

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements';
+import { Button, Loading } from '../../../components/Elements';
 import { MessageItem } from './MessageItem';
 import { SelectedSavedMessage } from './SelectedSavedMessage';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
@@ -45,6 +45,7 @@ type SavedMessageType = {
 export const SavedMessage = () => {
     const urlParams = useParams<UrlParamsType>();
     const [savedMessage, setSavedMessage] = useState<SavedMessageType>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -53,6 +54,7 @@ export const SavedMessage = () => {
             try {
                 const SavedMessageResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/${urlParams.id}`);
                 setSavedMessage(SavedMessageResponse.data.listener_message);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -76,6 +78,7 @@ export const SavedMessage = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="SavedMessage"
                     subtitle='一時保存'

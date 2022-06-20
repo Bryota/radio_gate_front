@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements/Button';
+import { Button, Loading } from '../../../components/Elements';
 import { SelectedMessageTemplate } from './SelectedMessageTemplate';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
@@ -22,6 +22,7 @@ type MessageTemplateType = {
 export const MessageTemplate = () => {
     const urlParams = useParams<UrlParamsType>();
     const [messageTemplate, setMessageTemplate] = useState<MessageTemplateType>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -30,6 +31,7 @@ export const MessageTemplate = () => {
             try {
                 const MessageTemplateResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
                 setMessageTemplate(MessageTemplateResponse.data.message_template);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -62,6 +64,7 @@ export const MessageTemplate = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Message Template"
                     subtitle='メッセージテンプレート'

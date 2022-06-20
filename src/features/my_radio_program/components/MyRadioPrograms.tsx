@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements/Button';
+import { Button, Loading } from '../../../components/Elements';
 import { Pagination } from '../../../components/Pagination';
 import { MyRadioProgramList } from './MyRadioProgramList';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
@@ -22,6 +22,7 @@ type MyRadioProgramsType = {
 export const MyRadioPrograms = () => {
     const [myRadioPrograms, setMyRadioPrograms] = useState<MyRadioProgramsType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -30,6 +31,7 @@ export const MyRadioPrograms = () => {
             try {
                 const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs?page=${currentPage}`);
                 setMyRadioPrograms(RadioStationNameResponse.data.listener_my_programs.data);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -59,6 +61,7 @@ export const MyRadioPrograms = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="My Radio Programs"
                     subtitle='マイラジオ番組一覧'

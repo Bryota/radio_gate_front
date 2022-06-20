@@ -5,10 +5,11 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements';
+import { Button, Loading } from '../../../components/Elements';
 import { MessageItem } from './MessageItem';
 import { SelectedMessage } from './SelectedMessage';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
+
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
@@ -46,6 +47,7 @@ type MessageType = {
 export const Message = () => {
     const urlParams = useParams<UrlParamsType>();
     const [message, setMessage] = useState<MessageType>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -54,6 +56,7 @@ export const Message = () => {
             try {
                 const MessageResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/${urlParams.id}`);
                 setMessage(MessageResponse.data.listener_message);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -77,6 +80,7 @@ export const Message = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Message"
                     subtitle='投稿'

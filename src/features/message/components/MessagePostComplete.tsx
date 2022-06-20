@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements/Button';
+import { Button, Loading } from '../../../components/Elements';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 
 export const MessagePostComplete = () => {
@@ -12,6 +12,8 @@ export const MessagePostComplete = () => {
     const navigation = useNavigate();
     const [radioProgram, setRadioProgram] = useState<{ radio_program_id: string, is_my_radio_program: boolean }>(location.state as { radio_program_id: string, is_my_radio_program: boolean })
     const [radioProgramName, setRadioProgramName] = useState<string>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
+
     useEffect(() => {
         authorized();
         const fetchRadioProgramName = async () => {
@@ -19,9 +21,11 @@ export const MessagePostComplete = () => {
                 if (radioProgram.is_my_radio_program) {
                     const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${radioProgram.radio_program_id}`);
                     setRadioProgramName(RadioProgramResponse.data.listener_my_program.name);
+                    setIsLoading(false);
                 } else {
                     const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs/${radioProgram.radio_program_id}`);
                     setRadioProgramName(RadioProgramResponse.data.radio_program.name);
+                    setIsLoading(false);
                 }
             } catch (err) {
                 console.log(err);
@@ -39,6 +43,7 @@ export const MessagePostComplete = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Message Complete"
                     subtitle='メッセージ投稿完了'

@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
+import { Loading } from '../../../components/Elements';
 import { CornerList } from './CornerList';
 import { SelectedMyRadioProgram } from './SelectedMyRadioProgram';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
@@ -34,6 +35,7 @@ export const MyRadioProgram = () => {
     const [myRadioProgram, setMyRadioProgram] = useState<MyRadioProgramType>();
     const [corners, setCorners] = useState<CornerType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -44,6 +46,7 @@ export const MyRadioProgram = () => {
                 setMyRadioProgram(MyRadioProgramResponse.data.listener_my_program);
                 const CornerResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?page=${currentPage}&listener_my_program=${urlParams.id}`);
                 setCorners(CornerResponse.data.my_program_corners.data);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -69,6 +72,7 @@ export const MyRadioProgram = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="My Radio Program"
                     subtitle='マイラジオ番組'

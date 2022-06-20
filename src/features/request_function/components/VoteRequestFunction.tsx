@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements/Button';
+import { Button, Loading } from '../../../components/Elements';
 import { SelectedRequestFunction } from './SelectedRequestFunction';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
@@ -23,6 +23,7 @@ type RequestFunctionType = {
 export const VoteRequestFunction = () => {
     const [requestFunction, setRequestFunction] = useState<RequestFunctionType>();
     const [point, setPoint] = useState<string>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
     const urlParams = useParams<UrlParamsType>();
 
@@ -35,6 +36,7 @@ export const VoteRequestFunction = () => {
                     return navigation('/not_fount');
                 }
                 setRequestFunction(RequestFunctionResponse.data.request_function);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -66,6 +68,7 @@ export const VoteRequestFunction = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Request Function Vote"
                     subtitle='機能リクエスト投票'

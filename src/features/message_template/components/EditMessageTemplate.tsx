@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements/Button';
+import { Button, Loading } from '../../../components/Elements';
 import { Input, Textarea } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
@@ -24,6 +24,7 @@ export const EditMessageTemplate = () => {
     const [messageTemplate, setMessageTemplate] = useState<MessageTemplateType>();
     const [name, setName] = useState<string>();
     const [content, setContent] = useState<string>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -32,6 +33,7 @@ export const EditMessageTemplate = () => {
             try {
                 const MessageTemplateResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
                 setMessageTemplate(MessageTemplateResponse.data.message_template);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -60,6 +62,7 @@ export const EditMessageTemplate = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Message Template Edit"
                     subtitle='メッセージテンプレート更新'

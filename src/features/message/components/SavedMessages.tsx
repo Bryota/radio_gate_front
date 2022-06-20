@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
+import { Loading } from '../../../components/Elements';
 import { SavedMessageList } from './SavedMessageList';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
@@ -38,6 +39,7 @@ type SavedMessageType = {
 export const SavedMessages = () => {
     const [savedMessages, setSavedMessages] = useState<SavedMessageType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -46,6 +48,7 @@ export const SavedMessages = () => {
             try {
                 const SavedMessagesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved_messages?page=${currentPage}`);
                 setSavedMessages(SavedMessagesResponse.data.listener_messages.data);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }
@@ -72,6 +75,7 @@ export const SavedMessages = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="SavedMessages"
                     subtitle='一時保存一覧'

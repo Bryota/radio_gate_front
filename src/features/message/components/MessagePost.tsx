@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements';
+import { Button, Loading } from '../../../components/Elements';
 import { Input, CheckBox, Textarea, Select } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/components/pagination.css';
@@ -35,6 +35,7 @@ export const MessagePost = () => {
     const [content, setContent] = useState<string>();
     const [radioName, setRadioName] = useState<string>();
     const [firstRender, setFirstRender] = useState<boolean>(true);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -48,9 +49,7 @@ export const MessagePost = () => {
 
         // 初回レンダリング時のみ実行
         if (firstRender) {
-            setRadioInfoFromGetParams();
-            fetchMessageTemplates();
-            setFirstRender(false);
+            firstRenderingAction();
         }
     }, [isMyRadioProgram]);
 
@@ -59,6 +58,13 @@ export const MessagePost = () => {
         if (!authorized) {
             navigation('/login');
         }
+    }
+
+    const firstRenderingAction = async () => {
+        await setRadioInfoFromGetParams();
+        await fetchMessageTemplates();
+        setFirstRender(false);
+        setIsLoading(false);
     }
 
     const setRadioInfoFromGetParams = async () => {
@@ -278,6 +284,7 @@ export const MessagePost = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Message Post"
                     subtitle='メッセージ投稿'

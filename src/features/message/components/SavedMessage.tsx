@@ -24,6 +24,8 @@ type SavedMessageType = {
     subject?: string
     content: string
     radio_name?: string
+    listener_info_flag: boolean
+    tel_flag: boolean
     created_at: string
     updated_at: string
     listener_my_program?: {
@@ -112,11 +114,11 @@ export const SavedMessage = () => {
                     {/* # TODO: API側も変更する */}
                     <MessageItem
                         item_name='本名・住所を記載したかどうか'
-                        value='いいえ'
+                        value={savedMessage?.listener_info_flag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         item_name='電話番号を記載したかどうか'
-                        value='はい'
+                        value={savedMessage?.tel_flag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         item_name='本文'

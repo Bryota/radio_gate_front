@@ -76,6 +76,10 @@ export const MessagePost = () => {
                 setProgramCornerId(String(getParams.get('my_program_corner')));
             }
         }
+
+        if (getParams.get('saved_message')) {
+            fetchSavedMessage();
+        }
     }
 
     // データ取得関連
@@ -119,8 +123,8 @@ export const MessagePost = () => {
 
     const fetchMyRadioProgramFromParams = async () => {
         try {
-            const MessageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
-            setRadioPrograms(MessageTemplatesResponse.data.listener_my_programs.data);
+            const MyRadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
+            setRadioPrograms(MyRadioProgramsResponse.data.listener_my_programs.data);
             setRadioProgramId(String(getParams.get('my_radio_program')));
             const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${String(getParams.get('my_radio_program'))}`);
             setCorners(ConrernsResponse.data.my_program_corners.data);
@@ -149,6 +153,39 @@ export const MessagePost = () => {
                 const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program_corners?radio_program=${radio_program_id}`);
                 setCorners(ConrernsResponse.data.program_corners.data);
             }
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
+    const fetchSavedMessage = async () => {
+        try {
+            const SavedMessageResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/${getParams.get('saved_message')}`);
+            if (SavedMessageResponse.data.listener_message.radio_program_id) {
+                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs/${SavedMessageResponse.data.listener_message.radio_program_id}`);
+                fetchRadioProgramRelatedWithRadioStation(RadioProgramsResponse.data.radio_program.radio_station_id);
+                setRadioProgramId(String(SavedMessageResponse.data.listener_message.radio_program_id));
+                fetchCorner(SavedMessageResponse.data.listener_message.radio_program_id);
+                if (SavedMessageResponse.data.listener_message.program_corner_id) {
+                    setProgramCornerId(String(SavedMessageResponse.data.listener_message.program_corner_id));
+                }
+            }
+            if (SavedMessageResponse.data.listener_message.listener_my_program_id) {
+                setIsMyRadioProgram(true);
+                const MyRadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
+                setRadioPrograms(MyRadioProgramsResponse.data.listener_my_programs.data);
+                setRadioProgramId(SavedMessageResponse.data.listener_message.listener_my_program_id);
+                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${SavedMessageResponse.data.listener_message.listener_my_program_id}`);
+                setCorners(ConrernsResponse.data.my_program_corners.data);
+                if (SavedMessageResponse.data.listener_message.my_program_corner_id) {
+                    setProgramCornerId(String(SavedMessageResponse.data.listener_message.my_program_corner_id));
+                }
+            }
+            if (SavedMessageResponse.data.listener_message.subject) {
+                setSubject(SavedMessageResponse.data.listener_message.subject);
+            }
+            setRadioName(SavedMessageResponse.data.listener_message.radio_name);
+            setContent(SavedMessageResponse.data.listener_message.content);
         } catch (err) {
             console.log(err);
         }
@@ -227,7 +264,7 @@ export const MessagePost = () => {
                 });
             }
             if (MessageSaveResponse.status === 201) {
-                navigation('/messages');
+                navigation('/saved_messages');
             } else {
                 alert(MessageSaveResponse.data.message);
             }

@@ -7,7 +7,7 @@ import { MyRadioPrograms, MyRadioProgram, CreateMyRadioProgram, EditMyRadioProgr
 import { MessageTemplates, MessageTemplate, CreateMessageTemplate, EditMessageTemplate } from '../features/message_template';
 import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
-import { MessagePost, MessagePostComplete, Messages, Message } from '../features/message';
+import { MessagePost, MessagePostComplete, Messages, Message, SavedMessages, SavedMessage } from '../features/message';
 import { RequestFunctions, RequestFunction, CreateRequestFunctionRequest, VoteRequestFunction } from '../features/request_function';
 import { Inquiry, DeveloperContact, HowToUse, NotFound } from '../features/static';
 
@@ -43,6 +43,8 @@ export const AppRoutes = () => {
         { path: '/message_post/complete', element: <MessagePostComplete /> },
         { path: '/messages', element: <Messages /> },
         { path: '/message/:id', element: <Message /> },
+        { path: '/saved_messages', element: <SavedMessages /> },
+        { path: '/saved_message/:id', element: <SavedMessage /> },
     ];
 
     // 認証関連

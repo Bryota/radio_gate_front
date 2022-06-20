@@ -5,6 +5,7 @@ import { useState, useEffect } from 'react';
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
+import { Loading } from '../../../components/Elements';
 import { MessageList } from './MessageList';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
@@ -39,6 +40,7 @@ type MessagesType = {
 export const Messages = () => {
     const [messages, setMessages] = useState<MessagesType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -47,6 +49,7 @@ export const Messages = () => {
             try {
                 const MessagesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages?page=${currentPage}`);
                 setMessages(MessagesResponse.data.listener_messages.data);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }

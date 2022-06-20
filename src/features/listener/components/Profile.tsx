@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements';
+import { Button, Loading } from '../../../components/Elements';
 import { ProfileItem } from './ProfileItem';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/components/pagination.css';
@@ -28,6 +28,7 @@ type ProfileType = {
 
 export const Profile = () => {
     const [profile, setProfile] = useState<ProfileType>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -36,6 +37,7 @@ export const Profile = () => {
             try {
                 const ProfileResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`);
                 setProfile(ProfileResponse.data.listener);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }

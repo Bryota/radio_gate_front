@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements';
+import { Button, Loading } from '../../../components/Elements';
 import { Input } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/components/pagination.css';
@@ -41,6 +41,7 @@ export const ProfileEdit = () => {
     const [building, setBuilding] = useState<string>();
     const [roomNumber, setRoomNumber] = useState<string>();
     const [tel, setTel] = useState<string>();
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -49,6 +50,7 @@ export const ProfileEdit = () => {
             try {
                 const ProfileResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`);
                 setProfile(ProfileResponse.data.listener);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }

@@ -5,7 +5,7 @@ import { useState, useEffect } from 'react';
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Input } from '../../../components/Form';
-import { Button } from '../../../components/Elements';
+import { Button, Loading } from '../../../components/Elements';
 import { EditInputItem } from './EditInputItem';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/elements/radio.css';
@@ -26,6 +26,7 @@ export const EditMyRadioProgram = () => {
     const [name, setName] = useState<string>();
     const [email, setEmail] = useState<string>();
     const [corners, setCorners] = useState<CornerType[]>([]);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -40,6 +41,7 @@ export const EditMyRadioProgram = () => {
 
                 const CornerResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${urlParams.id}`);
                 setCorners(CornerResponse.data.my_program_corners.data);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }

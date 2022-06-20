@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button } from '../../../components/Elements/Button';
+import { Button, Loading } from '../../../components/Elements';
 import { Pagination } from '../../../components/Pagination';
 import { MessageTemplateList } from './MessageTemplateList';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
@@ -20,6 +20,7 @@ type MessageTemplatesType = {
 export const MessageTemplates = () => {
     const [messageTemplates, setMessageTemplates] = useState<MessageTemplatesType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
+    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -28,6 +29,7 @@ export const MessageTemplates = () => {
             try {
                 const MessageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates?page=${currentPage}`);
                 setMessageTemplates(MessageTemplatesResponse.data.message_templates.data);
+                setIsLoading(false);
             } catch (err) {
                 console.log(err);
             }

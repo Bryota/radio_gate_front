@@ -56,6 +56,7 @@ export const RadioStations = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Radio Station"
                     subtitle='ラジオ局一覧'

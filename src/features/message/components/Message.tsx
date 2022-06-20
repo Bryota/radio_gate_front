@@ -80,6 +80,7 @@ export const Message = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Message"
                     subtitle='投稿'

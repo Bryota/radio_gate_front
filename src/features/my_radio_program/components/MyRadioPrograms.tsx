@@ -61,6 +61,7 @@ export const MyRadioPrograms = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="My Radio Programs"
                     subtitle='マイラジオ番組一覧'

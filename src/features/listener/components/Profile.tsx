@@ -61,6 +61,7 @@ export const Profile = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Profile"
                     subtitle='アカウント情報'

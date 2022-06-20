@@ -75,6 +75,7 @@ export const Messages = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Messages"
                     subtitle='投稿一覧'

@@ -59,6 +59,7 @@ export const MessageTemplates = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Message Templates"
                     subtitle='メッセージテンプレート一覧'

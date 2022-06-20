@@ -43,6 +43,7 @@ export const MessagePostComplete = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Message Complete"
                     subtitle='メッセージ投稿完了'

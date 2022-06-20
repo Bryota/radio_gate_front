@@ -90,6 +90,7 @@ export const ProfileEdit = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Profile Edit"
                     subtitle='アカウント情報更新'

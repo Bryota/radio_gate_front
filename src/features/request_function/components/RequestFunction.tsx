@@ -56,6 +56,7 @@ export const RequestFunction = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Request Function"
                     subtitle='機能リクエスト'

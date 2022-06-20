@@ -68,6 +68,7 @@ export const VoteRequestFunction = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Request Function Vote"
                     subtitle='機能リクエスト投票'

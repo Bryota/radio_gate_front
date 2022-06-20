@@ -78,6 +78,7 @@ export const SavedMessage = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="SavedMessage"
                     subtitle='一時保存'

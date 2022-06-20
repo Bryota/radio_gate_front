@@ -75,6 +75,7 @@ export const SavedMessages = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="SavedMessages"
                     subtitle='一時保存一覧'

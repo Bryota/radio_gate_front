@@ -62,6 +62,7 @@ export const EditMessageTemplate = () => {
     return (
         <>
             <MainLayout>
+                {isLoading ? <Loading /> : <></>}
                 <Pagehead
                     title="Message Template Edit"
                     subtitle='メッセージテンプレート更新'

@@ -60,7 +60,7 @@ export const Message = () => {
         }
         fetchMessage();
     }, []);
-    console.log(message)
+
     const authorized = async () => {
         let authorized = await isAuthorized();
         if (!authorized) {

@@ -186,6 +186,8 @@ export const MessagePost = () => {
             }
             setRadioName(SavedMessageResponse.data.listener_message.radio_name);
             setContent(SavedMessageResponse.data.listener_message.content);
+            setIsSentListenerinfo(SavedMessageResponse.data.listener_message.listener_info_flag);
+            setIsSentTel(SavedMessageResponse.data.listener_message.tel_flag);
         } catch (err) {
             console.log(err);
         }
@@ -359,11 +361,13 @@ export const MessagePost = () => {
                     <CheckBox
                         label='is_sent_userifno'
                         text='本名・住所を記載する'
+                        checked={isSentListenerinfo}
                         change_action={() => setIsSentListenerinfo(!isSentListenerinfo)}
                     />
                     <CheckBox
                         label='is_sent_tel'
                         text='電話番号を記載する'
+                        checked={isSentTel}
                         change_action={() => setIsSentTel(!isSentTel)}
                     />
                 </InnerBox>

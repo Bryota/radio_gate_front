@@ -25,6 +25,8 @@ type MessageType = {
     content: string
     radio_name?: string
     posted_at: string
+    listener_info_flag: boolean
+    tel_flag: boolean
     created_at: string
     updated_at: string
     listener_my_program?: {
@@ -58,7 +60,7 @@ export const Message = () => {
         }
         fetchMessage();
     }, []);
-
+    console.log(message)
     const authorized = async () => {
         let authorized = await isAuthorized();
         if (!authorized) {
@@ -110,14 +112,13 @@ export const Message = () => {
                         item_name='ラジオネーム'
                         value={message?.radio_name}
                     />
-                    {/* # TODO: API側も変更する */}
                     <MessageItem
                         item_name='本名・住所を記載したかどうか'
-                        value='いいえ'
+                        value={message?.listener_info_flag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         item_name='電話番号を記載したかどうか'
-                        value='はい'
+                        value={message?.tel_flag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         item_name='本文'

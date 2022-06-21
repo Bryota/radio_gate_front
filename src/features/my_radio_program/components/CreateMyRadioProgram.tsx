@@ -8,6 +8,7 @@ import { Input } from '../../../components/Form';
 import { Button } from '../../../components/Elements';
 import { CreateCornerInput } from './CreateCornerInput';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { validationCheck } from '../../../modules/validation/validationCheck';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
@@ -16,10 +17,16 @@ type CornerType = {
     name: string
 }
 
+type validatedArrayType = {
+    key: string,
+    message: string
+}
+
 export const CreateMyRadioProgram = () => {
-    const [name, setName] = useState<string>();
-    const [email, setEmail] = useState<string>();
+    const [name, setName] = useState<string>('');
+    const [email, setEmail] = useState<string>('');
     const [corners, setCorners] = useState<CornerType[]>([]);
+    const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -33,7 +40,55 @@ export const CreateMyRadioProgram = () => {
         }
     }
 
+    const validation = () => {
+        const validationCorners = corners.map((corner, index) => {
+            return {
+                key: `corner${index}`,
+                value: corner.name,
+                type: 'require'
+            }
+        })
+        const result = validationCheck(
+            [
+                {
+                    key: 'name',
+                    value: name,
+                    type: 'require'
+                },
+                {
+                    key: 'name',
+                    value: name,
+                    type: 'max|150'
+                },
+                {
+                    key: 'email',
+                    value: email,
+                    type: 'require'
+                },
+                {
+                    key: 'email',
+                    value: email,
+                    type: 'email'
+                },
+                {
+                    key: 'email',
+                    value: email,
+                    type: 'max|150'
+                },
+            ].concat(validationCorners)
+        )
+        if (result.length) {
+            setValidationMessages(result);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     const click_handler = async () => {
+        if (validation()) {
+            return true;
+        }
         await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`, {
             name,
             email
@@ -50,6 +105,8 @@ export const CreateMyRadioProgram = () => {
             } else {
                 console.log(res.data.message);
             }
+        }).catch(err => {
+            console.log(err)
         });
     }
 
@@ -76,7 +133,6 @@ export const CreateMyRadioProgram = () => {
         )
     }
 
-
     return (
         <>
             <MainLayout>
@@ -90,12 +146,14 @@ export const CreateMyRadioProgram = () => {
                         text='ラジオ番組名'
                         is_first_item={true}
                         change_action={e => setName(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
                     />
                     <Input
                         key='email'
                         text='メールアドレス'
                         type='email'
                         change_action={e => setEmail(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
                     />
                     <p className="text-left mt-5 h3">番組コーナー</p>
                     {
@@ -106,6 +164,7 @@ export const CreateMyRadioProgram = () => {
                                     key={`corner${index}`}
                                     text='コーナー'
                                     value={corner.name}
+                                    validationMessages={validationMessages.filter(validationMessage => validationMessage.key === `corner${index}`)}
                                     changeAction={e => changeCorner(e.target.value, index)}
                                     deleteFormAction={() => { deleteCornerForm(index) }}
                                 />

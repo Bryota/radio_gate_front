@@ -7,6 +7,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { Input, Textarea } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { validationCheck } from '../../../modules/validation/validationCheck';
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
@@ -19,12 +20,18 @@ type MessageTemplateType = {
     content: string
 }
 
+type validatedArrayType = {
+    key: string,
+    message: string
+}
+
 export const EditMessageTemplate = () => {
     const urlParams = useParams<UrlParamsType>();
     const [messageTemplate, setMessageTemplate] = useState<MessageTemplateType>();
-    const [name, setName] = useState<string>();
-    const [content, setContent] = useState<string>();
+    const [name, setName] = useState<string>('');
+    const [content, setContent] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -32,7 +39,8 @@ export const EditMessageTemplate = () => {
         const fetchRadioProgram = async () => {
             try {
                 const MessageTemplateResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
-                setMessageTemplate(MessageTemplateResponse.data.message_template);
+                setName(MessageTemplateResponse.data.message_template.name);
+                setContent(MessageTemplateResponse.data.message_template.content);
                 setIsLoading(false);
             } catch (err) {
                 console.log(err);
@@ -48,7 +56,33 @@ export const EditMessageTemplate = () => {
         }
     }
 
+    const validation = () => {
+        const result = validationCheck(
+            [
+                {
+                    key: 'name',
+                    value: name,
+                    type: 'require'
+                },
+                {
+                    key: 'content',
+                    value: content,
+                    type: 'require'
+                },
+            ]
+        )
+        if (result.length) {
+            setValidationMessages(result);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     const update_handler = async () => {
+        if (validation()) {
+            return true;
+        }
         try {
             await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`, {
                 name,
@@ -71,15 +105,17 @@ export const EditMessageTemplate = () => {
                     <Input
                         key='name'
                         text='テンプレート名'
-                        value={messageTemplate?.name}
+                        value={name}
                         is_first_item={true}
                         change_action={e => setName(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
                     />
                     <Textarea
-                        key='body'
+                        key='content'
                         text='本文'
-                        value={messageTemplate?.content}
+                        value={content}
                         change_action={e => setContent(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'content')}
                     />
                 </InnerBox>
                 <Button

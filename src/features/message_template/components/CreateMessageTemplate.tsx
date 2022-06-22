@@ -7,18 +7,58 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements/Button';
 import { Input, Textarea } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { validationCheck } from '../../../modules/validation/validationCheck';
 import '../../../assets/css/elements/radio.css';
 
+type validatedArrayType = {
+    key: string,
+    message: string
+}
+
 export const CreateMessageTemplate = () => {
-    const [name, setName] = useState<string>();
-    const [content, setContent] = useState<string>();
+    const [name, setName] = useState<string>('');
+    const [content, setContent] = useState<string>('');
+    const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
 
     useEffect(() => {
         authorized();
     }, []);
 
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
+
+    const validation = () => {
+        const result = validationCheck(
+            [
+                {
+                    key: 'name',
+                    value: name,
+                    type: 'require'
+                },
+                {
+                    key: 'content',
+                    value: content,
+                    type: 'require'
+                },
+            ]
+        )
+        if (result.length) {
+            setValidationMessages(result);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     const create_handler = async () => {
+        if (validation()) {
+            return true;
+        }
         await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates`, {
             name,
             content
@@ -30,13 +70,6 @@ export const CreateMessageTemplate = () => {
                 console.log(res.data.message);
             }
         });
-    }
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
     }
 
     return (
@@ -52,11 +85,13 @@ export const CreateMessageTemplate = () => {
                         text='テンプレート名'
                         is_first_item={true}
                         change_action={e => setName(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
                     />
                     <Textarea
-                        key='body'
+                        key='content'
                         text='本文'
                         change_action={e => setContent(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'content')}
                     />
                 </InnerBox>
                 <Button

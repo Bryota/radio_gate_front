@@ -41,9 +41,19 @@ export const CreateMessageTemplate = () => {
                     type: 'require'
                 },
                 {
+                    key: 'name',
+                    value: name,
+                    type: 'max|150'
+                },
+                {
                     key: 'content',
                     value: content,
                     type: 'require'
+                },
+                {
+                    key: 'content',
+                    value: content,
+                    type: 'max|1000'
                 },
             ]
         )

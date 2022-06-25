@@ -14,6 +14,8 @@ export const validationCheck = (validationTargets: Array<validationTargetArrayTy
     validationTargets.map(validationTarget => {
         if (validationTarget.type === 'require') {
             return addValidationResult(validationTarget.key, requireValidation(validationTarget.value), validatedArray);
+        } else if (validationTarget.type === 'integer') {
+            return addValidationResult(validationTarget.key, integerValidation(validationTarget.value), validatedArray);
         } else if (validationTarget.type === 'email') {
             return addValidationResult(validationTarget.key, emailValidation(validationTarget.value), validatedArray);
         } else if (validationTarget.type.includes('max')) {
@@ -29,6 +31,14 @@ const requireValidation = (value: string) => {
         return null
     } else {
         return '必須項目です。';
+    }
+}
+
+const integerValidation = (value: string) => {
+    if (value == '' || Number.isNaN(value)) {
+        return null
+    } else {
+        return '数値で入力してください。';
     }
 }
 

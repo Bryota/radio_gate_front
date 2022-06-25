@@ -6,25 +6,142 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Input } from '../../../components/Form/Input';
 import { Button } from '../../../components/Elements/Button';
+import { validationCheck } from '../../../modules/validation/validationCheck';
+
+type validatedArrayType = {
+    key: string,
+    message: string
+}
 
 export const Register = () => {
-    const [email, setEmail] = useState<string>();
-    const [password, setPassword] = useState<string>();
-    const [lastName, setLastName] = useState<string>();
-    const [firstName, setFirstName] = useState<string>();
-    const [lastNameKana, setLastNameKana] = useState<string>();
-    const [firstNameKana, setFirstNameKana] = useState<string>();
-    const [radioName, setRadioName] = useState<string>();
-    const [postCode, setPostCode] = useState<string>();
-    const [prefecture, setPrefecture] = useState<string>();
-    const [city, setCity] = useState<string>();
-    const [houseNumber, setHouseNumber] = useState<string>();
-    const [building, setBuilding] = useState<string>();
-    const [roomNumber, setRoomNumber] = useState<string>();
-    const [tel, setTel] = useState<string>();
+    const [email, setEmail] = useState<string>('');
+    const [password, setPassword] = useState<string>('');
+    const [lastName, setLastName] = useState<string>('');
+    const [firstName, setFirstName] = useState<string>('');
+    const [lastNameKana, setLastNameKana] = useState<string>('');
+    const [firstNameKana, setFirstNameKana] = useState<string>('');
+    const [radioName, setRadioName] = useState<string>('');
+    const [postCode, setPostCode] = useState<string>('');
+    const [prefecture, setPrefecture] = useState<string>('');
+    const [city, setCity] = useState<string>('');
+    const [houseNumber, setHouseNumber] = useState<string>('');
+    const [building, setBuilding] = useState<string>('');
+    const [roomNumber, setRoomNumber] = useState<string>('');
+    const [tel, setTel] = useState<string>('');
+    const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
 
+    const validation = () => {
+        const result = validationCheck(
+            [
+                {
+                    key: 'email',
+                    value: email,
+                    type: 'require'
+                },
+                {
+                    key: 'email',
+                    value: email,
+                    type: 'email'
+                },
+                {
+                    key: 'password',
+                    value: password,
+                    type: 'require'
+                },
+                {
+                    key: 'lastName',
+                    value: lastName,
+                    type: 'max|150'
+                },
+                {
+                    key: 'firstName',
+                    value: firstName,
+                    type: 'max|150'
+                },
+                {
+                    key: 'lastNameKana',
+                    value: lastNameKana,
+                    type: 'max|150'
+                },
+                {
+                    key: 'firstNameKana',
+                    value: firstNameKana,
+                    type: 'max|150'
+                },
+                {
+                    key: 'radioName',
+                    value: radioName,
+                    type: 'max|150'
+                },
+                {
+                    key: 'postCode',
+                    value: postCode,
+                    type: 'integer'
+                },
+                {
+                    key: 'prefecture',
+                    value: prefecture,
+                    type: 'max|150'
+                },
+                {
+                    key: 'city',
+                    value: city,
+                    type: 'max|150'
+                },
+                {
+                    key: 'houseNumber',
+                    value: houseNumber,
+                    type: 'max|255'
+                },
+                {
+                    key: 'building',
+                    value: building,
+                    type: 'max|255'
+                },
+                {
+                    key: 'roomNumber',
+                    value: roomNumber,
+                    type: 'max|255'
+                },
+                {
+                    key: 'tel',
+                    value: tel,
+                    type: 'max|100'
+                }
+            ]
+        )
+        validateEmailUnique(email)
+        if (result.length) {
+            setValidationMessages(result);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    const validateEmailUnique = async (email: string) => {
+        try {
+            await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener/is_unique_email`, {
+                email,
+            }).then((res) => {
+                if (res.data.is_unique_email == false) {
+                    setValidationMessages([...validationMessages, {
+                        key: 'email',
+                        message: 'メールアドレスが既に使われています。'
+                    }])
+                }
+                return res.data.is_unique_email
+            })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     const click_handler = async () => {
+        if (validation()) {
+            return;
+        }
         try {
             await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/register`, {
                 email,
@@ -34,7 +151,7 @@ export const Register = () => {
                 last_name_kana: lastNameKana,
                 first_name_kana: firstNameKana,
                 radio_name: radioName,
-                post_code: postCode,
+                post_code: Number(postCode),
                 prefecture: prefecture,
                 city: city,
                 house_number: houseNumber,
@@ -68,6 +185,7 @@ export const Register = () => {
                         text='メールアドレス'
                         is_first_item={true}
                         change_action={e => setEmail(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
                     />
                     <Input
                         key='password'
@@ -75,36 +193,42 @@ export const Register = () => {
                         text='パスワード'
                         type="password"
                         change_action={e => setPassword(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'password')}
                     />
                     <Input
                         key='first_name'
                         value={lastName}
                         text='姓'
                         change_action={e => setLastName(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'lastName')}
                     />
                     <Input
                         key='last_name'
                         value={firstName}
                         text='名'
                         change_action={e => setFirstName(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'firstName')}
                     />
                     <Input
                         key='first_name_kana'
                         value={lastNameKana}
                         text='姓かな'
                         change_action={e => setLastNameKana(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'lastNameKana')}
                     />
                     <Input
                         key='last_name_kana'
                         value={firstNameKana}
                         text='名かな'
                         change_action={e => setFirstNameKana(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'firstNameKana')}
                     />
                     <Input
                         key='radio_name'
                         value={radioName}
                         text='ラジオネーム'
                         change_action={e => setRadioName(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'radioName')}
                     />
                     <Input
                         key='post_code'
@@ -112,42 +236,49 @@ export const Register = () => {
                         text='郵便番号'
                         is_post_code={true}
                         change_action={e => setPostCode(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'postCode')}
                     />
                     <Input
                         key='prefecture'
                         value={prefecture}
                         text='都道府県'
                         change_action={e => setPrefecture(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'prefecture')}
                     />
                     <Input
                         key='city'
                         value={city}
                         text='市区町村'
                         change_action={e => setCity(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'city')}
                     />
                     <Input
                         key='house_number'
                         value={houseNumber}
                         text='番地'
                         change_action={e => setHouseNumber(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'houseNumber')}
                     />
                     <Input
                         key='building'
                         value={building}
                         text='建物'
                         change_action={e => setBuilding(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'building')}
                     />
                     <Input
                         key='room_number'
                         value={roomNumber}
                         text='部屋番号'
                         change_action={e => setRoomNumber(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'roomNumber')}
                     />
                     <Input
                         key='tel'
                         value={tel}
                         text='電話番号'
                         change_action={e => setTel(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'tel')}
                     />
                 </InnerBox>
                 <Button

@@ -7,6 +7,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { SelectedRequestFunction } from './SelectedRequestFunction';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { validationCheck } from '../../../modules/validation/validationCheck';
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
@@ -20,12 +21,18 @@ type RequestFunctionType = {
     point: number
 }
 
+type validatedArrayType = {
+    key: string,
+    message: string
+}
+
 export const VoteRequestFunction = () => {
     const [requestFunction, setRequestFunction] = useState<RequestFunctionType>();
-    const [point, setPoint] = useState<string>();
+    const [point, setPoint] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const navigation = useNavigate();
     const urlParams = useParams<UrlParamsType>();
+    const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
+    const navigation = useNavigate();
 
     useEffect(() => {
         authorized();
@@ -51,7 +58,28 @@ export const VoteRequestFunction = () => {
         }
     }
 
+    const validation = () => {
+        const result = validationCheck(
+            [
+                {
+                    key: 'point',
+                    value: point,
+                    type: 'require'
+                },
+            ]
+        )
+        if (result.length) {
+            setValidationMessages(result);
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     const click_handler = async () => {
+        if (validation()) {
+            return;
+        }
         await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/submit_point`, {
             request_function_id: requestFunction?.id,
             point: point
@@ -90,6 +118,13 @@ export const VoteRequestFunction = () => {
                                 <option value='7'>7</option>
                             </select>
                         </div>
+                        {
+                            validationMessages.map(validationMessage => {
+                                return (
+                                    <p className='mt-2 color-accent'>{validationMessage.message}</p>
+                                )
+                            })
+                        }
                     </div>
                 </InnerBox>
                 <Button

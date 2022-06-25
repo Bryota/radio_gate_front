@@ -87,7 +87,7 @@ export const CreateMyRadioProgram = () => {
 
     const click_handler = async () => {
         if (validation()) {
-            return true;
+            return;
         }
         await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`, {
             name,

@@ -91,7 +91,7 @@ export const EditMessageTemplate = () => {
 
     const update_handler = async () => {
         if (validation()) {
-            return true;
+            return;
         }
         try {
             await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`, {

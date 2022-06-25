@@ -1,3 +1,5 @@
+import defaultAxios from 'axios';
+
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import axios from '../../../settings/Axios';
@@ -138,6 +140,37 @@ export const Register = () => {
         }
     }
 
+    const searchAddressByPostCode = async (postCode: string) => {
+        try {
+            await defaultAxios.get(`${process.env.REACT_APP_ZIPCLOUD_API_URL}?zipcode=${postCode}`)
+                .then((res) => {
+                    if (res.data.results !== null) {
+                        setPrefecture(res.data.results[0].address1);
+                        setCity(res.data.results[0].address2);
+                        setHouseNumber(res.data.results[0].address3);
+                        setValidationMessages(
+                            // TODO: validationMessagesにtype入れてそれで判別した方がいいかも
+                            validationMessages.filter((validationMessage) => (validationMessage.message !== '郵便番号を正しく入力してください。'))
+                        );
+                    } else {
+                        setPrefecture('');
+                        setCity('');
+                        setHouseNumber('');
+                        let existsValidationMessage = validationMessages.some(validationMessage => validationMessage.message === '郵便番号を正しく入力してください。')
+                        if
+                            (!existsValidationMessage) {
+                            setValidationMessages([...validationMessages, {
+                                key: 'postCode',
+                                message: '郵便番号を正しく入力してください。'
+                            }]);
+                        }
+                    }
+                })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     const click_handler = async () => {
         if (validation()) {
             return;
@@ -235,6 +268,7 @@ export const Register = () => {
                         value={postCode}
                         text='郵便番号'
                         is_post_code={true}
+                        searchAddressByPostCode={(postCode => searchAddressByPostCode(postCode))}
                         change_action={e => setPostCode(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'postCode')}
                     />

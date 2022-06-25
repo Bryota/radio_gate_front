@@ -1,3 +1,5 @@
+import defaultAxios from 'axios';
+
 import axios from '../../../settings/Axios';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
@@ -33,7 +35,6 @@ type validatedArrayType = {
 }
 
 export const ProfileEdit = () => {
-    const [profile, setProfile] = useState<ProfileType>();
     const [lastName, setLastName] = useState<string>('');
     const [firstName, setFirstName] = useState<string>('');
     const [lastNameKana, setLastNameKana] = useState<string>('');
@@ -55,7 +56,18 @@ export const ProfileEdit = () => {
         const fetchProfile = async () => {
             try {
                 const ProfileResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`);
-                setProfile(ProfileResponse.data.listener);
+                setLastName(ProfileResponse.data.listener.last_name);
+                setFirstName(ProfileResponse.data.listener.first_name);
+                setLastNameKana(ProfileResponse.data.listener.last_name_kana);
+                setFirstNameKana(ProfileResponse.data.listener.last_name_kana);
+                setRadioName(ProfileResponse.data.listener.radio_name);
+                setPostCode(ProfileResponse.data.listener.post_code);
+                setPrefecture(ProfileResponse.data.listener.prefecture);
+                setCity(ProfileResponse.data.listener.city);
+                setHouseNumber(ProfileResponse.data.listener.house_number);
+                setBuilding(ProfileResponse.data.listener.building);
+                setRoomNumber(ProfileResponse.data.listener.roomNumber);
+                setTel(ProfileResponse.data.listener.tel);
                 setIsLoading(false);
             } catch (err) {
                 console.log(err);
@@ -144,6 +156,37 @@ export const ProfileEdit = () => {
         }
     }
 
+    const searchAddressByPostCode = async (postCode: string) => {
+        try {
+            await defaultAxios.get(`${process.env.REACT_APP_ZIPCLOUD_API_URL}?zipcode=${postCode}`)
+                .then((res) => {
+                    if (res.data.results !== null) {
+                        setPrefecture(res.data.results[0].address1);
+                        setCity(res.data.results[0].address2);
+                        setHouseNumber(res.data.results[0].address3);
+                        setValidationMessages(
+                            // TODO: validationMessagesにtype入れてそれで判別した方がいいかも
+                            validationMessages.filter((validationMessage) => (validationMessage.message !== '郵便番号を正しく入力してください。'))
+                        );
+                    } else {
+                        setPrefecture('');
+                        setCity('');
+                        setHouseNumber('');
+                        let existsValidationMessage = validationMessages.some(validationMessage => validationMessage.message === '郵便番号を正しく入力してください。')
+                        if
+                            (!existsValidationMessage) {
+                            setValidationMessages([...validationMessages, {
+                                key: 'postCode',
+                                message: '郵便番号を正しく入力してください。'
+                            }]);
+                        }
+                    }
+                })
+        } catch (err) {
+            console.log(err)
+        }
+    }
+
     const click_handler = async () => {
         if (validation()) {
             return;
@@ -180,85 +223,86 @@ export const ProfileEdit = () => {
                 <InnerBox>
                     <Input
                         key='lastName'
-                        value={profile?.last_name}
+                        value={lastName}
                         text='姓'
                         change_action={e => setLastName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'lastName')}
                     />
                     <Input
                         key='firstName'
-                        value={profile?.first_name}
+                        value={firstName}
                         text='名'
                         change_action={e => setFirstName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'firstName')}
                     />
                     <Input
                         key='lastNameKana'
-                        value={profile?.last_name_kana}
+                        value={lastNameKana}
                         text='姓かな'
                         change_action={e => setLastNameKana(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'lastNameKana')}
                     />
                     <Input
                         key='firstNameKana'
-                        value={profile?.first_name_kana}
+                        value={firstNameKana}
                         text='名かな'
                         change_action={e => setFirstNameKana(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'firstNameKana')}
                     />
                     <Input
                         key='radioName'
-                        value={profile?.radio_name}
+                        value={radioName}
                         text='ラジオネーム'
                         change_action={e => setRadioName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'radioName')}
                     />
                     <Input
                         key='postCode'
-                        value={profile?.post_code}
+                        value={postCode}
                         text='郵便番号'
                         is_post_code={true}
+                        searchAddressByPostCode={(postCode => searchAddressByPostCode(postCode))}
                         change_action={e => setPostCode(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'postCode')}
                     />
                     <Input
                         key='prefecture'
-                        value={profile?.prefecture}
+                        value={prefecture}
                         text='都道府県'
                         change_action={e => setPrefecture(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'prefecture')}
                     />
                     <Input
                         key='city'
-                        value={profile?.city}
+                        value={city}
                         text='市区町村'
                         change_action={e => setCity(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'city')}
                     />
                     <Input
                         key='houseNumber'
-                        value={profile?.house_number}
+                        value={houseNumber}
                         text='番地'
                         change_action={e => setHouseNumber(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'houseNumber')}
                     />
                     <Input
                         key='building'
-                        value={profile?.building}
+                        value={building}
                         text='建物'
                         change_action={e => setBuilding(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'building')}
                     />
                     <Input
                         key='roomNumber'
-                        value={profile?.room_number}
+                        value={roomNumber}
                         text='部屋番号'
                         change_action={e => setRoomNumber(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'roomNumber')}
                     />
                     <Input
                         key='tel'
-                        value={profile?.tel}
+                        value={tel}
                         text='電話番号'
                         change_action={e => setTel(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'tel')}

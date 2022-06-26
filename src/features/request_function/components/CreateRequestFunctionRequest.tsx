@@ -71,10 +71,9 @@ export const CreateRequestFunctionRequest = () => {
         }).then(res => {
             // TODO: エラー時の処理追加
             if (res.status === 201) {
-                alert('機能リクエストを申請しました');
-                navigation('/request_functions');
+                navigation('/request_functions', { state: { flash_message: '機能リクエストを申請しました' } })
             } else {
-                console.log(res.data.message);
+                navigation('/request_functions', { state: { flash_message: '機能リクエストの申請に失敗しました' } })
             }
         });
     }

@@ -98,7 +98,7 @@ export const EditMessageTemplate = () => {
                 name,
                 content
             });
-            alert('更新しました');
+            navigation(`message_template/${urlParams.id}`, { state: { flash_message: 'メッセージテンプレートを更新しました' } })
         } catch (err) {
             console.log(err)
         }

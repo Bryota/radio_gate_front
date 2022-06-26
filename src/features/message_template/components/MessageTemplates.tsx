@@ -1,10 +1,10 @@
 import axios from '../../../settings/Axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button, Loading } from '../../../components/Elements';
+import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { Pagination } from '../../../components/Pagination';
 import { MessageTemplateList } from './MessageTemplateList';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
@@ -18,9 +18,11 @@ type MessageTemplatesType = {
 }
 
 export const MessageTemplates = () => {
+    const location = useLocation();
     const [messageTemplates, setMessageTemplates] = useState<MessageTemplatesType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -60,6 +62,7 @@ export const MessageTemplates = () => {
         <>
             <MainLayout>
                 {isLoading ? <Loading /> : <></>}
+                {locationParams && locationParams.hasOwnProperty('flash_message') ? <FlashMessage message={locationParams.flash_message} /> : <></>}
                 <Pagehead
                     title="Message Templates"
                     subtitle='メッセージテンプレート一覧'

@@ -54,7 +54,7 @@ export const MessageTemplate = () => {
         try {
             await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
             return (
-                navigation('/message_templates')
+                navigation('/message_templates', { state: { flash_message: 'メッセージテンプレートを削除しました' } })
             )
         } catch (err) {
             console.log(err)

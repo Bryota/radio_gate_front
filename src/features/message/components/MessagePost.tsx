@@ -272,7 +272,7 @@ export const MessagePost = () => {
                 });
             }
             if (MessageSaveResponse.status === 201) {
-                navigation('/saved_messages');
+                navigation('/saved_messages', { state: { flash_message: 'メッセージを一時保存しました' } })
             } else {
                 alert(MessageSaveResponse.data.message);
             }

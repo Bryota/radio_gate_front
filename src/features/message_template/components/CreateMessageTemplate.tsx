@@ -75,9 +75,9 @@ export const CreateMessageTemplate = () => {
         }).then(res => {
             // TODO: エラー時の処理追加
             if (res.status === 201) {
-                alert('作成しました')
+                navigation('/message_templates', { state: { flash_message: '新しいメッセージテンプレートを作成しました' } })
             } else {
-                console.log(res.data.message);
+                navigation('/message_templates', { state: { flash_message: 'メッセージテンプレートの作成に失敗しました' } })
             }
         });
     }

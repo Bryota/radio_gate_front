@@ -206,7 +206,9 @@ export const ProfileEdit = () => {
                 room_number: roomNumber,
                 tel: tel
             });
-            alert('更新しました');
+            return (
+                navigation('/profile', { state: { flash_message: 'アカウント情報を更新しました' } })
+            )
         } catch (err) {
             console.log(err)
         }

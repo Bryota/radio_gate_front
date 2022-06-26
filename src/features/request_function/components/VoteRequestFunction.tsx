@@ -86,9 +86,9 @@ export const VoteRequestFunction = () => {
         }).then(res => {
             // TODO: エラー時の処理追加
             if (res.status === 201) {
-                navigation('/request_functions');
+                navigation('/request_functions', { state: { flash_message: '機能リクエストに投票しました' } })
             } else {
-                console.log(res.data.message);
+                navigation('/request_functions', { state: { flash_message: '機能リクエストの投票に失敗しました' } })
             }
         });
     }

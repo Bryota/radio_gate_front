@@ -1,10 +1,10 @@
 import axios from '../../../settings/Axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button, Loading } from '../../../components/Elements';
+import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { ProfileItem } from './ProfileItem';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import '../../../assets/css/components/pagination.css';
@@ -27,8 +27,10 @@ type ProfileType = {
 }
 
 export const Profile = () => {
+    const location = useLocation();
     const [profile, setProfile] = useState<ProfileType>();
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -62,6 +64,7 @@ export const Profile = () => {
         <>
             <MainLayout>
                 {isLoading ? <Loading /> : <></>}
+                {locationParams && locationParams.hasOwnProperty('flash_message') ? <FlashMessage message={locationParams.flash_message} /> : <></>}
                 <Pagehead
                     title="Profile"
                     subtitle='アカウント情報'

@@ -127,7 +127,7 @@ export const EditMyRadioProgram = () => {
         try {
             await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners/${id}`);
             return (
-                navigation('/my_radio_programs')
+                navigation('/my_radio_programs', { state: { flash_message: 'マイラジオ番組を削除しました' } })
             )
         } catch (err) {
             console.log(err)
@@ -165,7 +165,7 @@ export const EditMyRadioProgram = () => {
                     })
                 }
             })
-            navigation(`/my_radio_program/${urlParams.id}`)
+            navigation(`/my_radio_program/${urlParams.id}`, { state: { flash_message: 'マイラジオ番組を更新しました' } })
         } catch (err) {
             console.log(err)
         }

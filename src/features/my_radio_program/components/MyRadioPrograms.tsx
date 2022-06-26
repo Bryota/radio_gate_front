@@ -1,10 +1,10 @@
 import axios from '../../../settings/Axios';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
-import { Button, Loading } from '../../../components/Elements';
+import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { Pagination } from '../../../components/Pagination';
 import { MyRadioProgramList } from './MyRadioProgramList';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
@@ -20,9 +20,11 @@ type MyRadioProgramsType = {
 }
 
 export const MyRadioPrograms = () => {
+    const location = useLocation();
     const [myRadioPrograms, setMyRadioPrograms] = useState<MyRadioProgramsType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -57,11 +59,11 @@ export const MyRadioPrograms = () => {
     const nextPagination = () => {
         setCurrentPage((pre_current_page) => pre_current_page + 1);
     }
-
     return (
         <>
             <MainLayout>
                 {isLoading ? <Loading /> : <></>}
+                {locationParams && locationParams.hasOwnProperty('flash_message') ? <FlashMessage message={locationParams.flash_message} /> : <></>}
                 <Pagehead
                     title="My Radio Programs"
                     subtitle='マイラジオ番組一覧'

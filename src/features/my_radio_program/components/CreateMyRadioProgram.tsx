@@ -102,8 +102,9 @@ export const CreateMyRadioProgram = () => {
                         'name': corner.name
                     })
                 });
+                navigation('/my_radio_programs', { state: { flash_message: '新しいマイラジオ番組を作成しました' } })
             } else {
-                console.log(res.data.message);
+                navigation('/my_radio_programs', { state: { flash_message: 'マイラジオ番組の作成に失敗しました' } })
             }
         }).catch(err => {
             console.log(err)

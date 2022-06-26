@@ -1,0 +1,19 @@
+.flash_message {
+    background-color: rgba(168, 206, 48, 0.7);
+    bottom: 0;
+    right: 0;
+    position: fixed;
+    width: 100%;
+    animation: fadeout 2s ease 2s 1 forwards;
+}
+
+@keyframes fadeout {
+    0% {
+        background-color: rgba(168, 206, 48, 0.7);
+    }
+
+    100% {
+        background-color: rgba(168, 206, 48, 0.0);
+        opacity: 0;
+    }
+}

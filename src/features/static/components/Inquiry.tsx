@@ -25,6 +25,13 @@ export const Inquiry = () => {
         authorized();
     }, []);
 
+    const authorized = async () => {
+        let authorized = await isAuthorized();
+        if (!authorized) {
+            navigation('/login');
+        }
+    }
+
     const validation = () => {
         const result = validationCheck(
             [
@@ -63,7 +70,7 @@ export const Inquiry = () => {
         }
     }
 
-    const click_handler = async () => {
+    const sendInquery = async () => {
         if (validation()) {
             return;
         }
@@ -72,7 +79,6 @@ export const Inquiry = () => {
             type,
             content
         }).then(res => {
-            // TODO: エラー時の処理追加
             if (res.status === 200) {
                 console.log(res)
                 navigation('/message_post', { state: { flash_message: 'お問い合わせを送信しました' } })
@@ -80,12 +86,6 @@ export const Inquiry = () => {
                 navigation('/message_post', { state: { flash_message: 'お問い合わせの送信に失敗しました' } })
             }
         });
-    }
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
     }
 
     return (
@@ -100,21 +100,21 @@ export const Inquiry = () => {
                         key='email'
                         text='メールアドレス'
                         value={email}
-                        change_action={e => setEmail(e.target.value)}
+                        changeAction={e => setEmail(e.target.value)}
                         is_first_item={true}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
                     />
                     <Input
                         key='type'
                         text='問い合わせ種別'
-                        change_action={e => setType(e.target.value)}
+                        changeAction={e => setType(e.target.value)}
                         value={type}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'type')}
                     />
                     <Textarea
                         key='content'
                         text='詳細'
-                        change_action={e => setContent(e.target.value)}
+                        changeAction={e => setContent(e.target.value)}
                         value={content}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'content')}
                     />
@@ -122,7 +122,7 @@ export const Inquiry = () => {
                 <Button
                     text='送信する'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={sendInquery}
                 />
             </MainLayout>
         </>

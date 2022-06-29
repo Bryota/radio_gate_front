@@ -1,79 +1,55 @@
-import axios from '../../../settings/Axios';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { MessageItem } from './MessageItem';
 import { SelectedSavedMessage } from './SelectedSavedMessage';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
     id: string
 }
 
-type SavedMessageType = {
+type MessageType = {
     id: number
-    radio_program_id: string
-    program_corner_id: string
-    listener_my_program_id: string
-    my_program_corner_id: string
+    radioProgramId: string
+    programCornerId: string
+    listenerMyProgramId: string
+    myProgramCornerId: string
     subject?: string
     content: string
-    radio_name?: string
-    listener_info_flag: boolean
-    tel_flag: boolean
-    created_at: string
-    updated_at: string
-    listener_my_program?: {
+    radioName?: string
+    posted_at: string
+    listenerInfoFlag: boolean
+    telFlag: boolean
+    createdAt: string
+    updatedAt: string
+    listenerMyProgram?: {
         name?: string
     }
-    my_program_corner?: {
+    myProgramCorner?: {
         name?: string
     }
-    radio_program?: {
+    radioProgram?: {
         name?: string
     }
-    program_corner?: {
+    programCorner?: {
         name?: string
     }
 }
 
+type MessageResponseType = {
+    listener_message: MessageType
+    isLoading: boolean
+}
+
 export const SavedMessage = () => {
     const urlParams = useParams<UrlParamsType>();
-    const [savedMessage, setSavedMessage] = useState<SavedMessageType>();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
-
-    useEffect(() => {
-        authorized();
-        const fetchMessage = async () => {
-            try {
-                const SavedMessageResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/${urlParams.id}`);
-                setSavedMessage(SavedMessageResponse.data.listener_message);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchMessage();
-    }, []);
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
-
-    const click_handler = () => {
-        return (
-            navigation('/saved_messages')
-        )
-    }
+    const { apiData: savedMessage, isLoading } = useFetchApiData<MessageResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/${urlParams.id}`);
 
     return (
         <>
@@ -84,54 +60,54 @@ export const SavedMessage = () => {
                     subtitle='一時保存'
                 />
                 {
-                    savedMessage?.radio_program
+                    savedMessage?.listener_message.radioProgram
                         ?
                         <SelectedSavedMessage
-                            id={savedMessage?.id}
-                            name={savedMessage?.radio_program?.name}
+                            id={savedMessage?.listener_message.id}
+                            name={savedMessage?.listener_message.radioProgram?.name}
                         />
                         :
                         <SelectedSavedMessage
-                            id={savedMessage?.id}
-                            name={savedMessage?.listener_my_program?.name}
+                            id={savedMessage?.listener_message.id}
+                            name={savedMessage?.listener_message.listenerMyProgram?.name}
                         />
                 }
                 <div>
                     {
-                        savedMessage?.radio_program
+                        savedMessage?.listener_message.radioProgram
                             ?
                             <MessageItem
-                                item_name='コーナー/件名'
-                                value={savedMessage?.program_corner ? savedMessage?.program_corner?.name : savedMessage?.subject}
+                                itemName='コーナー/件名'
+                                value={savedMessage?.listener_message.programCorner ? savedMessage?.listener_message.programCorner?.name : savedMessage?.listener_message.subject}
                             />
                             :
                             <MessageItem
-                                item_name='コーナー/件名'
-                                value={savedMessage?.my_program_corner ? savedMessage?.my_program_corner?.name : savedMessage?.subject}
+                                itemName='コーナー/件名'
+                                value={savedMessage?.listener_message.myProgramCorner ? savedMessage?.listener_message.myProgramCorner?.name : savedMessage?.listener_message.subject}
                             />
                     }
                     <MessageItem
-                        item_name='ラジオネーム'
-                        value={savedMessage?.radio_name}
+                        itemName='ラジオネーム'
+                        value={savedMessage?.listener_message.radioName}
                     />
                     {/* # TODO: API側も変更する */}
                     <MessageItem
-                        item_name='本名・住所を記載したかどうか'
-                        value={savedMessage?.listener_info_flag ? 'はい' : 'いいえ'}
+                        itemName='本名・住所を記載したかどうか'
+                        value={savedMessage?.listener_message.listenerInfoFlag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
-                        item_name='電話番号を記載したかどうか'
-                        value={savedMessage?.tel_flag ? 'はい' : 'いいえ'}
+                        itemName='電話番号を記載したかどうか'
+                        value={savedMessage?.listener_message.telFlag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
-                        item_name='本文'
-                        value={savedMessage?.content}
+                        itemName='本文'
+                        value={savedMessage?.listener_message.content}
                     />
                 </div>
                 <Button
                     text='一時保存一覧'
                     type='get'
-                    click_action={click_handler}
+                    clickAction={() => navigation('/saved_messages')}
                 />
             </MainLayout>
         </>

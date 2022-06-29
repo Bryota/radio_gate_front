@@ -7,6 +7,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { SelectedMessageTemplate } from './SelectedMessageTemplate';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
@@ -19,38 +20,17 @@ type MessageTemplateType = {
     content: string
 }
 
+type MessageTemplateResponseType = {
+    message_template: MessageTemplateType
+    isLoading: boolean
+}
+
 export const MessageTemplate = () => {
     const urlParams = useParams<UrlParamsType>();
-    const [messageTemplate, setMessageTemplate] = useState<MessageTemplateType>();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
+    const { apiData: messageTemplate, isLoading } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
 
-    useEffect(() => {
-        authorized();
-        const fetchMessageTemplate = async () => {
-            try {
-                const MessageTemplateResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
-                setMessageTemplate(MessageTemplateResponse.data.message_template);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchMessageTemplate();
-    }, []);
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
-
-    const to_edit_page = () => {
-        navigation(`edit`)
-    }
-
-    const delete_handler = async () => {
+    const deleteMessageTemplate = async () => {
         try {
             await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
             return (
@@ -70,21 +50,21 @@ export const MessageTemplate = () => {
                     subtitle='メッセージテンプレート'
                 />
                 <SelectedMessageTemplate
-                    name={messageTemplate?.name}
+                    name={messageTemplate?.message_template.name}
                 />
                 <div>
                     <p className='h3 mb-4'>本文</p>
-                    <InnerBox>{messageTemplate?.content}</InnerBox>
+                    <InnerBox>{messageTemplate?.message_template.content}</InnerBox>
                 </div>
                 <Button
                     text='編集する'
                     type='post'
-                    click_action={to_edit_page}
+                    clickAction={() => navigation(`edit`)}
                 />
                 <Button
                     text='削除する'
                     type='delete'
-                    click_action={delete_handler}
+                    clickAction={deleteMessageTemplate}
                 />
             </MainLayout>
         </>

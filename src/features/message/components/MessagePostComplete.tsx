@@ -55,7 +55,7 @@ export const MessagePostComplete = () => {
                 <Button
                     text='投稿一覧'
                     type='get'
-                    click_action={() => {
+                    clickAction={() => {
                         return navigation('/messages')
                     }}
                 />

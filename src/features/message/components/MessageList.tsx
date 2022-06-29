@@ -2,22 +2,22 @@ import Moment from 'react-moment';
 
 type MessageListType = {
     id: number
-    radio_program?: string
+    radioProgram?: string
     corner?: string
-    post_date: string
+    postDate: string
 }
 
-export const MessageList = ({ id, radio_program, corner, post_date }: MessageListType): JSX.Element => {
+export const MessageList = ({ id, radioProgram, corner, postDate }: MessageListType): JSX.Element => {
     return (
         <>
             <div className='row align-items-center mt-4 p-2rem list-item'>
                 <div className="col-6 row font-20">
-                    <p>{radio_program}</p>
+                    <p>{radioProgram}</p>
                     <p>{corner}</p>
                 </div>
                 <p className="col-4 font-20">
                     <Moment format='YYYY年MM月DD日 hh時mm分'>
-                        {post_date}
+                        {postDate}
                     </Moment>
                 </p>
                 <a href={`/message/${id}`} className='col-2 text-center p-2 list-btn bg-main'>

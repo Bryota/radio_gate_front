@@ -36,7 +36,7 @@ export const PasswordReset = () => {
                 <Button
                     text='パスワード再設定'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={click_handler}
                 />
             </MainLayout>
         </>

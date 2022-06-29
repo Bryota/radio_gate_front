@@ -1,13 +1,12 @@
-import axios from '../../../settings/Axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { Pagination } from '../../../components/Pagination';
 import { MyRadioProgramList } from './MyRadioProgramList';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
@@ -19,45 +18,26 @@ type MyRadioProgramsType = {
     updated_at: string
 }
 
+type MyRadioProgramsResponseType = {
+    listener_my_programs: {
+        data: MyRadioProgramsType[]
+    }
+    isLoading: boolean
+}
+
 export const MyRadioPrograms = () => {
     const location = useLocation();
-    const [myRadioPrograms, setMyRadioPrograms] = useState<MyRadioProgramsType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const navigation = useNavigate();
-
-    useEffect(() => {
-        authorized();
-        const fetchMyRadioPrograms = async () => {
-            try {
-                const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs?page=${currentPage}`);
-                setMyRadioPrograms(RadioStationNameResponse.data.listener_my_programs.data);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchMyRadioPrograms();
-    }, [currentPage]);
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
-
-    const click_handler = () => {
-        navigation('/my_radio_program/create')
-    }
+    const { apiData: myRadioPrograms, isLoading } = useFetchApiData<MyRadioProgramsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs?page=${currentPage}`, currentPage);
 
     const prevPagination = () => {
-        setCurrentPage((pre_current_page) => pre_current_page - 1);
+        setCurrentPage((preCurrentPage) => preCurrentPage - 1);
     }
 
     const nextPagination = () => {
-        setCurrentPage((pre_current_page) => pre_current_page + 1);
+        setCurrentPage((preCurrentPage) => preCurrentPage + 1);
     }
     return (
         <>
@@ -72,10 +52,10 @@ export const MyRadioPrograms = () => {
                     text='マイラジオ番組を追加'
                     type='post'
                     line_left={true}
-                    click_action={click_handler}
+                    clickAction={() => navigation('/my_radio_program/create')}
                 />
                 <div>
-                    {myRadioPrograms.map(myRadioProgram => {
+                    {myRadioPrograms?.listener_my_programs.data.map(myRadioProgram => {
                         return (
                             <MyRadioProgramList
                                 key={myRadioProgram.id}
@@ -87,8 +67,8 @@ export const MyRadioPrograms = () => {
                 </div>
                 <Pagination
                     currentPage={currentPage}
-                    prev_action={prevPagination}
-                    next_action={nextPagination}
+                    prevAction={prevPagination}
+                    nextAction={nextPagination}
                 />
             </MainLayout>
         </>

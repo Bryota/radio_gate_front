@@ -10,12 +10,6 @@ export const ForgotPasswordComplete = () => {
     const [email, setEmail] = useState<{ email: string }>(location.state as { email: string })
     const navigation = useNavigate();
 
-    const click_handler = () => {
-        return (
-            navigation('/login')
-        );
-    }
-
     return (
         <>
             <MainLayout>
@@ -31,7 +25,7 @@ export const ForgotPasswordComplete = () => {
                 <Button
                     text='ログイン画面へ'
                     type='get'
-                    click_action={click_handler}
+                    clickAction={() => navigation('/login')}
                 />
             </MainLayout>
         </>

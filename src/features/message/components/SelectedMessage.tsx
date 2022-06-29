@@ -3,10 +3,10 @@ import '../../../assets/css/elements/radio.css';
 
 type SelectedMessageType = {
     name?: string
-    post_date?: string
+    postDate?: string
 }
 
-export const SelectedMessage = ({ name, post_date }: SelectedMessageType): JSX.Element => {
+export const SelectedMessage = ({ name, postDate }: SelectedMessageType): JSX.Element => {
     return (
         <>
             <div className='mb-5'>
@@ -15,7 +15,7 @@ export const SelectedMessage = ({ name, post_date }: SelectedMessageType): JSX.E
                 </div>
                 <p className='mt-2 ps-3 font-20'>
                     <Moment format='YYYY年MM月DD日 hh時mm分'>
-                        {post_date}
+                        {postDate}
                     </Moment>
                     <span className='mx-4'>投稿済み</span>
                 </p>

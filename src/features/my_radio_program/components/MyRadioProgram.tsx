@@ -1,6 +1,5 @@
-import axios from '../../../settings/Axios';
-import { useParams, useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useParams, useLocation } from 'react-router-dom';
+import { useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
@@ -8,7 +7,7 @@ import { Pagination } from '../../../components/Pagination';
 import { Loading, FlashMessage } from '../../../components/Elements';
 import { CornerList } from './CornerList';
 import { SelectedMyRadioProgram } from './SelectedMyRadioProgram';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
@@ -26,49 +25,36 @@ type MyRadioProgramType = {
 
 type CornerType = {
     id: number
-    listener_my_program_id: number
+    listenerMyProgramId: number
     name: string
+}
+
+type MyRadioProgramResponseType = {
+    listener_my_program: MyRadioProgramType
+    isLoading: boolean
+}
+
+type MyProgramCornersResponseType = {
+    my_program_corners: {
+        data: CornerType[]
+    }
+    isLoading: boolean
 }
 
 export const MyRadioProgram = () => {
     const location = useLocation();
     const urlParams = useParams<UrlParamsType>();
-    const [myRadioProgram, setMyRadioProgram] = useState<MyRadioProgramType>();
-    const [corners, setCorners] = useState<CornerType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
-    const navigation = useNavigate();
-
-    useEffect(() => {
-        authorized();
-        const fetchRadioProgram = async () => {
-            try {
-                const MyRadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`);
-                setMyRadioProgram(MyRadioProgramResponse.data.listener_my_program);
-                const CornerResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?page=${currentPage}&listener_my_program=${urlParams.id}`);
-                setCorners(CornerResponse.data.my_program_corners.data);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchRadioProgram();
-    }, [currentPage]);
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
+    const { apiData: myRadioProgram } = useFetchApiData<MyRadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`);
+    const { apiData: corners, isLoading } = useFetchApiData<MyProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?page=${currentPage}&listener_my_program=${urlParams.id}`);
 
     const prevPagination = () => {
-        setCurrentPage((pre_current_page) => pre_current_page - 1);
+        setCurrentPage((preCurrentPage) => preCurrentPage - 1);
     }
 
     const nextPagination = () => {
-        setCurrentPage((pre_current_page) => pre_current_page + 1);
+        setCurrentPage((preCurrentPage) => preCurrentPage + 1);
     }
 
     return (
@@ -81,20 +67,20 @@ export const MyRadioProgram = () => {
                     subtitle='マイラジオ番組'
                 />
                 <SelectedMyRadioProgram
-                    id={myRadioProgram?.id}
-                    name={myRadioProgram?.name}
-                    email={myRadioProgram?.email}
+                    id={myRadioProgram?.listener_my_program.id}
+                    name={myRadioProgram?.listener_my_program.name}
+                    email={myRadioProgram?.listener_my_program.email}
                 />
                 <div className="row">
                     <h2>コーナー一覧</h2>
                 </div>
                 <div>
-                    {corners.map(corner => {
+                    {corners?.my_program_corners.data.map(corner => {
                         return (
                             <CornerList
                                 key={corner.id}
                                 id={corner.id}
-                                my_radio_program_id={corner.listener_my_program_id}
+                                myRadioProgramId={corner.listenerMyProgramId}
                                 name={corner.name}
                             />
                         )
@@ -102,8 +88,8 @@ export const MyRadioProgram = () => {
                 </div>
                 <Pagination
                     currentPage={currentPage}
-                    prev_action={prevPagination}
-                    next_action={nextPagination}
+                    prevAction={prevPagination}
+                    nextAction={nextPagination}
                 />
             </MainLayout>
         </>

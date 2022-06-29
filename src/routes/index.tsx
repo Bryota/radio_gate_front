@@ -23,7 +23,7 @@ export const AppRoutes = () => {
     //ラジオ関連
     const radioStations = [{ path: '/radio_stations', element: <RadioStations /> }];
     const radioPrograms = [
-        { path: '/radio_programs/:radio_station_id', element: <RadioPrograms /> },
+        { path: '/radio_programs/:radioStationId', element: <RadioPrograms /> },
         { path: '/radio_program/:id', element: <RadioProgram /> },
     ];
     const myRadioPrograms = [
@@ -110,12 +110,12 @@ export const AppRoutes = () => {
         { path: 'admin/radio_station/:id/edit', element: <AdminEditRadioStation /> },
     ]
     const adminRadioProgram = [
-        { path: 'admin/radio_programs/:radio_station_id', element: <AdminRadioPrograms /> },
+        { path: 'admin/radio_programs/:radioStationId', element: <AdminRadioPrograms /> },
         { path: 'admin/radio_program/:id', element: <AdminRadioProgram /> },
         { path: 'admin/radio_program/create', element: <AdminCreateRadioProgram /> },
         { path: 'admin/radio_program/:id/edit', element: <AdminEditRadioProgram /> },
-        { path: 'admin/radio_program/:radio_program_id/corner/create', element: <AdminCreateCorner /> },
-        { path: 'admin/radio_program/:radio_program_id/corner/:id/edit', element: <AdminEditCorner /> },
+        { path: 'admin/radio_program/:radioProgramId/corner/create', element: <AdminCreateCorner /> },
+        { path: 'admin/radio_program/:radioProgramId/corner/:id/edit', element: <AdminEditCorner /> },
     ]
 
     const element = useRoutes([

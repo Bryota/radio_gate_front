@@ -47,7 +47,7 @@ export const Login = () => {
         }
     }
 
-    const click_handler = async () => {
+    const Login = async () => {
         if (validation()) {
             return;
         }
@@ -82,21 +82,21 @@ export const Login = () => {
                         text='メールアドレス'
                         type="email"
                         is_first_item={true}
-                        change_action={e => setEmail(e.target.value)}
+                        changeAction={e => setEmail(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
                     />
                     <Input
                         key='password'
                         text='パスワード'
                         type="password"
-                        change_action={e => setPassword(e.target.value)}
+                        changeAction={e => setPassword(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'password')}
                     />
                 </InnerBox>
                 <Button
                     text='ログインする'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={Login}
                 />
                 <div className='text-center mb-3'>
                     <a href="/register">新規登録の方はこちら</a>

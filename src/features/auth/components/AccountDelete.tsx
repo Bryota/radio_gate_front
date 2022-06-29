@@ -14,7 +14,6 @@ export const AccountDelete = () => {
         authorized();
     }, []);
 
-
     const authorized = async () => {
         let authorized = await isAuthorized();
         if (!authorized) {
@@ -22,7 +21,7 @@ export const AccountDelete = () => {
         }
     }
 
-    const click_handler = async () => {
+    const deleteAccount = async () => {
         try {
             await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`)
                 .then((res) => {
@@ -53,7 +52,7 @@ export const AccountDelete = () => {
                 <Button
                     text='アカウント削除'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={deleteAccount}
                 />
             </MainLayout>
         </>

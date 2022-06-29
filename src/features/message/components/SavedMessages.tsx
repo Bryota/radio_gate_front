@@ -8,71 +8,59 @@ import { Pagination } from '../../../components/Pagination';
 import { Loading, FlashMessage } from '../../../components/Elements';
 import { SavedMessageList } from './SavedMessageList';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
-type SavedMessageType = {
+type MessageType = {
     id: number
-    radio_program_id: string
-    program_corner_id: string
-    listener_my_program_id: string
-    my_program_corner_id: string
+    radioProgramId: string
+    programCornerId: string
+    listenerMyProgramId: string
+    myProgramCornerId: string
     subject?: string
     content: string
-    radio_name?: string
-    created_at: string
-    updated_at: string
-    listener_my_program?: {
+    radioName?: string
+    posted_at: string
+    listenerInfoFlag: boolean
+    telFlag: boolean
+    createdAt: string
+    updatedAt: string
+    listenerMyProgram?: {
         name?: string
     }
-    my_program_corner?: {
+    myProgramCorner?: {
         name?: string
     }
-    radio_program?: {
+    radioProgram?: {
         name?: string
     }
-    program_corner?: {
+    programCorner?: {
         name?: string
     }
 }
 
+type MessagesResponseType = {
+    listener_message: {
+        data: MessageType[]
+    }
+    isLoading: boolean
+}
+
 export const SavedMessages = () => {
     const location = useLocation();
-    const [savedMessages, setSavedMessages] = useState<SavedMessageType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const navigation = useNavigate();
-
-    useEffect(() => {
-        authorized();
-        const fetchMessages = async () => {
-            try {
-                const SavedMessagesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved_messages?page=${currentPage}`);
-                setSavedMessages(SavedMessagesResponse.data.listener_messages.data);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchMessages();
-    }, []);
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
+    const { apiData: savedMessages, isLoading } = useFetchApiData<MessagesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved_messages?page=${currentPage}`);
 
     const prevPagination = () => {
-        setCurrentPage((pre_current_page) => pre_current_page - 1);
+        setCurrentPage((preCurrentPage) => preCurrentPage - 1);
     }
 
     const nextPagination = () => {
-        setCurrentPage((pre_current_page) => pre_current_page + 1);
+        setCurrentPage((preCurrentPage) => preCurrentPage + 1);
     }
-    console.log(savedMessages)
 
     return (
         <>
@@ -85,21 +73,21 @@ export const SavedMessages = () => {
                 />
                 <div>
                     {
-                        savedMessages.map(message => {
-                            if (message.radio_program) {
+                        savedMessages?.listener_message.data.map(message => {
+                            if (message.radioProgram) {
                                 return (
                                     <SavedMessageList
                                         id={message.id}
-                                        radio_program={message.radio_program?.name}
-                                        corner={message.program_corner ? message.program_corner?.name : message.subject}
+                                        radioProgram={message.radioProgram?.name}
+                                        corner={message.programCorner ? message.programCorner?.name : message.subject}
                                     />
                                 )
                             } else {
                                 return (
                                     <SavedMessageList
                                         id={message.id}
-                                        radio_program={message.listener_my_program?.name}
-                                        corner={message.my_program_corner ? message.my_program_corner?.name : message.subject}
+                                        radioProgram={message.listenerMyProgram?.name}
+                                        corner={message.myProgramCorner ? message.myProgramCorner?.name : message.subject}
                                     />
                                 )
                             }
@@ -108,8 +96,8 @@ export const SavedMessages = () => {
                 </div>
                 <Pagination
                     currentPage={currentPage}
-                    prev_action={prevPagination}
-                    next_action={nextPagination}
+                    prevAction={prevPagination}
+                    nextAction={nextPagination}
                 />
             </MainLayout>
         </>

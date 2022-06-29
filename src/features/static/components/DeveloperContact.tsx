@@ -54,7 +54,7 @@ export const DeveloperContact = () => {
                 <Button
                     text='送信する'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={click_handler}
                 />
             </MainLayout>
         </>

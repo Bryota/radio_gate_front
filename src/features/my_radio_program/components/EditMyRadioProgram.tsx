@@ -9,11 +9,20 @@ import { Button, Loading } from '../../../components/Elements';
 import { EditInputItem } from './EditInputItem';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
 type UrlParamsType = {
     id: string
+}
+
+type MyRadioProgramType = {
+    id: number
+    name: string
+    email: string
+    created_at: string
+    updated_at: string
 }
 
 type CornerType = {
@@ -26,45 +35,39 @@ type validatedArrayType = {
     message: string
 }
 
+type MyRadioProgramResponseType = {
+    listener_my_program: MyRadioProgramType
+    isLoading: boolean
+}
+
+type MyProgramCornersResponseType = {
+    my_program_corners: {
+        data: CornerType[]
+    }
+    isLoading: boolean
+}
+
 export const EditMyRadioProgram = () => {
     const urlParams = useParams<UrlParamsType>();
-    const [Id, setId] = useState<string>();
-    const [name, setName] = useState<string>('');
-    const [email, setEmail] = useState<string>('');
-    const [corners, setCorners] = useState<CornerType[]>([]);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [Id, setId] = useState<number | undefined>();
+    const [name, setName] = useState<string | undefined>('');
+    const [email, setEmail] = useState<string | undefined>('');
+    const [corners, setCorners] = useState<CornerType[] | undefined>([]);
+    const [currentPage, setCurrentPage] = useState<number>(1);
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
+    const { apiData: myRadioProgram } = useFetchApiData<MyRadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`);
+    const { apiData: responseCorners, isLoading } = useFetchApiData<MyProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?page=${currentPage}&listener_my_program=${urlParams.id}`);
 
     useEffect(() => {
-        authorized();
-        const fetchRadioProgram = async () => {
-            try {
-                const MyRadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`);
-                let myRadioProgram = MyRadioProgramResponse.data.listener_my_program;
-                setId(myRadioProgram.id);
-                setName(myRadioProgram.name);
-                setEmail(myRadioProgram.email);
-
-                const CornerResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${urlParams.id}`);
-                setCorners(CornerResponse.data.my_program_corners.data);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchRadioProgram();
+        setId(myRadioProgram?.listener_my_program.id);
+        setName(myRadioProgram?.listener_my_program.name);
+        setEmail(myRadioProgram?.listener_my_program.email);
+        setCorners(responseCorners?.my_program_corners.data);
     }, []);
 
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
-
     const validation = () => {
-        const validationCorners = corners.map((corner, index) => {
+        const validationCorners = corners?.map((corner, index) => {
             return {
                 key: `corner${index}`,
                 value: corner.name,
@@ -98,7 +101,7 @@ export const EditMyRadioProgram = () => {
                     value: email,
                     type: 'max|150'
                 },
-            ].concat(validationCorners)
+            ].concat(validationCorners!)
         )
         if (result.length) {
             setValidationMessages(result);
@@ -109,12 +112,12 @@ export const EditMyRadioProgram = () => {
     }
 
     const addCorner = () => {
-        setCorners([...corners, { id: '', name: '' }]);
+        setCorners([...corners!, { id: '', name: '' }]);
     }
 
     const changeCorner = (value: string, i: number): void => {
         setCorners(
-            corners.map((corner, index): CornerType => {
+            corners?.map((corner, index): CornerType => {
                 return {
                     id: corner.id,
                     name: i === index ? value : corner.name
@@ -136,13 +139,13 @@ export const EditMyRadioProgram = () => {
 
     const deleteCornerForm = (i: number) => {
         setCorners(
-            corners.filter((corner, index) => {
+            corners?.filter((corner, index) => {
                 return i !== index;
             })
         )
     }
 
-    const click_handler = async () => {
+    const editMyRadioProgram = async () => {
         if (validation()) {
             return;
         }
@@ -152,7 +155,7 @@ export const EditMyRadioProgram = () => {
                 // TODO: メールアドレスを変更しないと更新できない
                 email
             });
-            corners.map(async (corner) => {
+            corners?.map(async (corner) => {
                 if (corner.id) {
                     await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners/${corner.id}`, {
                         'listener_my_program_id': Id,
@@ -196,7 +199,7 @@ export const EditMyRadioProgram = () => {
                         text='ラジオ番組名'
                         value={name}
                         is_first_item={true}
-                        change_action={e => setName(e.target.value)}
+                        changeAction={e => setName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
                     />
                     <Input
@@ -204,12 +207,12 @@ export const EditMyRadioProgram = () => {
                         text='メールアドレス'
                         value={email}
                         type='email'
-                        change_action={e => setEmail(e.target.value)}
+                        changeAction={e => setEmail(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
                     />
                     <p className="text-left mt-5 h3">番組コーナー</p>
                     {
-                        corners.map((corner, index) => {
+                        corners?.map((corner, index) => {
                             return (
                                 <EditInputItem
                                     myProgeamConrerId={Number(corner.id)}
@@ -228,18 +231,18 @@ export const EditMyRadioProgram = () => {
                         text='コーナーを増やす'
                         type='get'
                         line_left={true}
-                        click_action={addCorner}
+                        clickAction={addCorner}
                     />
                 </InnerBox>
                 <Button
                     text='更新する'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={editMyRadioProgram}
                 />
                 <Button
                     text='削除する'
                     type='delete'
-                    click_action={delete_handler}
+                    clickAction={delete_handler}
                 />
             </MainLayout>
         </>

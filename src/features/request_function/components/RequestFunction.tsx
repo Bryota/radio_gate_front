@@ -1,12 +1,10 @@
-import axios from '../../../settings/Axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { SelectedRequestFunction } from './SelectedRequestFunction';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
@@ -20,39 +18,16 @@ type RequestFunctionType = {
     point: number
 }
 
+type RequestFunctionResponseType = {
+    request_function: RequestFunctionType
+    isLoading: boolean
+}
+
 export const RequestFunction = () => {
-    const [requestFunction, setRequestFunction] = useState<RequestFunctionType>();
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
     const urlParams = useParams<UrlParamsType>();
+    const { apiData: requestFunction, isLoading } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${urlParams.id}`);
 
-    useEffect(() => {
-        authorized();
-        const fetchRequestFunction = async () => {
-            try {
-                const RequestFunctionResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${urlParams.id}`);
-                if (RequestFunctionResponse.data.status === 'failed') {
-                    return navigation('/not_fount');
-                }
-                setRequestFunction(RequestFunctionResponse.data.request_function);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchRequestFunction();
-    }, []);
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
-
-    const click_handler = () => {
-        return '';
-    }
     return (
         <>
             <MainLayout>
@@ -62,23 +37,23 @@ export const RequestFunction = () => {
                     subtitle='機能リクエスト'
                 />
                 <SelectedRequestFunction
-                    name={requestFunction?.name}
+                    name={requestFunction?.request_function.name}
                 />
                 <div>
                     <p className='h3 mb-4'>詳細</p>
-                    <InnerBox>{requestFunction?.detail}</InnerBox>
+                    <InnerBox>{requestFunction?.request_function.detail}</InnerBox>
                 </div>
                 <Button
                     text='投票する'
                     type='post'
-                    click_action={() => {
-                        return navigation(`/request_function/${requestFunction?.id}/vote`)
+                    clickAction={() => {
+                        return navigation(`/request_function/${requestFunction?.request_function.id}/vote`)
                     }}
                 />
                 <Button
                     text='機能リクエスト一覧'
                     type='get'
-                    click_action={() => {
+                    clickAction={() => {
                         return navigation(`/request_functions`)
                     }}
                 />

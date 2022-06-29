@@ -1,5 +1,3 @@
-import '../../../assets/css/elements/radio.css';
-
 type RequestFunctionType = {
     id: number
     name: string
@@ -24,7 +22,6 @@ export const RequestFunctionList = ({ id, name, point, is_voted }: RequestFuncti
                             投票する
                         </a>
                 }
-
                 <a href={`/request_function/${id}`} className='col-2 offset-1 btn bg-main list-btn'>
                     詳細
                 </a>

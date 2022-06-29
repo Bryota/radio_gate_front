@@ -11,7 +11,7 @@ export const ForgotPassword = () => {
     const [email, setEmail] = useState<string>();
     const navigation = useNavigate();
 
-    const click_handler = async () => {
+    const sendEmailForPasswordReset = async () => {
         try {
             await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/forgot_password`, {
                 email,
@@ -28,6 +28,7 @@ export const ForgotPassword = () => {
             console.log(err)
         }
     }
+
     return (
         <>
             <MainLayout>
@@ -42,13 +43,13 @@ export const ForgotPassword = () => {
                         text='メールアドレス'
                         type="email"
                         is_first_item={true}
-                        change_action={e => setEmail(e.target.value)}
+                        changeAction={e => setEmail(e.target.value)}
                     />
                 </InnerBox>
                 <Button
                     text='送信する'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={sendEmailForPasswordReset}
                 />
             </MainLayout>
         </>

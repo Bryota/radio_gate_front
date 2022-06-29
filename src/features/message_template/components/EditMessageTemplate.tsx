@@ -6,8 +6,8 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { Input, Textarea } from '../../../components/Form';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import '../../../assets/css/elements/radio.css';
 
 type UrlParamsType = {
@@ -25,36 +25,23 @@ type validatedArrayType = {
     message: string
 }
 
+type MessageTemplateResponseType = {
+    message_template: MessageTemplateType
+    isLoading: boolean
+}
+
 export const EditMessageTemplate = () => {
     const urlParams = useParams<UrlParamsType>();
-    const [messageTemplate, setMessageTemplate] = useState<MessageTemplateType>();
-    const [name, setName] = useState<string>('');
-    const [content, setContent] = useState<string>('');
-    const [isLoading, setIsLoading] = useState<boolean>(true);
+    const [name, setName] = useState<string | undefined>('');
+    const [content, setContent] = useState<string | undefined>('');
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
+    const { apiData: messageTemplate, isLoading } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
 
     useEffect(() => {
-        authorized();
-        const fetchRadioProgram = async () => {
-            try {
-                const MessageTemplateResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
-                setName(MessageTemplateResponse.data.message_template.name);
-                setContent(MessageTemplateResponse.data.message_template.content);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchRadioProgram();
+        setName(messageTemplate?.message_template.name);
+        setContent(messageTemplate?.message_template.content);
     }, []);
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
 
     const validation = () => {
         const result = validationCheck(
@@ -89,7 +76,7 @@ export const EditMessageTemplate = () => {
         }
     }
 
-    const update_handler = async () => {
+    const updateMessageTemplate = async () => {
         if (validation()) {
             return;
         }
@@ -103,6 +90,7 @@ export const EditMessageTemplate = () => {
             console.log(err)
         }
     }
+
     return (
         <>
             <MainLayout>
@@ -117,21 +105,21 @@ export const EditMessageTemplate = () => {
                         text='テンプレート名'
                         value={name}
                         is_first_item={true}
-                        change_action={e => setName(e.target.value)}
+                        changeAction={e => setName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
                     />
                     <Textarea
                         key='content'
                         text='本文'
                         value={content}
-                        change_action={e => setContent(e.target.value)}
+                        changeAction={e => setContent(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'content')}
                     />
                 </InnerBox>
                 <Button
                     text='更新する'
                     type='post'
-                    click_action={update_handler}
+                    clickAction={updateMessageTemplate}
                 />
             </MainLayout>
         </>

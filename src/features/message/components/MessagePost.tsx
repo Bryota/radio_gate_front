@@ -295,7 +295,7 @@ export const MessagePost = () => {
                         text='マイラジオ番組を使用する'
                         is_first_item={true}
                         checked={isMyRadioProgram}
-                        change_action={() => setIsMyRadioProgram(!isMyRadioProgram)}
+                        changeAction={() => setIsMyRadioProgram(!isMyRadioProgram)}
                     />
                     {
                         isMyRadioProgram
@@ -307,7 +307,7 @@ export const MessagePost = () => {
                                 items={radioStations}
                                 text='ラジオ局'
                                 selected_id={Number(radioStationId)}
-                                change_action={e => fetchRadioProgramRelatedWithRadioStation(e.target.value)}
+                                changeAction={e => fetchRadioProgramRelatedWithRadioStation(e.target.value)}
                             />
                     }
                     <Select
@@ -315,14 +315,14 @@ export const MessagePost = () => {
                         items={radioPrograms}
                         text='番組'
                         selected_id={Number(radioProgramId)}
-                        change_action={e => fetchCorner(e.target.value)}
+                        changeAction={e => fetchCorner(e.target.value)}
                     />
                     <Select
                         key='corner'
                         items={corners}
                         text='コーナー'
                         selected_id={Number(programCornerId)}
-                        change_action={e => setProgramCornerId(e.target.value)}
+                        changeAction={e => setProgramCornerId(e.target.value)}
                     />
                     <span>※コーナーを選択した場合、コーナー名が件名になります</span>
                     {
@@ -333,19 +333,19 @@ export const MessagePost = () => {
                             <Input
                                 key='subject'
                                 text='件名'
-                                change_action={e => setSubject(e.target.value)}
+                                changeAction={e => setSubject(e.target.value)}
                             />
                     }
                     <Input
                         key='radio_name'
                         text='ラジオネーム'
                         value='ハイキングベアー'
-                        change_action={e => setRadioName(e.target.value)}
+                        changeAction={e => setRadioName(e.target.value)}
                     />
                     <CheckBox
                         label='is_used_message_template'
                         text='メッセージテンプレートを使用する'
-                        change_action={() => toggleMessageTemplate()}
+                        changeAction={() => toggleMessageTemplate()}
                     />
                     {
                         isUsedMessageTemplate
@@ -354,7 +354,7 @@ export const MessagePost = () => {
                                 key='message_template'
                                 items={messageTemplates}
                                 text='テンプレート名'
-                                change_action={e => showMessageTemplate(e)}
+                                changeAction={e => showMessageTemplate(e)}
                             />
                             :
                             <></>
@@ -363,30 +363,30 @@ export const MessagePost = () => {
                         key='content'
                         value={content}
                         text='本文'
-                        change_action={e => setContent(e.target.value)}
+                        changeAction={e => setContent(e.target.value)}
                     />
                     <CheckBox
                         label='is_sent_userifno'
                         text='本名・住所を記載する'
                         checked={isSentListenerinfo}
-                        change_action={() => setIsSentListenerinfo(!isSentListenerinfo)}
+                        changeAction={() => setIsSentListenerinfo(!isSentListenerinfo)}
                     />
                     <CheckBox
                         label='is_sent_tel'
                         text='電話番号を記載する'
                         checked={isSentTel}
-                        change_action={() => setIsSentTel(!isSentTel)}
+                        changeAction={() => setIsSentTel(!isSentTel)}
                     />
                 </InnerBox>
                 <Button
                     text='投稿する'
                     type='post'
-                    click_action={sendMessage}
+                    clickAction={sendMessage}
                 />
                 <Button
                     text='一時保存'
                     type='get'
-                    click_action={saveMessage}
+                    clickAction={saveMessage}
                 />
             </MainLayout>
         </>

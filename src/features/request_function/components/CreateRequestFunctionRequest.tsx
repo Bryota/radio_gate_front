@@ -61,7 +61,7 @@ export const CreateRequestFunctionRequest = () => {
         }
     }
 
-    const click_handler = async () => {
+    const postRequestFunctionRequest = async () => {
         if (validation()) {
             return;
         }
@@ -69,7 +69,6 @@ export const CreateRequestFunctionRequest = () => {
             name,
             detail
         }).then(res => {
-            // TODO: エラー時の処理追加
             if (res.status === 201) {
                 navigation('/request_functions', { state: { flash_message: '機能リクエストを申請しました' } })
             } else {
@@ -77,6 +76,7 @@ export const CreateRequestFunctionRequest = () => {
             }
         });
     }
+
     return (
         <>
             <MainLayout>
@@ -88,20 +88,20 @@ export const CreateRequestFunctionRequest = () => {
                     <Input
                         key='name'
                         text='タイトル'
-                        change_action={e => setName(e.target.value)}
+                        changeAction={e => setName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
                     />
                     <Textarea
                         key='detail'
                         text='詳細'
-                        change_action={e => setDetail(e.target.value)}
+                        changeAction={e => setDetail(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'detail')}
                     />
                 </InnerBox>
                 <Button
                     text='申請する'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={postRequestFunctionRequest}
                 />
             </MainLayout>
         </>

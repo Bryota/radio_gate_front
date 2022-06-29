@@ -1,15 +1,15 @@
 import '../../../assets/css/elements/radio.css';
 
 type MessageItemType = {
-    item_name: string
+    itemName: string
     value?: string
 }
 
-export const MessageItem = ({ item_name, value }: MessageItemType): JSX.Element => {
+export const MessageItem = ({ itemName, value }: MessageItemType): JSX.Element => {
     return (
         <>
             <div className='row mb-5'>
-                <p className='mb-2 font-25'>{item_name}</p>
+                <p className='mb-2 font-25'>{itemName}</p>
                 <div className='px-4 py-3 font-20 inner-box'>
                     {value}
                 </div>

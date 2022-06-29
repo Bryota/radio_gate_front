@@ -36,7 +36,7 @@ export const PasswordUpdate = () => {
                 <Button
                     text='パスワード更新'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={click_handler}
                 />
             </MainLayout>
         </>

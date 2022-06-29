@@ -4,18 +4,18 @@ import '../../assets/css/components/pagination.css';
 
 type PaginationType = {
     currentPage?: number
-    prev_action?: () => void
-    next_action?: () => void
+    prevAction?: () => void
+    nextAction?: () => void
 }
 
-export const Pagination = ({ currentPage = 0, prev_action = () => { }, next_action = () => { } }: PaginationType): JSX.Element => {
+export const Pagination = ({ currentPage = 0, prevAction = () => { }, nextAction = () => { } }: PaginationType): JSX.Element => {
     return (
         <div className='d-flex text-center justify-content-evenly align-items-center mt-5 pb-5'>
-            <button className='p-3 bg-white pagination-item' onClick={() => prev_action()} disabled={currentPage === 1 ? true : false}>
+            <button className='p-3 bg-white pagination-item' onClick={() => prevAction()} disabled={currentPage === 1 ? true : false}>
                 <img src={ArrowLeft} alt="＜" />
             </button>
             <p className='font-20'>{currentPage}</p>
-            <button className='p-3 bg-white pagination-item' onClick={() => next_action()}>
+            <button className='p-3 bg-white pagination-item' onClick={() => nextAction()}>
                 <img src={ArrowRight} alt="＞" />
             </button>
         </div>

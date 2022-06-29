@@ -65,7 +65,7 @@ export const CreateMessageTemplate = () => {
         }
     }
 
-    const create_handler = async () => {
+    const createMessageTemplate = async () => {
         if (validation()) {
             return;
         }
@@ -73,7 +73,6 @@ export const CreateMessageTemplate = () => {
             name,
             content
         }).then(res => {
-            // TODO: エラー時の処理追加
             if (res.status === 201) {
                 navigation('/message_templates', { state: { flash_message: '新しいメッセージテンプレートを作成しました' } })
             } else {
@@ -94,20 +93,20 @@ export const CreateMessageTemplate = () => {
                         key='name'
                         text='テンプレート名'
                         is_first_item={true}
-                        change_action={e => setName(e.target.value)}
+                        changeAction={e => setName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
                     />
                     <Textarea
                         key='content'
                         text='本文'
-                        change_action={e => setContent(e.target.value)}
+                        changeAction={e => setContent(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'content')}
                     />
                 </InnerBox>
                 <Button
                     text='作成する'
                     type='post'
-                    click_action={create_handler}
+                    clickAction={createMessageTemplate}
                 />
             </MainLayout>
         </>

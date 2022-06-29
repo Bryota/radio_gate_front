@@ -1,14 +1,13 @@
 import axios from '../../../settings/Axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { SelectedRequestFunction } from './SelectedRequestFunction';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
-import '../../../assets/css/elements/radio.css';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 
 type UrlParamsType = {
     id: string
@@ -26,37 +25,17 @@ type validatedArrayType = {
     message: string
 }
 
+type RequestFunctionResponseType = {
+    request_function: RequestFunctionType
+    isLoading: boolean
+}
+
 export const VoteRequestFunction = () => {
-    const [requestFunction, setRequestFunction] = useState<RequestFunctionType>();
     const [point, setPoint] = useState<string>('');
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const urlParams = useParams<UrlParamsType>();
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
-
-    useEffect(() => {
-        authorized();
-        const fetchRequestFunction = async () => {
-            try {
-                const RequestFunctionResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${urlParams.id}`);
-                if (RequestFunctionResponse.data.status === 'failed') {
-                    return navigation('/not_fount');
-                }
-                setRequestFunction(RequestFunctionResponse.data.request_function);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchRequestFunction();
-    }, []);
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
+    const { apiData: requestFunction, isLoading } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${urlParams.id}`);
 
     const validation = () => {
         const result = validationCheck(
@@ -76,15 +55,14 @@ export const VoteRequestFunction = () => {
         }
     }
 
-    const click_handler = async () => {
+    const voteRequestFunction = async () => {
         if (validation()) {
             return;
         }
         await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/submit_point`, {
-            request_function_id: requestFunction?.id,
+            request_function_id: requestFunction?.request_function.id,
             point: point
         }).then(res => {
-            // TODO: エラー時の処理追加
             if (res.status === 201) {
                 navigation('/request_functions', { state: { flash_message: '機能リクエストに投票しました' } })
             } else {
@@ -102,7 +80,7 @@ export const VoteRequestFunction = () => {
                     subtitle='機能リクエスト投票'
                 />
                 <SelectedRequestFunction
-                    name={requestFunction?.name}
+                    name={requestFunction?.request_function.name}
                 />
                 <InnerBox>
                     <div className='row form-input_item'>
@@ -130,7 +108,7 @@ export const VoteRequestFunction = () => {
                 <Button
                     text='投票する'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={voteRequestFunction}
                 />
             </MainLayout>
         </>

@@ -1,6 +1,6 @@
 type validationTargetArrayType = {
     key: string,
-    value: string,
+    value?: string,
     type: string
 }
 
@@ -26,7 +26,7 @@ export const validationCheck = (validationTargets: Array<validationTargetArrayTy
     return validatedArray
 }
 
-const requireValidation = (value: string) => {
+const requireValidation = (value: string = '') => {
     if (value) {
         return null
     } else {
@@ -34,7 +34,7 @@ const requireValidation = (value: string) => {
     }
 }
 
-const integerValidation = (value: string) => {
+const integerValidation = (value: string = '') => {
     if (value == '' || Number.isNaN(value)) {
         return null
     } else {
@@ -42,7 +42,7 @@ const integerValidation = (value: string) => {
     }
 }
 
-const emailValidation = (value: string) => {
+const emailValidation = (value: string = '') => {
     const regexp = /^[a-zA-Z0-9_+-]+(\.[a-zA-Z0-9_+-]+)*@([a-zA-Z0-9][a-zA-Z0-9-]*[a-zA-Z0-9]*\.)+[a-zA-Z]{2,}$/;
     if (regexp.test(value)) {
         return null;
@@ -51,8 +51,8 @@ const emailValidation = (value: string) => {
     }
 }
 
-const maxValidation = (value: string, length: number) => {
-    if (value.length > length) {
+const maxValidation = (value: string = '', length: number) => {
+    if (value && value.length > length) {
         return `${length}文字以内で入力してください。`
     } else {
         return null;

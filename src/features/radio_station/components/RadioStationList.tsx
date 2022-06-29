@@ -1,5 +1,3 @@
-import '../../../assets/css/elements/radio.css';
-
 type RadioStationType = {
     id: number
     name: string

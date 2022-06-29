@@ -85,7 +85,7 @@ export const CreateMyRadioProgram = () => {
         }
     }
 
-    const click_handler = async () => {
+    const createMyRadioProgram = async () => {
         if (validation()) {
             return;
         }
@@ -93,7 +93,6 @@ export const CreateMyRadioProgram = () => {
             name,
             email
         }).then(res => {
-            // TODO: エラー時の処理追加
             if (res.status === 201) {
                 let my_radio_program_id = res.data.listener_my_program.id;
                 corners.map(async (corner) => {
@@ -146,14 +145,14 @@ export const CreateMyRadioProgram = () => {
                         key='name'
                         text='ラジオ番組名'
                         is_first_item={true}
-                        change_action={e => setName(e.target.value)}
+                        changeAction={e => setName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
                     />
                     <Input
                         key='email'
                         text='メールアドレス'
                         type='email'
-                        change_action={e => setEmail(e.target.value)}
+                        changeAction={e => setEmail(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
                     />
                     <p className="text-left mt-5 h3">番組コーナー</p>
@@ -176,13 +175,13 @@ export const CreateMyRadioProgram = () => {
                         text='コーナーを増やす'
                         type='get'
                         line_left={true}
-                        click_action={addCorner}
+                        clickAction={addCorner}
                     />
                 </InnerBox>
                 <Button
                     text='作成する'
                     type='post'
-                    click_action={click_handler}
+                    clickAction={createMyRadioProgram}
                 />
             </MainLayout>
         </>

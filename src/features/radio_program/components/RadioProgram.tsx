@@ -1,6 +1,5 @@
-import axios from '../../../settings/Axios';
-import { useParams, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom'
+import { useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
@@ -8,7 +7,7 @@ import { Pagination } from '../../../components/Pagination';
 import { Loading } from '../../../components/Elements';
 import { CornerList } from './CornerList';
 import { SelectedRadioProgram } from './SelectedRadioProgram';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
@@ -30,43 +29,30 @@ type ProgramCornersType = {
     name: string
 }
 
+type RadioProgramResponseType = {
+    radio_program: RadioProgramType
+    isLoading: boolean
+}
+
+type ProgramCornersResponseType = {
+    program_corners: {
+        data: ProgramCornersType[]
+    }
+    isLoading: boolean
+}
+
 export const RadioProgram = () => {
     const urlParams = useParams<UrlParamsType>();
-    const [radioProgram, setRadioProgram] = useState<RadioProgramType>();
-    const [programCorners, setProgramCorners] = useState<ProgramCornersType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
-    const navigation = useNavigate();
-
-    useEffect(() => {
-        authorized();
-        const fetchRadioProgram = async () => {
-            try {
-                const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs/${urlParams.id}`);
-                setRadioProgram(RadioProgramResponse.data.radio_program);
-                const ProgramConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program_corners?page=${currentPage}&radio_program=${urlParams.id}`);
-                setProgramCorners(ProgramConrernsResponse.data.program_corners.data);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchRadioProgram();
-    }, [currentPage]);
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
+    const { apiData: radioProgram } = useFetchApiData<RadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs/${urlParams.id}`);
+    const { apiData: programCorners, isLoading } = useFetchApiData<ProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program_corners?page=${currentPage}&radio_program=${urlParams.id}`, currentPage);
 
     const prevPagination = () => {
-        setCurrentPage((pre_current_page) => pre_current_page - 1);
+        setCurrentPage((preCurrentPage) => preCurrentPage - 1);
     }
 
     const nextPagination = () => {
-        setCurrentPage((pre_current_page) => pre_current_page + 1);
+        setCurrentPage((preCurrentPage) => preCurrentPage + 1);
     }
 
     return (
@@ -78,28 +64,28 @@ export const RadioProgram = () => {
                     subtitle='ラジオ番組'
                 />
                 <SelectedRadioProgram
-                    id={radioProgram?.id}
-                    name={radioProgram?.name}
-                    email={radioProgram?.email}
+                    id={radioProgram?.radio_program.id}
+                    name={radioProgram?.radio_program.name}
+                    email={radioProgram?.radio_program.email}
                 />
                 <div className="row">
                     <h2>コーナー一覧</h2>
                 </div>
                 <div>
-                    {programCorners.map(programCorner => {
+                    {programCorners?.program_corners.data.map(programCorner => {
                         return (
                             <CornerList
                                 id={programCorner.id}
                                 name={programCorner.name}
-                                radio_program_id={programCorner.radio_program_id}
+                                radioProgramId={programCorner.radio_program_id}
                             />
                         )
                     })}
                 </div>
                 <Pagination
                     currentPage={currentPage}
-                    prev_action={prevPagination}
-                    next_action={nextPagination}
+                    prevAction={prevPagination}
+                    nextAction={nextPagination}
                 />
             </MainLayout>
         </>

@@ -1,17 +1,16 @@
-import axios from '../../../settings/Axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { Pagination } from '../../../components/Pagination';
 import { RequestFunctionList } from './RequestFunctionList';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
-type RequestFunctionsType = {
+type RequestFunctionType = {
     id: number
     name: string
     detail: string
@@ -19,41 +18,24 @@ type RequestFunctionsType = {
     is_voted: boolean
 }
 
+type RequestFunctionsResponseType = {
+    request_functions: RequestFunctionType[]
+    isLoading: boolean
+}
+
 export const RequestFunctions = () => {
     const location = useLocation();
-    const [requestFunctions, setRequestFunctions] = useState<RequestFunctionsType[]>([]);
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [isLoading, setIsLoading] = useState<boolean>(true);
     const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const navigation = useNavigate();
-
-    useEffect(() => {
-        authorized();
-        const fetchRequestFunctions = async () => {
-            try {
-                const RequestFunctionResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions?page=${currentPage}`);
-                setRequestFunctions(RequestFunctionResponse.data.request_functions);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchRequestFunctions();
-    }, [currentPage]);
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
+    const { apiData: requestFunctions, isLoading } = useFetchApiData<RequestFunctionsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions?page=${currentPage}`, currentPage);
 
     const prevPagination = () => {
-        setCurrentPage((pre_current_page) => pre_current_page - 1);
+        setCurrentPage((preCurrentPage) => preCurrentPage - 1);
     }
 
     const nextPagination = () => {
-        setCurrentPage((pre_current_page) => pre_current_page + 1);
+        setCurrentPage((preCurrentPage) => preCurrentPage + 1);
     }
 
     return (
@@ -69,13 +51,13 @@ export const RequestFunctions = () => {
                     text='機能リクエストを申請'
                     type='get'
                     line_left={true}
-                    click_action={() => {
+                    clickAction={() => {
                         navigation('/request_function/request')
                     }}
                 />
                 <div>
                     {
-                        requestFunctions.map(requestFunction => {
+                        requestFunctions?.request_functions.map(requestFunction => {
                             return (
                                 <RequestFunctionList
                                     key={requestFunction.id}
@@ -90,8 +72,8 @@ export const RequestFunctions = () => {
                 </div>
                 <Pagination
                     currentPage={currentPage}
-                    prev_action={prevPagination}
-                    next_action={nextPagination}
+                    prevAction={prevPagination}
+                    nextAction={nextPagination}
                 />
             </MainLayout>
         </>

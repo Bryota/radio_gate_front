@@ -1,10 +1,14 @@
 import Axios from 'axios'
+const cookies = document.cookie.split("; ");
+const cookie = cookies.find((_) => _.startsWith("XSRF-TOKEN")) || "";
+const csrfToken = decodeURIComponent(cookie.split("=")[1]);
 
 const axios = Axios.create({
-    xsrfHeaderName: 'X-CSRF-Token',
     withCredentials: true,
     headers: {
-        'content-type': 'application/json'
+        Accept: "application/json",
+        "Content-Type": "application/json",
+        "X-XSRF-TOKEN": csrfToken,
     }
 })
 

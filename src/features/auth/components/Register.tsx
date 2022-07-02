@@ -124,17 +124,16 @@ export const Register = () => {
 
     const validateEmailUnique = async (email: string) => {
         try {
-            await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener/is_unique_email`, {
-                email,
-            }).then((res) => {
-                if (res.data.is_unique_email == false) {
-                    setValidationMessages([...validationMessages, {
-                        key: 'email',
-                        message: 'メールアドレスが既に使われています。'
-                    }])
-                }
-                return res.data.is_unique_email
-            })
+            await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener/is_unique_email?email=${email}`)
+                .then((res) => {
+                    if (res.data.is_unique_email == false) {
+                        setValidationMessages([...validationMessages, {
+                            key: 'email',
+                            message: 'メールアドレスが既に使われています。'
+                        }])
+                    }
+                    return res.data.is_unique_email
+                })
         } catch (err) {
             console.log(err)
         }
@@ -191,11 +190,14 @@ export const Register = () => {
                 building: building,
                 room_number: roomNumber,
                 tel: tel
-            }).then((res) => {
+            }).then(async (res) => {
                 if (res.status === 200) {
-                    return (
-                        navigation('/login')
-                    );
+                    await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`)
+                        .then(() => {
+                            return (
+                                navigation('/message_post')
+                            );
+                        })
                 } else {
                     alert('アカウントの作成に失敗しました')
                 }

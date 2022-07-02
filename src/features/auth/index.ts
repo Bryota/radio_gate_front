@@ -3,5 +3,4 @@ export * from './components/Login';
 export * from './components/ForgotPassword';
 export * from './components/ForgotPasswordComplete';
 export * from './components/PasswordReset';
-export * from './components/PasswordUpdate';
 export * from './components/AccountDelete';

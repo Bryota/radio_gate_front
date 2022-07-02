@@ -5,7 +5,7 @@ import { RadioStations } from '../features/radio_station';
 import { RadioPrograms, RadioProgram } from '../features/radio_program';
 import { MyRadioPrograms, MyRadioProgram, CreateMyRadioProgram, EditMyRadioProgram } from '../features/my_radio_program';
 import { MessageTemplates, MessageTemplate, CreateMessageTemplate, EditMessageTemplate } from '../features/message_template';
-import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, PasswordUpdate, AccountDelete } from '../features/auth';
+import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset, AccountDelete } from '../features/auth';
 import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete, Messages, Message, SavedMessages, SavedMessage } from '../features/message';
 import { RequestFunctions, RequestFunction, CreateRequestFunctionRequest, VoteRequestFunction } from '../features/request_function';
@@ -54,7 +54,6 @@ export const AppRoutes = () => {
         { path: 'forgot_password', element: <ForgotPassword /> },
         { path: 'forgot_password/complete', element: <ForgotPasswordComplete /> },
         { path: 'password_reset', element: <PasswordReset /> },
-        { path: 'password_update', element: <PasswordUpdate /> },
         { path: 'account_delete', element: <AccountDelete /> }
     ]
 

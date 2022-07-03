@@ -1,7 +1,8 @@
 type validationTargetArrayType = {
     key: string,
     value?: string,
-    type: string
+    type: string,
+    confirm?: string
 }
 
 type validatedArrayType = {
@@ -20,6 +21,8 @@ export const validationCheck = (validationTargets: Array<validationTargetArrayTy
             return addValidationResult(validationTarget.key, emailValidation(validationTarget.value), validatedArray);
         } else if (validationTarget.type.includes('max')) {
             return addValidationResult(validationTarget.key, maxValidation(validationTarget.value, Number(validationTarget.type.slice(4))), validatedArray);
+        } else if (validationTarget.type === 'confirm') {
+            return addValidationResult(validationTarget.key, confirmValidation(validationTarget.value, validationTarget.confirm), validatedArray);
         }
     })
 
@@ -54,6 +57,14 @@ const emailValidation = (value: string = '') => {
 const maxValidation = (value: string = '', length: number) => {
     if (value && value.length > length) {
         return `${length}文字以内で入力してください。`
+    } else {
+        return null;
+    }
+}
+
+const confirmValidation = (value: string = '', confirm: string = '') => {
+    if (value !== confirm) {
+        return 'パスワードが一致しませんでした。'
     } else {
         return null;
     }

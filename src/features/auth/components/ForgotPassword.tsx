@@ -6,24 +6,60 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Input } from '../../../components/Form/Input';
 import { Button } from '../../../components/Elements/Button';
+import { validationCheck } from '../../../modules/validation/validationCheck';
+
+type validatedArrayType = {
+    key: string,
+    message: string
+}
 
 export const ForgotPassword = () => {
     const [email, setEmail] = useState<string>();
     const navigation = useNavigate();
+    const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
+
+    const validation = () => {
+        const result = validationCheck(
+            [
+                {
+                    key: 'email',
+                    value: email,
+                    type: 'require'
+                },
+                {
+                    key: 'email',
+                    value: email,
+                    type: 'email'
+                }
+            ]
+        )
+        if (result.length) {
+            setValidationMessages(result);
+            return true;
+        } else {
+            return false;
+        }
+    }
 
     const sendEmailForPasswordReset = async () => {
+        if (validation()) {
+            return;
+        }
         try {
-            await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/forgot_password`, {
-                email,
-            }).then((res) => {
-                if (res.status === 200) {
-                    return (
-                        navigation('/forgot_password/complete', { state: { email: email } })
-                    );
-                } else {
-                    alert(res.data.message)
-                }
-            })
+            await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`)
+                .then(async () => {
+                    await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/forgot_password`, {
+                        email,
+                    }).then((res) => {
+                        if (res.status === 200) {
+                            return (
+                                navigation('/forgot_password/complete', { state: { email: email } })
+                            );
+                        } else {
+                            alert(res.data.message)
+                        }
+                    })
+                })
         } catch (err) {
             console.log(err)
         }
@@ -44,6 +80,7 @@ export const ForgotPassword = () => {
                         type="email"
                         is_first_item={true}
                         changeAction={e => setEmail(e.target.value)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
                     />
                 </InnerBox>
                 <Button

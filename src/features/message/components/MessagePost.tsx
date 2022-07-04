@@ -251,7 +251,7 @@ export const MessagePost = () => {
         try {
             let MessageSaveResponse;
             if (isMyRadioProgram) {
-                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/save`, {
+                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved_messages`, {
                     listener_my_program_id: radioProgramId,
                     my_program_corner_id: programCornerId,
                     subject: subject,
@@ -261,7 +261,7 @@ export const MessagePost = () => {
                     tel_flag: isSentTel
                 });
             } else {
-                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/save`, {
+                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved_messages`, {
                     radio_program_id: radioProgramId,
                     program_corner_id: programCornerId,
                     subject: subject,

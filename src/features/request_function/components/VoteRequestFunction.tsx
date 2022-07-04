@@ -59,8 +59,7 @@ export const VoteRequestFunction = () => {
         if (validation()) {
             return;
         }
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/submit_point`, {
-            request_function_id: requestFunction?.request_function.id,
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${requestFunction?.request_function.id}/point`, {
             point: point
         }).then(res => {
             if (res.status === 201) {

@@ -47,7 +47,7 @@ export const AdminCreateRequestFunction = () => {
     const close_request_function_request = async (id: number) => {
         if (window.confirm('参考にした機能リクエスト申請を非公開にしますか')) {
             try {
-                const RequesetFunctionRequestsResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_function_requests/close/${id}`);
+                const RequesetFunctionRequestsResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_function_requests/${id}/close`);
                 if (RequesetFunctionRequestsResponse.status === 200) {
                     window.location.reload();
                 } else {

@@ -74,7 +74,7 @@ export const Inquiry = () => {
         if (validation()) {
             return;
         }
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/inquery/send`, {
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/inquery`, {
             email,
             type,
             content

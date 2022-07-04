@@ -29,7 +29,7 @@ export const AdminRadioPrograms = () => {
     useEffect(() => {
         const fetchRadioPrograms = async () => {
             try {
-                const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_station_name/${urlParams.radio_station_id}`);
+                const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_station/${urlParams.radio_station_id}/name`);
                 setRadioStationName(RadioStationNameResponse.data.radio_station_name);
 
                 const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_programs?radio_station=${urlParams.radio_station_id}`);

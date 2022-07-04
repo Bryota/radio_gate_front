@@ -38,7 +38,7 @@ type RadioProgramsResponseType = {
 export const RadioPrograms = () => {
     const urlParams = useParams<UrlParamsType>();
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const { apiData: radioStationName } = useFetchApiData<RadioStationNameResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_station_name/${urlParams.radioStationId}`);
+    const { apiData: radioStationName } = useFetchApiData<RadioStationNameResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_station/${urlParams.radioStationId}/name`);
     const { apiData: radioPrograms, isLoading } = useFetchApiData<RadioProgramsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs?page=${currentPage}&radio_station=${urlParams.radioStationId}`, currentPage);
 
     const prevPagination = () => {

@@ -30,7 +30,7 @@ export const AdminRequestFunctionRequests = () => {
     const close_request_function_request = async (id: number) => {
         if (window.confirm('非公開にしますか')) {
             try {
-                const RequesetFunctionRequestsResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_function_requests/close/${id}`);
+                const RequesetFunctionRequestsResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_function_requests/${id}/close`);
                 if (RequesetFunctionRequestsResponse.status === 200) {
                     window.location.reload();
                 } else {

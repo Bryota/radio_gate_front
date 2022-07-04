@@ -1,0 +1,30 @@
+.navbar {
+    display: block;
+    background-color: #EBF9C1;
+    overflow: hidden;
+    border-right: 1px solid #E34B2D;
+    position: sticky !important;
+    left: 0;
+    top: 0;
+    bottom: 0;
+}
+
+.navbar-icon__wrap {
+    padding-left: 20px;
+}
+
+.navbar-icon__wrap div {
+    width: 200px;
+}
+
+.navbar-icon__wrap a:hover {
+    text-decoration: none;
+}
+
+.navbar-icon__wrap img {
+    margin-right: 25px;
+}
+
+.navbar-icon {
+    width: 30px;
+}

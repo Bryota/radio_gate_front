@@ -35,7 +35,7 @@ export const VoteRequestFunction = () => {
     const urlParams = useParams<UrlParamsType>();
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
-    const { apiData: requestFunction, isLoading } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${urlParams.id}`);
+    const { apiData: requestFunction, isLoading } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${urlParams.id}`);
 
     const validation = () => {
         const result = validationCheck(
@@ -59,7 +59,7 @@ export const VoteRequestFunction = () => {
         if (validation()) {
             return;
         }
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${requestFunction?.request_function.id}/point`, {
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${requestFunction?.request_function.id}/point`, {
             point: point
         }).then(res => {
             if (res.status === 201) {

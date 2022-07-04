@@ -18,7 +18,7 @@ export const AdminCreateRequestFunction = () => {
     useEffect(() => {
         const fetchRequestFunction = async () => {
             try {
-                const RequesetFunctionresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_function_requests/${requestFunctionRequestId.request_function_request_id}`);
+                const RequesetFunctionresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request-function-requests/${requestFunctionRequestId.request_function_request_id}`);
                 setName(RequesetFunctionresponse.data.request_function_request.name);
                 setDetail(RequesetFunctionresponse.data.request_function_request.detail);
             } catch (err) {
@@ -30,7 +30,7 @@ export const AdminCreateRequestFunction = () => {
 
     const click_handler = async () => {
         try {
-            await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_functions`, {
+            await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request-functions`, {
                 name: name,
                 detail: detail,
                 is_open: isOpen
@@ -47,7 +47,7 @@ export const AdminCreateRequestFunction = () => {
     const close_request_function_request = async (id: number) => {
         if (window.confirm('参考にした機能リクエスト申請を非公開にしますか')) {
             try {
-                const RequesetFunctionRequestsResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_function_requests/${id}/close`);
+                const RequesetFunctionRequestsResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request-function-requests/${id}/close`);
                 if (RequesetFunctionRequestsResponse.status === 200) {
                     window.location.reload();
                 } else {

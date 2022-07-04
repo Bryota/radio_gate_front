@@ -30,7 +30,7 @@ export const MyRadioPrograms = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const navigation = useNavigate();
-    const { apiData: myRadioPrograms, isLoading } = useFetchApiData<MyRadioProgramsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs?page=${currentPage}`, currentPage);
+    const { apiData: myRadioPrograms, isLoading } = useFetchApiData<MyRadioProgramsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs?page=${currentPage}`, currentPage);
 
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);

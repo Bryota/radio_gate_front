@@ -26,7 +26,7 @@ export const AdminRequestFunctionRequest = () => {
     useEffect(() => {
         const fetchRequestFunctionRequest = async () => {
             try {
-                const RequesetFunctionRequestresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_function_requests/${urlParams.id}`);
+                const RequesetFunctionRequestresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request-function-requests/${urlParams.id}`);
                 setRequestFunctionRequest(RequesetFunctionRequestresponse.data.request_function_request)
             } catch (err) {
                 console.log(err);

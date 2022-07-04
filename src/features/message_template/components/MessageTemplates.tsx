@@ -28,7 +28,7 @@ export const MessageTemplates = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const navigation = useNavigate();
-    const { apiData: messageTemplates, isLoading } = useFetchApiData<MessageTemplatesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates?page=${currentPage}`, currentPage);
+    const { apiData: messageTemplates, isLoading } = useFetchApiData<MessageTemplatesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates?page=${currentPage}`, currentPage);
 
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);

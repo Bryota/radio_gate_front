@@ -69,7 +69,7 @@ export const CreateMessageTemplate = () => {
         if (validation()) {
             return;
         }
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates`, {
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates`, {
             name,
             content
         }).then(res => {

@@ -49,7 +49,7 @@ type MessageResponseType = {
 export const SavedMessage = () => {
     const urlParams = useParams<UrlParamsType>();
     const navigation = useNavigate();
-    const { apiData: savedMessage, isLoading } = useFetchApiData<MessageResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/${urlParams.id}`);
+    const { apiData: savedMessage, isLoading } = useFetchApiData<MessageResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages/${urlParams.id}`);
 
     return (
         <>

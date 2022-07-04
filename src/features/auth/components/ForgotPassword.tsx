@@ -48,7 +48,7 @@ export const ForgotPassword = () => {
         try {
             await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`)
                 .then(async () => {
-                    await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/forgot_password`, {
+                    await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/forgot-password`, {
                         email,
                     }).then((res) => {
                         if (res.status === 200) {

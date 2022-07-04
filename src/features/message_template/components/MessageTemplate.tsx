@@ -28,11 +28,11 @@ type MessageTemplateResponseType = {
 export const MessageTemplate = () => {
     const urlParams = useParams<UrlParamsType>();
     const navigation = useNavigate();
-    const { apiData: messageTemplate, isLoading } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
+    const { apiData: messageTemplate, isLoading } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${urlParams.id}`);
 
     const deleteMessageTemplate = async () => {
         try {
-            await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
+            await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${urlParams.id}`);
             return (
                 navigation('/message_templates', { state: { flash_message: 'メッセージテンプレートを削除しました' } })
             )

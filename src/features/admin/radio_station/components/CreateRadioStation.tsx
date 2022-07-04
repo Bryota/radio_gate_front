@@ -13,7 +13,7 @@ export const AdminCreateRadioStation = () => {
 
     const click_handler = async () => {
         try {
-            await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_stations`, {
+            await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-stations`, {
                 name,
             });
             navigation('/admin/radio_stations')

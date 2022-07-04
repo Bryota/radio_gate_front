@@ -75,7 +75,7 @@ export const DeveloperContact = () => {
         if (validation()) {
             return;
         }
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/developer_contact`, {
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/developer-contact`, {
             email,
             github,
             languages,

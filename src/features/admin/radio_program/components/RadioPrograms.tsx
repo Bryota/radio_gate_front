@@ -29,10 +29,10 @@ export const AdminRadioPrograms = () => {
     useEffect(() => {
         const fetchRadioPrograms = async () => {
             try {
-                const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_station/${urlParams.radio_station_id}/name`);
+                const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-station/${urlParams.radio_station_id}/name`);
                 setRadioStationName(RadioStationNameResponse.data.radio_station_name);
 
-                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_programs?radio_station=${urlParams.radio_station_id}`);
+                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-programs?radio_station=${urlParams.radio_station_id}`);
                 setRadioPrograms(RadioProgramsResponse.data.radio_programs);
             } catch (err) {
                 console.log(err);
@@ -47,7 +47,7 @@ export const AdminRadioPrograms = () => {
 
     const delete_radio_program = async (id: number) => {
         try {
-            const RadioProgramresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_programs/${id}`);
+            const RadioProgramresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-programs/${id}`);
             if (RadioProgramresponse.status === 200) {
                 window.location.reload();
             } else {

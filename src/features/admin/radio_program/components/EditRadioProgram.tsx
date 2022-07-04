@@ -34,7 +34,7 @@ export const AdminEditRadioProgram = () => {
     useEffect(() => {
         const fetchRadioProgram = async () => {
             try {
-                const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_programs/${urlParams.id}`);
+                const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-programs/${urlParams.id}`);
                 setRadioProgram(RadioProgramResponse.data.radio_program);
 
             } catch (err) {
@@ -51,7 +51,7 @@ export const AdminEditRadioProgram = () => {
         if (email === undefined) {
             setEmail(radioProgram?.email);
         }
-        await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_programs/${radioProgram?.id}`, {
+        await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-programs/${radioProgram?.id}`, {
             // TODO: idは設定しなくても良くする
             radio_station_id: radioProgram?.radio_station.id,
             name: name,

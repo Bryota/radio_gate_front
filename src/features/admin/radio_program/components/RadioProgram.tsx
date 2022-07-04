@@ -39,9 +39,9 @@ export const AdminRadioProgram = () => {
     useEffect(() => {
         const fetchRadioProgram = async () => {
             try {
-                const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_programs/${urlParams.id}`);
+                const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-programs/${urlParams.id}`);
                 setRadioProgram(RadioProgramResponse.data.radio_program);
-                const ProgramConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/program_corners?radio_program=${urlParams.id}`);
+                const ProgramConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/program-corners?radio_program=${urlParams.id}`);
                 setProgramCorners(ProgramConrernsResponse.data.program_corners);
             } catch (err) {
                 console.log(err);
@@ -56,7 +56,7 @@ export const AdminRadioProgram = () => {
 
     const delete_corner = async (id: number) => {
         try {
-            const ProgramCornerresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/program_corners/${id}`);
+            const ProgramCornerresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/program-corners/${id}`);
             if (ProgramCornerresponse.status === 200) {
                 window.location.reload();
             } else {

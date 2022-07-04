@@ -124,7 +124,7 @@ export const Register = () => {
 
     const validateEmailUnique = async (email: string) => {
         try {
-            await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener/unique_email?email=${email}`)
+            await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener/unique-email?email=${email}`)
                 .then((res) => {
                     if (res.data.is_unique_email == false) {
                         setValidationMessages([...validationMessages, {

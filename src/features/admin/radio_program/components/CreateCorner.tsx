@@ -32,7 +32,7 @@ export const AdminCreateCorner = () => {
     useEffect(() => {
         const fetchRadioProgram = async () => {
             try {
-                const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_programs/${urlParams.radio_program_id}`);
+                const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-programs/${urlParams.radio_program_id}`);
                 setRadioProgram(RadioProgramResponse.data.radio_program);
             } catch (err) {
                 console.log(err);
@@ -42,7 +42,7 @@ export const AdminCreateCorner = () => {
     }, []);
 
     const click_handler = async () => {
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/program_corners`, {
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/program-corners`, {
             radio_program_id: radioProgram?.id,
             name,
         }).then(res => {

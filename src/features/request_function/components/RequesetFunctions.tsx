@@ -28,7 +28,7 @@ export const RequestFunctions = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const navigation = useNavigate();
-    const { apiData: requestFunctions, isLoading } = useFetchApiData<RequestFunctionsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions?page=${currentPage}`, currentPage);
+    const { apiData: requestFunctions, isLoading } = useFetchApiData<RequestFunctionsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions?page=${currentPage}`, currentPage);
 
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);

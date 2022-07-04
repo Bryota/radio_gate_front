@@ -21,7 +21,7 @@ export const AdminEditRequestFunction = () => {
     useEffect(() => {
         const fetchRequestFunction = async () => {
             try {
-                const RequesetFunctionresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_functions/${urlParams.id}`);
+                const RequesetFunctionresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request-functions/${urlParams.id}`);
                 setName(RequesetFunctionresponse.data.request_function.name);
                 setDetail(RequesetFunctionresponse.data.request_function.detail);
                 setIsOpen(RequesetFunctionresponse.data.request_function.is_open);
@@ -34,7 +34,7 @@ export const AdminEditRequestFunction = () => {
 
     const click_handler = async () => {
         try {
-            await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_functions/${urlParams.id}`, {
+            await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request-functions/${urlParams.id}`, {
                 name: name,
                 detail: detail,
                 is_open: isOpen

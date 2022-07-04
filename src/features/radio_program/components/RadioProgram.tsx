@@ -44,8 +44,8 @@ type ProgramCornersResponseType = {
 export const RadioProgram = () => {
     const urlParams = useParams<UrlParamsType>();
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const { apiData: radioProgram } = useFetchApiData<RadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs/${urlParams.id}`);
-    const { apiData: programCorners, isLoading } = useFetchApiData<ProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program_corners?page=${currentPage}&radio_program=${urlParams.id}`, currentPage);
+    const { apiData: radioProgram } = useFetchApiData<RadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${urlParams.id}`);
+    const { apiData: programCorners, isLoading } = useFetchApiData<ProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program-corners?page=${currentPage}&radio_program=${urlParams.id}`, currentPage);
 
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);

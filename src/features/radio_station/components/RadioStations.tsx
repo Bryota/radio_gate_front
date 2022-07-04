@@ -25,7 +25,7 @@ type RadioStationsResponseType = {
 
 export const RadioStations = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const { apiData: radioStations, isLoading } = useFetchApiData<RadioStationsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_stations?page=${currentPage}`, currentPage);
+    const { apiData: radioStations, isLoading } = useFetchApiData<RadioStationsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-stations?page=${currentPage}`, currentPage);
 
     const prevPagination = () => {
         setCurrentPage((pre_current_page) => pre_current_page - 1);

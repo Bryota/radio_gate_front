@@ -28,7 +28,7 @@ export const AdminEditRadioStation = () => {
     useEffect(() => {
         const fetchRadioStation = async () => {
             try {
-                const RadioStationresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_stations/${urlParams.id}`);
+                const RadioStationresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-stations/${urlParams.id}`);
                 setRadioStation(RadioStationresponse.data.radio_station)
             } catch (err) {
                 console.log(err);
@@ -39,7 +39,7 @@ export const AdminEditRadioStation = () => {
 
     const click_handler = async () => {
         try {
-            await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_stations/${urlParams.id}`, {
+            await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-stations/${urlParams.id}`, {
                 name,
             });
             navigation('/admin/radio_stations')

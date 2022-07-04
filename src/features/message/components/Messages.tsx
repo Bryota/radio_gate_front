@@ -47,7 +47,7 @@ type MessagesResponseType = {
 
 export const Messages = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const { apiData: messages, isLoading } = useFetchApiData<MessagesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages?page=${currentPage}`);
+    const { apiData: messages, isLoading } = useFetchApiData<MessagesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages?page=${currentPage}`);
 
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);

@@ -19,11 +19,11 @@ export const MessagePostComplete = () => {
         const fetchRadioProgramName = async () => {
             try {
                 if (radioProgram.is_my_radio_program) {
-                    const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${radioProgram.radio_program_id}`);
+                    const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs/${radioProgram.radio_program_id}`);
                     setRadioProgramName(RadioProgramResponse.data.listener_my_program.name);
                     setIsLoading(false);
                 } else {
-                    const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs/${radioProgram.radio_program_id}`);
+                    const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${radioProgram.radio_program_id}`);
                     setRadioProgramName(RadioProgramResponse.data.radio_program.name);
                     setIsLoading(false);
                 }

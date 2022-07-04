@@ -21,7 +21,7 @@ export const AdminRadioStations = () => {
     useEffect(() => {
         const fetchRadioStations = async () => {
             try {
-                const RadioStationsresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_stations`);
+                const RadioStationsresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-stations`);
                 setRadioStations(RadioStationsresponse.data.radio_stations)
             } catch (err) {
                 console.log(err);
@@ -36,7 +36,7 @@ export const AdminRadioStations = () => {
 
     const delete_radio_station = async (id: number) => {
         try {
-            const RadioStationsresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio_stations/${id}`);
+            const RadioStationsresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-stations/${id}`);
             if (RadioStationsresponse.status === 200) {
                 window.location.reload();
             } else {

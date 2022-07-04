@@ -26,7 +26,7 @@ type RequestFunctionResponseType = {
 export const RequestFunction = () => {
     const navigation = useNavigate();
     const urlParams = useParams<UrlParamsType>();
-    const { apiData: requestFunction, isLoading } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_functions/${urlParams.id}`);
+    const { apiData: requestFunction, isLoading } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${urlParams.id}`);
 
     return (
         <>

@@ -65,7 +65,7 @@ export const CreateRequestFunctionRequest = () => {
         if (validation()) {
             return;
         }
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request_function_requests`, {
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-function-requests`, {
             name,
             detail
         }).then(res => {

@@ -23,7 +23,7 @@ export const AdminRequestFunctions = () => {
     useEffect(() => {
         const fetchRequestFunctions = async () => {
             try {
-                const RequesetFunctionsresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_functions`);
+                const RequesetFunctionsresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request-functions`);
                 setRequestFunctions(RequesetFunctionsresponse.data.request_functions)
             } catch (err) {
                 console.log(err);
@@ -38,7 +38,7 @@ export const AdminRequestFunctions = () => {
 
     const delete_request_function = async (id: number) => {
         try {
-            const RequestFunctionresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request_functions/${id}`);
+            const RequestFunctionresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/request-functions/${id}`);
             if (RequestFunctionresponse.status === 200) {
                 window.location.reload();
             } else {

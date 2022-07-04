@@ -36,7 +36,7 @@ export const EditMessageTemplate = () => {
     const [content, setContent] = useState<string | undefined>('');
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
-    const { apiData: messageTemplate, isLoading } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`);
+    const { apiData: messageTemplate, isLoading } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${urlParams.id}`);
 
     useEffect(() => {
         setName(messageTemplate?.message_template.name);
@@ -81,7 +81,7 @@ export const EditMessageTemplate = () => {
             return;
         }
         try {
-            await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates/${urlParams.id}`, {
+            await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${urlParams.id}`, {
                 name,
                 content
             });

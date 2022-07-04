@@ -56,8 +56,8 @@ export const EditMyRadioProgram = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
-    const { apiData: myRadioProgram } = useFetchApiData<MyRadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`);
-    const { apiData: responseCorners, isLoading } = useFetchApiData<MyProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?page=${currentPage}&listener_my_program=${urlParams.id}`);
+    const { apiData: myRadioProgram } = useFetchApiData<MyRadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs/${urlParams.id}`);
+    const { apiData: responseCorners, isLoading } = useFetchApiData<MyProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?page=${currentPage}&listener_my_program=${urlParams.id}`);
 
     useEffect(() => {
         setId(myRadioProgram?.listener_my_program.id);
@@ -128,7 +128,7 @@ export const EditMyRadioProgram = () => {
 
     const deleteCorner = async (id: number) => {
         try {
-            await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners/${id}`);
+            await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners/${id}`);
             return (
                 navigation('/my_radio_programs', { state: { flash_message: 'コーナーを削除しました' } })
             )
@@ -150,19 +150,19 @@ export const EditMyRadioProgram = () => {
             return;
         }
         try {
-            await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`, {
+            await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs/${urlParams.id}`, {
                 name,
                 // TODO: メールアドレスを変更しないと更新できない
                 email
             });
             corners?.map(async (corner) => {
                 if (corner.id) {
-                    await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners/${corner.id}`, {
+                    await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners/${corner.id}`, {
                         'listener_my_program_id': Id,
                         'name': corner.name
                     });
                 } else {
-                    await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners`, {
+                    await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners`, {
                         'listener_my_program_id': Id,
                         'name': corner.name
                     })
@@ -176,7 +176,7 @@ export const EditMyRadioProgram = () => {
 
     const delete_handler = async () => {
         try {
-            await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs/${urlParams.id}`);
+            await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs/${urlParams.id}`);
             return (
                 navigation('/my_radio_programs', { state: { flash_message: 'マイラジオ番組を削除しました' } })
             )

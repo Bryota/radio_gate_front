@@ -92,7 +92,7 @@ export const MessagePost = () => {
     const fetchRadioStations = async () => {
         setRadioPrograms([]);
         try {
-            const radioStationsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_stations`);
+            const radioStationsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-stations`);
             setRadioStations(radioStationsResponse.data.radio_stations.data);
         } catch (err) {
             console.log(err);
@@ -101,7 +101,7 @@ export const MessagePost = () => {
 
     const fetchMyRadioPrograms = async () => {
         try {
-            const radioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
+            const radioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs`);
             setRadioPrograms(radioProgramsResponse.data.listener_my_programs.data);
         } catch (err) {
             console.log(err);
@@ -110,7 +110,7 @@ export const MessagePost = () => {
 
     const fetchMessageTemplates = async () => {
         try {
-            const messageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message_templates`);
+            const messageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates`);
             setMessageTemplates(messageTemplatesResponse.data.message_templates);
         } catch (err) {
             console.log(err);
@@ -119,7 +119,7 @@ export const MessagePost = () => {
 
     const fetchRadioProgramFromParams = async () => {
         try {
-            const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs/${getParams.get('radio_program')}`);
+            const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${getParams.get('radio_program')}`);
             fetchRadioProgramRelatedWithRadioStation(RadioProgramsResponse.data.radio_program.radio_station_id);
             fetchCorner(String(getParams.get('radio_program')))
         } catch (err) {
@@ -129,10 +129,10 @@ export const MessagePost = () => {
 
     const fetchMyRadioProgramFromParams = async () => {
         try {
-            const MyRadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
+            const MyRadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs`);
             setRadioPrograms(MyRadioProgramsResponse.data.listener_my_programs.data);
             setRadioProgramId(String(getParams.get('my_radio_program')));
-            const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${String(getParams.get('my_radio_program'))}`);
+            const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?listener_my_program=${String(getParams.get('my_radio_program'))}`);
             setCorners(ConrernsResponse.data.my_program_corners.data);
         } catch (err) {
             console.log(err);
@@ -142,7 +142,7 @@ export const MessagePost = () => {
     const fetchRadioProgramRelatedWithRadioStation = async (radio_station_id: string) => {
         setRadioStationId(radio_station_id);
         try {
-            const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs?radio_station=${radio_station_id}`);
+            const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs?radio_station=${radio_station_id}`);
             setRadioPrograms(RadioProgramsResponse.data.radio_programs.data);
         } catch (err) {
             console.log(err);
@@ -153,10 +153,10 @@ export const MessagePost = () => {
         setRadioProgramId(radio_program_id);
         try {
             if (isMyRadioProgram) {
-                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${radio_program_id}`);
+                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?listener_my_program=${radio_program_id}`);
                 setCorners(ConrernsResponse.data.my_program_corners.data);
             } else {
-                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program_corners?radio_program=${radio_program_id}`);
+                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/program-corners?radio_program=${radio_program_id}`);
                 setCorners(ConrernsResponse.data.program_corners.data);
             }
         } catch (err) {
@@ -166,9 +166,9 @@ export const MessagePost = () => {
 
     const fetchSavedMessage = async () => {
         try {
-            const SavedMessageResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/${getParams.get('saved_message')}`);
+            const SavedMessageResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages/${getParams.get('saved_message')}`);
             if (SavedMessageResponse.data.listener_message.radio_program_id) {
-                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio_programs/${SavedMessageResponse.data.listener_message.radio_program_id}`);
+                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${SavedMessageResponse.data.listener_message.radio_program_id}`);
                 fetchRadioProgramRelatedWithRadioStation(RadioProgramsResponse.data.radio_program.radio_station_id);
                 setRadioProgramId(String(SavedMessageResponse.data.listener_message.radio_program_id));
                 fetchCorner(SavedMessageResponse.data.listener_message.radio_program_id);
@@ -178,10 +178,10 @@ export const MessagePost = () => {
             }
             if (SavedMessageResponse.data.listener_message.listener_my_program_id) {
                 setIsMyRadioProgram(true);
-                const MyRadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`);
+                const MyRadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs`);
                 setRadioPrograms(MyRadioProgramsResponse.data.listener_my_programs.data);
                 setRadioProgramId(SavedMessageResponse.data.listener_message.listener_my_program_id);
-                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners?listener_my_program=${SavedMessageResponse.data.listener_message.listener_my_program_id}`);
+                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?listener_my_program=${SavedMessageResponse.data.listener_message.listener_my_program_id}`);
                 setCorners(ConrernsResponse.data.my_program_corners.data);
                 if (SavedMessageResponse.data.listener_message.my_program_corner_id) {
                     setProgramCornerId(String(SavedMessageResponse.data.listener_message.my_program_corner_id));
@@ -217,7 +217,7 @@ export const MessagePost = () => {
         try {
             let MessagePostResponse;
             if (isMyRadioProgram) {
-                MessagePostResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages`, {
+                MessagePostResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages`, {
                     listener_my_program_id: radioProgramId,
                     my_program_corner_id: programCornerId,
                     subject: subject,
@@ -227,7 +227,7 @@ export const MessagePost = () => {
                     tel_flag: isSentTel
                 });
             } else {
-                MessagePostResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages`, {
+                MessagePostResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages`, {
                     radio_program_id: radioProgramId,
                     program_corner_id: programCornerId,
                     subject: subject,
@@ -251,7 +251,7 @@ export const MessagePost = () => {
         try {
             let MessageSaveResponse;
             if (isMyRadioProgram) {
-                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/save`, {
+                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved-messages`, {
                     listener_my_program_id: radioProgramId,
                     my_program_corner_id: programCornerId,
                     subject: subject,
@@ -261,7 +261,7 @@ export const MessagePost = () => {
                     tel_flag: isSentTel
                 });
             } else {
-                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_messages/save`, {
+                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved-messages`, {
                     radio_program_id: radioProgramId,
                     program_corner_id: programCornerId,
                     subject: subject,

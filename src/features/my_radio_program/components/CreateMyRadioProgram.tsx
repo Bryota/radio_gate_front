@@ -89,14 +89,14 @@ export const CreateMyRadioProgram = () => {
         if (validation()) {
             return;
         }
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener_my_programs`, {
+        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs`, {
             name,
             email
         }).then(res => {
             if (res.status === 201) {
                 let my_radio_program_id = res.data.listener_my_program.id;
                 corners.map(async (corner) => {
-                    await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my_program_corners`, {
+                    await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners`, {
                         'listener_my_program_id': my_radio_program_id,
                         'name': corner.name
                     })

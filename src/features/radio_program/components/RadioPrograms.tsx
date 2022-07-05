@@ -16,7 +16,6 @@ import '../../../assets/css/components/pagination.css';
 
 export const RadioPrograms = () => {
     const urlParams = useParams<RadioProgramsUrlParamsType>();
-    console.log(urlParams)
     const [currentPage, setCurrentPage] = useState<number>(1);
     const { apiData: radioStationName } = useFetchApiData<RadioStationNameResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-station/${urlParams.radioStationId}/name`);
     const { apiData: radioPrograms, isLoading } = useFetchApiData<RadioProgramsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs?page=${currentPage}&radio_station=${urlParams.radioStationId}`, currentPage);

@@ -7,45 +7,14 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Input } from '../../../components/Form';
 import { Button, Loading } from '../../../components/Elements';
 import { EditInputItem } from './EditInputItem';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { UrlParamsType, validatedArrayType } from '../../../types/common';
+import { CornerType, MyRadioProgramResponseType, MyProgramCornersResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type UrlParamsType = {
-    id: string
-}
-
-type MyRadioProgramType = {
-    id: number
-    name: string
-    email: string
-    created_at: string
-    updated_at: string
-}
-
-type CornerType = {
-    id: string
-    name: string
-}
-
-type validatedArrayType = {
-    key: string,
-    message: string
-}
-
-type MyRadioProgramResponseType = {
-    listener_my_program: MyRadioProgramType
-    isLoading: boolean
-}
-
-type MyProgramCornersResponseType = {
-    my_program_corners: {
-        data: CornerType[]
-    }
-    isLoading: boolean
-}
 
 export const EditMyRadioProgram = () => {
     const urlParams = useParams<UrlParamsType>();
@@ -112,7 +81,7 @@ export const EditMyRadioProgram = () => {
     }
 
     const addCorner = () => {
-        setCorners([...corners!, { id: '', name: '' }]);
+        setCorners([...corners!, { id: 0, name: '' }]);
     }
 
     const changeCorner = (value: string, i: number): void => {

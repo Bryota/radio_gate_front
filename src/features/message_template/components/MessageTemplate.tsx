@@ -1,29 +1,16 @@
 import axios from '../../../settings/Axios';
 import { useParams, useNavigate } from 'react-router-dom'
-import { useState, useEffect } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { SelectedMessageTemplate } from './SelectedMessageTemplate';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { UrlParamsType } from '../../../types/common';
+import { MessageTemplateResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
-
-type UrlParamsType = {
-    id: string
-}
-
-type MessageTemplateType = {
-    id: number
-    name: string
-    content: string
-}
-
-type MessageTemplateResponseType = {
-    message_template: MessageTemplateType
-    isLoading: boolean
-}
 
 export const MessageTemplate = () => {
     const urlParams = useParams<UrlParamsType>();

@@ -1,8 +1,4 @@
-type SelectedRequestFunctionType = {
-    name?: string
-}
-
-export const SelectedRequestFunction = ({ name }: SelectedRequestFunctionType): JSX.Element => {
+export const SelectedRequestFunction = ({ name }: { name?: string }): JSX.Element => {
     return (
         <>
             <div className='mb-5'>

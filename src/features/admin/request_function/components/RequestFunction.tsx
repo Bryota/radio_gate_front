@@ -6,19 +6,8 @@ import { AdminMainLayout } from '../../../../components/Layout';
 import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements';
 
-type UrlParamsType = {
-    id: string
-}
-
-type RequestFunctionType = {
-    id: number
-    name: string
-    detail: string
-    point: number
-    is_open: boolean
-    created_at: string
-    updated_at: string
-}
+import { UrlParamsType } from '../../../../types/common';
+import { RequestFunctionType } from '../../../../types/admin';
 
 export const AdminRequestFunction = () => {
     const urlParams = useParams<UrlParamsType>();

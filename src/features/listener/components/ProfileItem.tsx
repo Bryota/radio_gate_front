@@ -1,11 +1,6 @@
-import '../../../assets/css/elements/listener.css';
+import { ProfileItemType } from '../../../types/listener';
 
-type ProfileItemType = {
-    label: string
-    value?: string
-    is_first_item?: boolean
-    no_value?: boolean
-}
+import '../../../assets/css/elements/listener.css';
 
 export const ProfileItem = ({ label, value, is_first_item = false, no_value = false }: ProfileItemType): JSX.Element => {
     return (

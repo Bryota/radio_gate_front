@@ -5,23 +5,11 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { SelectedRequestFunction } from './SelectedRequestFunction';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { UrlParamsType } from '../../../types/common';
+import { RequestFunctionResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
-
-type UrlParamsType = {
-    id: string
-}
-
-type RequestFunctionType = {
-    id: number
-    name: string
-    detail: string
-    point: number
-}
-
-type RequestFunctionResponseType = {
-    request_function: RequestFunctionType
-    isLoading: boolean
-}
 
 export const RequestFunction = () => {
     const navigation = useNavigate();

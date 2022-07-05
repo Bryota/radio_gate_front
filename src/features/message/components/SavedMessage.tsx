@@ -7,44 +7,11 @@ import { Button, Loading } from '../../../components/Elements';
 import { MessageItem } from './MessageItem';
 import { SelectedSavedMessage } from './SelectedSavedMessage';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { UrlParamsType } from '../../../types/common';
+import { MessageResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
-
-type UrlParamsType = {
-    id: string
-}
-
-type MessageType = {
-    id: number
-    radioProgramId: string
-    programCornerId: string
-    listenerMyProgramId: string
-    myProgramCornerId: string
-    subject?: string
-    content: string
-    radioName?: string
-    posted_at: string
-    listenerInfoFlag: boolean
-    telFlag: boolean
-    createdAt: string
-    updatedAt: string
-    listenerMyProgram?: {
-        name?: string
-    }
-    myProgramCorner?: {
-        name?: string
-    }
-    radioProgram?: {
-        name?: string
-    }
-    programCorner?: {
-        name?: string
-    }
-}
-
-type MessageResponseType = {
-    listener_message: MessageType
-    isLoading: boolean
-}
 
 export const SavedMessage = () => {
     const urlParams = useParams<UrlParamsType>();

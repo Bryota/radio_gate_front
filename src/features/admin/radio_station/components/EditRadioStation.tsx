@@ -8,16 +8,8 @@ import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements/admin/Button';
 import { AdminInput } from '../../../../components/Form/admin/Input';
 
-type UrlParamsType = {
-    id: string
-}
-
-type RadioStationsType = {
-    id: number
-    name: string
-    created_at: string
-    updated_at: string
-}
+import { UrlParamsType } from '../../../../types/common';
+import { RadioStationsType } from '../../../../types/admin/';
 
 export const AdminEditRadioStation = () => {
     const urlParams = useParams<UrlParamsType>();

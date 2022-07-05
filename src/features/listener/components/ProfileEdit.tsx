@@ -10,34 +10,11 @@ import { Button, Loading } from '../../../components/Elements';
 import { Input } from '../../../components/Form';
 import { validationCheck } from '../../../modules/validation/validationCheck';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { validatedArrayType } from '../../../types/common';
+import { ProfileResponseType } from '../../../types/listener';
+
 import '../../../assets/css/components/pagination.css';
-
-type validatedArrayType = {
-    key: string,
-    message: string
-}
-
-type ProfileType = {
-    id: number
-    last_name?: string
-    first_name?: string
-    last_name_kana?: string
-    first_name_kana?: string
-    radio_name?: string
-    post_code?: string
-    prefecture?: string
-    city?: string
-    house_number?: string
-    building?: string
-    room_number?: string
-    tel?: string
-    email: string
-}
-
-type ProfileResponseType = {
-    listener: ProfileType
-    isLoading: boolean
-}
 
 export const ProfileEdit = () => {
     const [lastName, setLastName] = useState<string | undefined>('');

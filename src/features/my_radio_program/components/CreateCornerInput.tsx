@@ -1,19 +1,4 @@
-type validatedArrayType = {
-    key: string,
-    message: string
-}
-
-type FormInputType = {
-    myProgeamConrerId: number
-    key: string,
-    value?: string,
-    text: string,
-    type?: string
-    isFirstItem?: boolean
-    validationMessages?: Array<validatedArrayType>
-    changeAction?: (event: React.ChangeEvent<HTMLInputElement>) => void
-    deleteFormAction?: (id: number) => void
-}
+import { FormInputType } from '../../../types/common';
 
 export const CreateCornerInput = ({ myProgeamConrerId, key, value = '', text, type = 'text', isFirstItem = false, validationMessages = [], changeAction = () => { }, deleteFormAction = () => { } }: FormInputType): JSX.Element => {
     return (

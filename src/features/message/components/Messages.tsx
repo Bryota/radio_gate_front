@@ -1,4 +1,3 @@
-import { useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
@@ -7,43 +6,11 @@ import { Pagination } from '../../../components/Pagination';
 import { Loading } from '../../../components/Elements';
 import { MessageList } from './MessageList';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { MessagesResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type MessageType = {
-    id: number
-    radioProgramId: string
-    programCornerId: string
-    listenerMyProgramId: string
-    myProgramCornerId: string
-    subject?: string
-    content: string
-    radioName?: string
-    posted_at: string
-    listenerInfoFlag: boolean
-    telFlag: boolean
-    createdAt: string
-    updatedAt: string
-    listenerMyProgram?: {
-        name?: string
-    }
-    myProgramCorner?: {
-        name?: string
-    }
-    radioProgram?: {
-        name?: string
-    }
-    programCorner?: {
-        name?: string
-    }
-}
-
-type MessagesResponseType = {
-    listener_message: {
-        data: MessageType[]
-    }
-    isLoading: boolean
-}
 
 export const Messages = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);

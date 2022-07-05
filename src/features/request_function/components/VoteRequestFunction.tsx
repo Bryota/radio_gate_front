@@ -9,26 +9,8 @@ import { SelectedRequestFunction } from './SelectedRequestFunction';
 import { validationCheck } from '../../../modules/validation/validationCheck';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
 
-type UrlParamsType = {
-    id: string
-}
-
-type RequestFunctionType = {
-    id: number
-    name: string
-    detail: string
-    point: number
-}
-
-type validatedArrayType = {
-    key: string,
-    message: string
-}
-
-type RequestFunctionResponseType = {
-    request_function: RequestFunctionType
-    isLoading: boolean
-}
+import { UrlParamsType, validatedArrayType } from '../../../types/common';
+import { RequestFunctionResponseType } from '../../../types/listener';
 
 export const VoteRequestFunction = () => {
     const [point, setPoint] = useState<string>('');

@@ -3,37 +3,16 @@ import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
-
 import { AdminMainLayout, AdminSidebar } from '../../../../components/Layout';
 import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements/admin/Button';
 import { AdminInput } from '../../../../components/Form/admin/Input';
 
-type UrlParamsType = {
-    id: string
-    radio_program_id: string
-}
+import { RadioProgramUrlParamsType, RadioProgramType, ProgramCornerType } from '../../../../types/admin';
 
-type RadioProgramType = {
-    id: number
-    name: string
-    email: string
-    created_at: string
-    updated_at: string
-    radio_station: {
-        name: string
-    }
-}
-
-type ProgramCornerType = {
-    id: number
-    name: string
-    created_at: string
-    updated_at: string
-}
 
 export const AdminEditCorner = () => {
-    const urlParams = useParams<UrlParamsType>();
+    const urlParams = useParams<RadioProgramUrlParamsType>();
     const [radioProgram, setRadioProgram] = useState<RadioProgramType>();
     const [programCorner, setProgramCorner] = useState<ProgramCornerType>();
     const [name, setName] = useState<string>();

@@ -1,10 +1,6 @@
-type MessageListType = {
-    id: number
-    radioProgram?: string
-    corner?: string
-}
+import { MessageListType } from '../../../types/listener';
 
-export const SavedMessageList = ({ id, radioProgram, corner }: MessageListType): JSX.Element => {
+export const SavedMessageList = ({ id, radioProgram, corner, postDate }: MessageListType): JSX.Element => {
     return (
         <>
             <div className='row align-items-center mt-4 p-2rem list-item'>

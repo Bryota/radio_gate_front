@@ -7,21 +7,11 @@ import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { Pagination } from '../../../components/Pagination';
 import { MessageTemplateList } from './MessageTemplateList';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { MessageTemplatesResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type MessageTemplateType = {
-    id: number
-    name: string
-    content: string
-}
-
-type MessageTemplatesResponseType = {
-    message_templates: {
-        data: MessageTemplateType[]
-    }
-    isLoading: boolean
-}
 
 export const MessageTemplates = () => {
     const location = useLocation();

@@ -7,21 +7,11 @@ import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { Pagination } from '../../../components/Pagination';
 import { RequestFunctionList } from './RequestFunctionList';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { RequestFunctionsResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type RequestFunctionType = {
-    id: number
-    name: string
-    detail: string
-    point: number
-    is_voted: boolean
-}
-
-type RequestFunctionsResponseType = {
-    request_functions: RequestFunctionType[]
-    isLoading: boolean
-}
 
 export const RequestFunctions = () => {
     const location = useLocation();

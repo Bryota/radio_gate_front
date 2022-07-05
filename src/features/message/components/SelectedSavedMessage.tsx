@@ -1,9 +1,6 @@
-import '../../../assets/css/elements/radio.css';
+import { SelectedMessageType } from '../../../types/listener';
 
-type SelectedMessageType = {
-    id?: number
-    name?: string
-}
+import '../../../assets/css/elements/radio.css';
 
 export const SelectedSavedMessage = ({ id, name }: SelectedMessageType): JSX.Element => {
     return (

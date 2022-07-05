@@ -8,23 +8,10 @@ import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements/admin/Button';
 import { AdminInput } from '../../../../components/Form/admin/Input';
 
-type UrlParamsType = {
-    radio_program_id: string
-}
-
-type RadioProgramType = {
-    id: number
-    name: string
-    email: string
-    created_at: string
-    updated_at: string
-    radio_station: {
-        name: string
-    }
-}
+import { RadioProgramType, RadioProgramUrlParamsType } from "../../../../types/admin";
 
 export const AdminCreateCorner = () => {
-    const urlParams = useParams<UrlParamsType>();
+    const urlParams = useParams<RadioProgramUrlParamsType>();
     const [radioProgram, setRadioProgram] = useState<RadioProgramType>();
     const [name, setName] = useState<string>();
     const navigation = useNavigate();

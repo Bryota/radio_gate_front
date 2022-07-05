@@ -7,23 +7,11 @@ import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { Pagination } from '../../../components/Pagination';
 import { MyRadioProgramList } from './MyRadioProgramList';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { MyRadioProgramsResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type MyRadioProgramsType = {
-    id: number
-    name: string
-    email: string
-    created_at: string
-    updated_at: string
-}
-
-type MyRadioProgramsResponseType = {
-    listener_my_programs: {
-        data: MyRadioProgramsType[]
-    }
-    isLoading: boolean
-}
 
 export const MyRadioPrograms = () => {
     const location = useLocation();

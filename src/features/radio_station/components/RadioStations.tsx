@@ -6,22 +6,11 @@ import { Pagination } from '../../../components/Pagination';
 import { Loading } from '../../../components/Elements';
 import { RadioStationList } from './RadioStationList';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { RadioStationsResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type RadioStationType = {
-    id: number
-    name: string
-    created_at: string
-    updated_at: string
-}
-
-type RadioStationsResponseType = {
-    radio_stations: {
-        data: RadioStationType[]
-    }
-    isLoading: boolean
-}
 
 export const RadioStations = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);

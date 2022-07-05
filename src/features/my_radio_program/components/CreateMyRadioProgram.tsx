@@ -9,18 +9,12 @@ import { Button } from '../../../components/Elements';
 import { CreateCornerInput } from './CreateCornerInput';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
+
+import { validatedArrayType } from '../../../types/common';
+import { CornerType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type CornerType = {
-    id: string
-    name: string
-}
-
-type validatedArrayType = {
-    key: string,
-    message: string
-}
 
 export const CreateMyRadioProgram = () => {
     const [name, setName] = useState<string>('');
@@ -111,7 +105,7 @@ export const CreateMyRadioProgram = () => {
     }
 
     const addCorner = () => {
-        setCorners([...corners, { id: '', name: '' }]);
+        setCorners([...corners, { id: 0, name: '' }]);
     }
 
     const changeCorner = (value: string, i: number): void => {

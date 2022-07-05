@@ -8,10 +8,7 @@ import { Input } from '../../../components/Form/Input';
 import { Button } from '../../../components/Elements/Button';
 import { validationCheck } from '../../../modules/validation/validationCheck';
 
-type validatedArrayType = {
-    key: string,
-    message: string
-}
+import { validatedArrayType } from '../../../types/common';
 
 export const PasswordReset = () => {
     const search = useLocation().search;

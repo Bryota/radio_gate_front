@@ -8,13 +8,11 @@ import { Button } from '../../../components/Elements/Button';
 import { Input, Textarea } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
+
+import { validatedArrayType } from '../../../types/common';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type validatedArrayType = {
-    key: string,
-    message: string
-}
 
 export const CreateRequestFunctionRequest = () => {
     const [name, setName] = useState<string>('');

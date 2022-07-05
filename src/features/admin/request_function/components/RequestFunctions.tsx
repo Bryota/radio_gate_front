@@ -7,14 +7,7 @@ import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements';
 import { AdminRequestFunctionList } from './RequestFunctionList';
 
-type RequestFunctionType = {
-    id: number
-    name: string
-    detail: string
-    point: number
-    created_at: string
-    updated_at: string
-}
+import { RequestFunctionType } from '../../../../types/admin';
 
 export const AdminRequestFunctions = () => {
     const [requestFunctions, setRequestFunctions] = useState<RequestFunctionType[]>([]);

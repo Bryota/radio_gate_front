@@ -1,7 +1,4 @@
-type RadioStationType = {
-    id: number
-    name: string
-}
+import { RadioStationType } from '../../../types/listener';
 
 export const RadioStationList = ({ id, name }: RadioStationType): JSX.Element => {
     return (

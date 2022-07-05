@@ -1,57 +1,22 @@
-import axios from '../../../settings/Axios';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
 import { Loading, FlashMessage } from '../../../components/Elements';
 import { SavedMessageList } from './SavedMessageList';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { MessagesResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type MessageType = {
-    id: number
-    radioProgramId: string
-    programCornerId: string
-    listenerMyProgramId: string
-    myProgramCornerId: string
-    subject?: string
-    content: string
-    radioName?: string
-    posted_at: string
-    listenerInfoFlag: boolean
-    telFlag: boolean
-    createdAt: string
-    updatedAt: string
-    listenerMyProgram?: {
-        name?: string
-    }
-    myProgramCorner?: {
-        name?: string
-    }
-    radioProgram?: {
-        name?: string
-    }
-    programCorner?: {
-        name?: string
-    }
-}
-
-type MessagesResponseType = {
-    listener_message: {
-        data: MessageType[]
-    }
-    isLoading: boolean
-}
 
 export const SavedMessages = () => {
     const location = useLocation();
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
-    const navigation = useNavigate();
     const { apiData: savedMessages, isLoading } = useFetchApiData<MessagesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved-messages?page=${currentPage}`);
 
     const prevPagination = () => {

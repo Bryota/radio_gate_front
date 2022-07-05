@@ -7,12 +7,7 @@ import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements';
 import { AdminRadioStationList } from './RadioStationList';
 
-type RadioStationsType = {
-    id: number
-    name: string
-    created_at: string
-    updated_at: string
-}
+import { RadioStationsType } from '../../../../types/admin/';
 
 export const AdminRadioStations = () => {
     const [radioStations, setRadioStations] = useState<RadioStationsType[]>([]);

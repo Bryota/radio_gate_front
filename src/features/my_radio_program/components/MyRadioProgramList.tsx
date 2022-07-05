@@ -1,11 +1,8 @@
+import { RadioProgramType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 
-type MyRadioProgramType = {
-    id: number
-    name: string
-}
-
-export const MyRadioProgramList = ({ id, name }: MyRadioProgramType): JSX.Element => {
+export const MyRadioProgramList = ({ id, name }: RadioProgramType): JSX.Element => {
     return (
         <>
             <div className='row mt-4 p-2rem list-item'>

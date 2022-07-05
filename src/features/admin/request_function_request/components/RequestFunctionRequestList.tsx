@@ -1,9 +1,4 @@
-type RequestFunctionRequestListType = {
-    id: number
-    name: string
-    post_date: string
-    click_action: (id: string) => void
-}
+import { RequestFunctionRequestListType } from '../../../../types/admin';
 
 export const AdminRequestFunctionRequestList = ({ id, name, post_date, click_action }: RequestFunctionRequestListType) => {
 

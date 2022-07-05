@@ -1,15 +1,6 @@
-import { AdminMainLayout, AdminSidebar } from '../../../../components/Layout';
-import { AdminPagehead } from '../../../../components/Pagehead';
-import { AdminButton } from '../../../../components/Elements';
+import { ListType } from "../../../../types/admin"
 
-type RadioProgramListType = {
-    id: number
-    name: string
-    is_first_item?: boolean
-    click_action: (id: string) => void
-}
-
-export const AdminRadioProgramList = ({ id, name, is_first_item = false, click_action }: RadioProgramListType) => {
+export const AdminRadioProgramList = ({ id, name, is_first_item = false, click_action }: ListType) => {
     return (
         <>
             <div className={is_first_item ? 'row bg-white text-center align-items-center py-3 px-4' : 'row bg-white text-center align-items-center py-3 px-4 mt-3'}>

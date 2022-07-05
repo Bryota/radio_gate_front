@@ -8,38 +8,12 @@ import { Loading, FlashMessage } from '../../../components/Elements';
 import { CornerList } from './CornerList';
 import { SelectedMyRadioProgram } from './SelectedMyRadioProgram';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { UrlParamsType } from '../../../types/common';
+import { MyRadioProgramResponseType, MyProgramCornersResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type UrlParamsType = {
-    id: string
-}
-
-type MyRadioProgramType = {
-    id: number
-    name: string
-    email: string
-    created_at: string
-    updated_at: string
-}
-
-type CornerType = {
-    id: number
-    listenerMyProgramId: number
-    name: string
-}
-
-type MyRadioProgramResponseType = {
-    listener_my_program: MyRadioProgramType
-    isLoading: boolean
-}
-
-type MyProgramCornersResponseType = {
-    my_program_corners: {
-        data: CornerType[]
-    }
-    isLoading: boolean
-}
 
 export const MyRadioProgram = () => {
     const location = useLocation();
@@ -80,7 +54,7 @@ export const MyRadioProgram = () => {
                             <CornerList
                                 key={corner.id}
                                 id={corner.id}
-                                myRadioProgramId={corner.listenerMyProgramId}
+                                programId={corner.programId}
                                 name={corner.name}
                             />
                         )

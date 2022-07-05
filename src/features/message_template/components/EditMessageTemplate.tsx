@@ -8,27 +8,11 @@ import { Button, Loading } from '../../../components/Elements';
 import { Input, Textarea } from '../../../components/Form';
 import { validationCheck } from '../../../modules/validation/validationCheck';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { UrlParamsType, validatedArrayType } from '../../../types/common';
+import { MessageTemplateResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
-
-type UrlParamsType = {
-    id: string
-}
-
-type MessageTemplateType = {
-    id: number
-    name: string
-    content: string
-}
-
-type validatedArrayType = {
-    key: string,
-    message: string
-}
-
-type MessageTemplateResponseType = {
-    message_template: MessageTemplateType
-    isLoading: boolean
-}
 
 export const EditMessageTemplate = () => {
     const urlParams = useParams<UrlParamsType>();

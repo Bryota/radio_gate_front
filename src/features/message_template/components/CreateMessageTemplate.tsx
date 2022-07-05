@@ -8,12 +8,10 @@ import { Button } from '../../../components/Elements/Button';
 import { Input, Textarea } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
-import '../../../assets/css/elements/radio.css';
 
-type validatedArrayType = {
-    key: string,
-    message: string
-}
+import { validatedArrayType } from '../../../types/common';
+
+import '../../../assets/css/elements/radio.css';
 
 export const CreateMessageTemplate = () => {
     const [name, setName] = useState<string>('');

@@ -1,12 +1,6 @@
-type CornerListType = {
-    id: number
-    name: string
-    radio_program_id?: number
-    is_first_item?: boolean
-    click_action: (id: string) => void
-}
+import { ListType } from "../../../../types/admin";
 
-export const Corners = ({ id, name, radio_program_id, is_first_item = false, click_action }: CornerListType) => {
+export const Corners = ({ id, name, radio_program_id, is_first_item = false, click_action }: ListType) => {
     return (
         <>
             <div className={is_first_item ? 'row bg-white text-center align-items-center py-3 px-4' : 'row bg-white text-center align-items-center py-3 px-4 mt-3'}>

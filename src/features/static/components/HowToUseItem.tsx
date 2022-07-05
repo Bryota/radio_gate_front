@@ -1,10 +1,7 @@
 import '../../../assets/css/elements/radio.css';
 import MailIcon from '../../../assets/images/mail_icon.svg';
 
-type HowToUseType = {
-    title: string
-    text: string
-}
+import { HowToUseType } from '../../../types/listener';
 
 export const HowToUseItem = ({ title, text }: HowToUseType): JSX.Element => {
     return (

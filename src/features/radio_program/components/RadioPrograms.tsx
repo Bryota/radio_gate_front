@@ -8,35 +8,14 @@ import { Loading } from '../../../components/Elements';
 import { RadioStation } from './RadioStation';
 import { RadioProgramList } from './RadioProgramList';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { RadioProgramsUrlParamsType, RadioStationNameResponseType, RadioProgramsResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
-type UrlParamsType = {
-    radioStationId: string
-}
-
-type RadioProgramType = {
-    id: number
-    name: string
-    email: string
-    created_at: string
-    updated_at: string
-}
-
-type RadioStationNameResponseType = {
-    radio_station_name: string
-    isLoading: boolean
-}
-
-type RadioProgramsResponseType = {
-    radio_programs: {
-        data: RadioProgramType[]
-    }
-    isLoading: boolean
-}
-
 export const RadioPrograms = () => {
-    const urlParams = useParams<UrlParamsType>();
+    const urlParams = useParams<RadioProgramsUrlParamsType>();
     const [currentPage, setCurrentPage] = useState<number>(1);
     const { apiData: radioStationName } = useFetchApiData<RadioStationNameResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-station/${urlParams.radioStationId}/name`);
     const { apiData: radioPrograms, isLoading } = useFetchApiData<RadioProgramsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs?page=${currentPage}&radio_station=${urlParams.radioStationId}`, currentPage);

@@ -8,9 +8,7 @@ import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements/admin/Button';
 import { AdminInput } from '../../../../components/Form/admin/Input';
 
-type UrlParamsType = {
-    id: string
-}
+import { UrlParamsType } from '../../../../types/common';
 
 type RadioProgramType = {
     id: number

@@ -9,10 +9,7 @@ import { Input, Textarea } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
 
-type validatedArrayType = {
-    key: string,
-    message: string
-}
+import { validatedArrayType } from '../../../types/common';
 
 export const DeveloperContact = () => {
     const [email, setEmail] = useState<string>('');

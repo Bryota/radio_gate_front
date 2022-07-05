@@ -1,11 +1,6 @@
-import Moment from 'react-moment';
+import { MessageListType } from '../../../types/listener';
 
-type MessageListType = {
-    id: number
-    radioProgram?: string
-    corner?: string
-    postDate: string
-}
+import Moment from 'react-moment';
 
 export const MessageList = ({ id, radioProgram, corner, postDate }: MessageListType): JSX.Element => {
     return (

@@ -1,10 +1,8 @@
 import Moment from 'react-moment';
-import '../../../assets/css/elements/radio.css';
 
-type SelectedMessageType = {
-    name?: string
-    postDate?: string
-}
+import { SelectedMessageType } from '../../../types/listener';
+
+import '../../../assets/css/elements/radio.css';
 
 export const SelectedMessage = ({ name, postDate }: SelectedMessageType): JSX.Element => {
     return (

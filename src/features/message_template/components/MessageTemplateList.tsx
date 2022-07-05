@@ -1,9 +1,6 @@
-import '../../../assets/css/elements/radio.css';
+import { MessageTemplateType } from '../../../types/listener';
 
-type MessageTemplateType = {
-    id: number
-    name: string
-}
+import '../../../assets/css/elements/radio.css';
 
 export const MessageTemplateList = ({ id, name }: MessageTemplateType): JSX.Element => {
     return (

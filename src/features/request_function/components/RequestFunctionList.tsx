@@ -1,9 +1,4 @@
-type RequestFunctionType = {
-    id: number
-    name: string
-    point: number
-    is_voted: boolean
-}
+import { RequestFunctionType } from '../../../types/listener';
 
 export const RequestFunctionList = ({ id, name, point, is_voted }: RequestFunctionType): JSX.Element => {
     return (

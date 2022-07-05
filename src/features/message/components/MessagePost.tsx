@@ -7,15 +7,10 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { Input, CheckBox, Textarea, Select } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
-import '../../../assets/css/components/pagination.css';
 
-type SelectItemType = {
-    id: number
-    name: string
-    content?: string
-    created_at: string
-    updated_at: string
-}
+import { SelectItemType } from '../../../types/common';
+
+import '../../../assets/css/components/pagination.css';
 
 export const MessagePost = () => {
     const search = useLocation().search;

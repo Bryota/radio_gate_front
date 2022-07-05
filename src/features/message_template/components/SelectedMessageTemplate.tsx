@@ -1,10 +1,6 @@
 import '../../../assets/css/elements/radio.css';
 
-type SelectedMessageTemplateType = {
-    name?: string
-}
-
-export const SelectedMessageTemplate = ({ name }: SelectedMessageTemplateType): JSX.Element => {
+export const SelectedMessageTemplate = ({ name }: { name?: string }): JSX.Element => {
     return (
         <>
             <div className='mb-5'>

@@ -1,9 +1,6 @@
-import '../../../assets/css/elements/radio.css';
+import { MessageItemType } from '../../../types/listener';
 
-type MessageItemType = {
-    itemName: string
-    value?: string
-}
+import '../../../assets/css/elements/radio.css';
 
 export const MessageItem = ({ itemName, value }: MessageItemType): JSX.Element => {
     return (

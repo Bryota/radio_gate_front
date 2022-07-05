@@ -7,9 +7,7 @@ import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements';
 import { AdminInput, AdminTextarea, AdminCheckBox } from '../../../../components/Form';
 
-type UrlParamsType = {
-    id: string
-}
+import { UrlParamsType } from '../../../../types/common';
 
 export const AdminEditRequestFunction = () => {
     const urlParams = useParams<UrlParamsType>();

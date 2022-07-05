@@ -8,31 +8,21 @@ import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements';
 import { AdminRadioProgramList } from './RadioProgramList';
 
-type UrlParamsType = {
-    radio_station_id: string
-}
-
-type RadioProgramsType = {
-    id: number
-    name: string
-    email: string
-    created_at: string
-    updated_at: string
-}
+import { RadioProgramsUrlParamsType, RadioProgramType } from '../../../../types/listener';
 
 export const AdminRadioPrograms = () => {
-    const urlParams = useParams<UrlParamsType>();
-    const [radioPrograms, setRadioPrograms] = useState<RadioProgramsType[]>([]);
+    const urlParams = useParams<RadioProgramsUrlParamsType>();
+    const [radioPrograms, setRadioPrograms] = useState<RadioProgramType[]>([]);
     const [radioStationName, setRadioStationName] = useState<string>();
     const navigation = useNavigate();
 
     useEffect(() => {
         const fetchRadioPrograms = async () => {
             try {
-                const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-station/${urlParams.radio_station_id}/name`);
+                const RadioStationNameResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-station/${urlParams.radioStationId}/name`);
                 setRadioStationName(RadioStationNameResponse.data.radio_station_name);
 
-                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-programs?radio_station=${urlParams.radio_station_id}`);
+                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-programs?radio_station=${urlParams.radioStationId}`);
                 setRadioPrograms(RadioProgramsResponse.data.radio_programs);
             } catch (err) {
                 console.log(err);
@@ -45,7 +35,7 @@ export const AdminRadioPrograms = () => {
         return navigation('/admin/radio_program/create');
     }
 
-    const delete_radio_program = async (id: number) => {
+    const delete_radio_program = async (id: number | undefined) => {
         try {
             const RadioProgramresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-programs/${id}`);
             if (RadioProgramresponse.status === 200) {

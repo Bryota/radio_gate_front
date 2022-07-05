@@ -5,12 +5,7 @@ import { AdminMainLayout } from '../../../../components/Layout';
 import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminRequestFunctionRequestList } from './RequestFunctionRequestList';
 
-type RequestFunctionRequestType = {
-    id: number
-    name: string
-    created_at: string
-    updated_at: string
-}
+import { RequestFunctionRequestType } from '../../../../types/admin';
 
 export const AdminRequestFunctionRequests = () => {
     const [requestFunctionRequests, setRequestFunctionRequests] = useState<RequestFunctionRequestType[]>([]);

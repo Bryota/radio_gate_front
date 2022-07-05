@@ -8,38 +8,12 @@ import { Loading } from '../../../components/Elements';
 import { CornerList } from './CornerList';
 import { SelectedRadioProgram } from './SelectedRadioProgram';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+
+import { UrlParamsType } from '../../../types/common';
+import { RadioProgramResponseType, ProgramCornersResponseType } from '../../../types/listener';
+
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
-
-type UrlParamsType = {
-    id: string
-}
-
-type RadioProgramType = {
-    id: number
-    name: string
-    email: string
-    created_at: string
-    updated_at: string
-}
-
-type ProgramCornersType = {
-    id: number
-    radio_program_id: number
-    name: string
-}
-
-type RadioProgramResponseType = {
-    radio_program: RadioProgramType
-    isLoading: boolean
-}
-
-type ProgramCornersResponseType = {
-    program_corners: {
-        data: ProgramCornersType[]
-    }
-    isLoading: boolean
-}
 
 export const RadioProgram = () => {
     const urlParams = useParams<UrlParamsType>();
@@ -77,7 +51,7 @@ export const RadioProgram = () => {
                             <CornerList
                                 id={programCorner.id}
                                 name={programCorner.name}
-                                radioProgramId={programCorner.radio_program_id}
+                                programId={programCorner.radio_program_id}
                             />
                         )
                     })}

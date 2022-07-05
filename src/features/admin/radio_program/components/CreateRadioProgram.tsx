@@ -8,12 +8,7 @@ import { AdminButton } from '../../../../components/Elements/admin/Button';
 import { AdminInput } from '../../../../components/Form/admin/Input';
 import { AdminSelect } from '../../../../components/Form/admin/Select';
 
-type RadioStationsType = {
-    id: number
-    name: string
-    created_at: string
-    updated_at: string
-}
+import { RadioStationsType } from '../../../../types/admin';
 
 export const AdminCreateRadioProgram = () => {
     const [radioStations, setRadioStations] = useState<RadioStationsType[]>([]);

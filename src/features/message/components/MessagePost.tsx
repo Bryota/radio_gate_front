@@ -7,6 +7,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { Input, CheckBox, Textarea, Select } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { usePostApi } from '../../../hooks/usePostApi';
 
 import { SelectItemType } from '../../../types/common';
 
@@ -31,6 +32,43 @@ export const MessagePost = () => {
     const [radioName, setRadioName] = useState<string>();
     const [firstRender, setFirstRender] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const { response: myRadioProgramPostResponse, postApi: postMessageToMyRadioProgram } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages`, {
+        listener_my_program_id: radioProgramId,
+        my_program_corner_id: programCornerId,
+        subject: subject,
+        content: content,
+        radio_name: radioName,
+        listener_info_flag: isSentListenerinfo,
+        tel_flag: isSentTel
+    });
+    const { response: radioProgramPostResponse, postApi: PostMessageToRadioProgram } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages`, {
+        radio_program_id: radioProgramId,
+        program_corner_id: programCornerId,
+        subject: subject,
+        content: content,
+        radio_name: radioName,
+        listener_info_flag: isSentListenerinfo,
+        tel_flag: isSentTel
+    });
+    const { response: myRadioProgramSaveResponse, postApi: saveMessageToMyRadioProgram } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved-messages`, {
+        listener_my_program_id: radioProgramId,
+        my_program_corner_id: programCornerId,
+        subject: subject,
+        content: content,
+        radio_name: radioName,
+        listener_info_flag: isSentListenerinfo,
+        tel_flag: isSentTel
+    });
+    const { response: radioProgramSaveResponse, postApi: saveMessageToRadioProgram } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved-messages`, {
+        radio_program_id: radioProgramId,
+        program_corner_id: programCornerId,
+        subject: subject,
+        content: content,
+        radio_name: radioName,
+        listener_info_flag: isSentListenerinfo,
+        tel_flag: isSentTel
+    });
+
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -212,30 +250,16 @@ export const MessagePost = () => {
         try {
             let MessagePostResponse;
             if (isMyRadioProgram) {
-                MessagePostResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages`, {
-                    listener_my_program_id: radioProgramId,
-                    my_program_corner_id: programCornerId,
-                    subject: subject,
-                    content: content,
-                    radio_name: radioName,
-                    listener_info_flag: isSentListenerinfo,
-                    tel_flag: isSentTel
-                });
+                postMessageToMyRadioProgram();
+                MessagePostResponse = myRadioProgramPostResponse;
             } else {
-                MessagePostResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages`, {
-                    radio_program_id: radioProgramId,
-                    program_corner_id: programCornerId,
-                    subject: subject,
-                    content: content,
-                    radio_name: radioName,
-                    listener_info_flag: isSentListenerinfo,
-                    tel_flag: isSentTel
-                });
+                PostMessageToRadioProgram();
+                MessagePostResponse = radioProgramPostResponse;
             }
             if (MessagePostResponse.status === 201) {
                 navigation('/message_post/complete', { state: { radio_program_id: radioProgramId, is_my_radio_program: isMyRadioProgram } })
             } else {
-                alert(MessagePostResponse.data.message)
+                alert('投稿に失敗しました。')
             }
         } catch (err) {
             console.log(err)
@@ -246,30 +270,16 @@ export const MessagePost = () => {
         try {
             let MessageSaveResponse;
             if (isMyRadioProgram) {
-                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved-messages`, {
-                    listener_my_program_id: radioProgramId,
-                    my_program_corner_id: programCornerId,
-                    subject: subject,
-                    content: content,
-                    radio_name: radioName,
-                    listener_info_flag: isSentListenerinfo,
-                    tel_flag: isSentTel
-                });
+                saveMessageToMyRadioProgram();
+                MessageSaveResponse = myRadioProgramSaveResponse;
             } else {
-                MessageSaveResponse = await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved-messages`, {
-                    radio_program_id: radioProgramId,
-                    program_corner_id: programCornerId,
-                    subject: subject,
-                    content: content,
-                    radio_name: radioName,
-                    listener_info_flag: isSentListenerinfo,
-                    tel_flag: isSentTel
-                });
+                saveMessageToRadioProgram();
+                MessageSaveResponse = radioProgramSaveResponse;
             }
             if (MessageSaveResponse.status === 201) {
                 navigation('/saved_messages', { state: { flash_message: 'メッセージを一時保存しました' } })
             } else {
-                alert(MessageSaveResponse.data.message);
+                alert('保存に失敗しました。');
             }
         } catch (err) {
             console.log(err)

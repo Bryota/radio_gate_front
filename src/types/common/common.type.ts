@@ -27,3 +27,8 @@ export type SelectItemType = {
     created_at: string
     updated_at: string
 }
+
+export type ApiResponseType = {
+    data: {},
+    status: number | undefined
+}

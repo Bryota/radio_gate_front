@@ -1,4 +1,3 @@
-import axios from '../../../settings/Axios';
 import { useNavigate } from 'react-router-dom';
 import { useState, useEffect } from 'react';
 
@@ -8,6 +7,7 @@ import { Button } from '../../../components/Elements/Button';
 import { Input, Textarea } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
+import { usePostApi } from '../../../hooks/usePostApi';
 
 import { validatedArrayType } from '../../../types/common';
 
@@ -18,6 +18,7 @@ export const CreateRequestFunctionRequest = () => {
     const [name, setName] = useState<string>('');
     const [detail, setDetail] = useState<string>('');
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
+    const { response, postApi: CreateRequestFunctionRequest } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-function-requests`, { name, detail });
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -63,16 +64,12 @@ export const CreateRequestFunctionRequest = () => {
         if (validation()) {
             return;
         }
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-function-requests`, {
-            name,
-            detail
-        }).then(res => {
-            if (res.status === 201) {
-                navigation('/request_functions', { state: { flash_message: '機能リクエストを申請しました' } })
-            } else {
-                navigation('/request_functions', { state: { flash_message: '機能リクエストの申請に失敗しました' } })
-            }
-        });
+        CreateRequestFunctionRequest();
+        if (response.status === 201) {
+            navigation('/request_functions', { state: { flash_message: '機能リクエストを申請しました' } })
+        } else {
+            navigation('/request_functions', { state: { flash_message: '機能リクエストの申請に失敗しました' } })
+        }
     }
 
     return (

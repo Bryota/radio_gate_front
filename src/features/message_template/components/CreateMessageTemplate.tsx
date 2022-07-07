@@ -1,4 +1,3 @@
-import axios from '../../../settings/Axios';
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -8,6 +7,7 @@ import { Button } from '../../../components/Elements/Button';
 import { Input, Textarea } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
+import { usePostApi } from '../../../hooks/usePostApi';
 
 import { validatedArrayType } from '../../../types/common';
 
@@ -17,6 +17,7 @@ export const CreateMessageTemplate = () => {
     const [name, setName] = useState<string>('');
     const [content, setContent] = useState<string>('');
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
+    const { response, postApi: CreateMessageTemplate } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates`, { name, content });
     const navigation = useNavigate();
 
     useEffect(() => {
@@ -67,16 +68,12 @@ export const CreateMessageTemplate = () => {
         if (validation()) {
             return;
         }
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates`, {
-            name,
-            content
-        }).then(res => {
-            if (res.status === 201) {
-                navigation('/message_templates', { state: { flash_message: '新しいメッセージテンプレートを作成しました' } })
-            } else {
-                navigation('/message_templates', { state: { flash_message: 'メッセージテンプレートの作成に失敗しました' } })
-            }
-        });
+        CreateMessageTemplate();
+        if (response.status === 201) {
+            navigation('/message_templates', { state: { flash_message: '新しいメッセージテンプレートを作成しました' } })
+        } else {
+            navigation('/message_templates', { state: { flash_message: 'メッセージテンプレートの作成に失敗しました' } })
+        }
     }
 
     return (

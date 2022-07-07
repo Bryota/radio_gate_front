@@ -8,6 +8,7 @@ import { Button, Loading } from '../../../components/Elements';
 import { SelectedRequestFunction } from './SelectedRequestFunction';
 import { validationCheck } from '../../../modules/validation/validationCheck';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+import { usePostApi } from '../../../hooks/usePostApi';
 
 import { UrlParamsType, validatedArrayType } from '../../../types/common';
 import { RequestFunctionResponseType } from '../../../types/listener';
@@ -18,6 +19,7 @@ export const VoteRequestFunction = () => {
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
     const { apiData: requestFunction, isLoading } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${urlParams.id}`);
+    const { response, postApi: UpdateRequestFunctionPoint } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${requestFunction?.request_function.id}/point`, { point });
 
     const validation = () => {
         const result = validationCheck(
@@ -41,15 +43,12 @@ export const VoteRequestFunction = () => {
         if (validation()) {
             return;
         }
-        await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${requestFunction?.request_function.id}/point`, {
-            point: point
-        }).then(res => {
-            if (res.status === 201) {
-                navigation('/request_functions', { state: { flash_message: '機能リクエストに投票しました' } })
-            } else {
-                navigation('/request_functions', { state: { flash_message: '機能リクエストの投票に失敗しました' } })
-            }
-        });
+        UpdateRequestFunctionPoint();
+        if (response.status === 201) {
+            navigation('/request_functions', { state: { flash_message: '機能リクエストに投票しました' } })
+        } else {
+            navigation('/request_functions', { state: { flash_message: '機能リクエストの投票に失敗しました' } })
+        }
     }
 
     return (

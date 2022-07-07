@@ -9,6 +9,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Input } from '../../../components/Form/Input';
 import { Button } from '../../../components/Elements/Button';
 import { validationCheck } from '../../../modules/validation/validationCheck';
+import { usePostApi } from '../../../hooks/usePostApi';
 
 import { validatedArrayType } from '../../../types/common';
 
@@ -28,6 +29,22 @@ export const Register = () => {
     const [roomNumber, setRoomNumber] = useState<string>('');
     const [tel, setTel] = useState<string>('');
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
+    const { response, postApi: Register } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/register`, {
+        email,
+        password,
+        last_name: lastName,
+        first_name: firstName,
+        last_name_kana: lastNameKana,
+        first_name_kana: firstNameKana,
+        radio_name: radioName,
+        post_code: Number(postCode),
+        prefecture: prefecture,
+        city: city,
+        house_number: houseNumber,
+        building: building,
+        room_number: roomNumber,
+        tel: tel
+    });
     const navigation = useNavigate();
 
     const validation = () => {
@@ -171,36 +188,16 @@ export const Register = () => {
         if (validation()) {
             return;
         }
-        try {
-            await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/register`, {
-                email,
-                password,
-                last_name: lastName,
-                first_name: firstName,
-                last_name_kana: lastNameKana,
-                first_name_kana: firstNameKana,
-                radio_name: radioName,
-                post_code: Number(postCode),
-                prefecture: prefecture,
-                city: city,
-                house_number: houseNumber,
-                building: building,
-                room_number: roomNumber,
-                tel: tel
-            }).then(async (res) => {
-                if (res.status === 200) {
-                    await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`)
-                        .then(() => {
-                            return (
-                                navigation('/message_post')
-                            );
-                        })
-                } else {
-                    alert('アカウントの作成に失敗しました')
-                }
-            })
-        } catch (err) {
-            console.log(err)
+        Register();
+        if (response.status === 200) {
+            await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`)
+                .then(() => {
+                    return (
+                        navigation('/message_post')
+                    );
+                })
+        } else {
+            alert('アカウントの作成に失敗しました')
         }
     }
 

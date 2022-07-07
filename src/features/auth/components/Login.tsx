@@ -1,12 +1,12 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import axios from '../../../settings/Axios';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Input } from '../../../components/Form/Input';
 import { Button } from '../../../components/Elements/Button';
 import { validationCheck } from '../../../modules/validation/validationCheck';
+import { usePostApi } from '../../../hooks/usePostApi';
 
 import { validatedArrayType } from '../../../types/common';
 
@@ -14,6 +14,7 @@ export const Login = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
+    const { response, postApi: SendCredentials } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/login`, { email, password });
     const navigation = useNavigate();
 
     const validation = () => {
@@ -48,22 +49,15 @@ export const Login = () => {
         if (validation()) {
             return;
         }
-        await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`)
-            .then(async () => {
-                await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/login`, {
-                    email,
-                    password
-                }).then(res => {
-                    // TODO: エラー時の処理追加
-                    if (res.status === 200) {
-                        return (
-                            navigation('/message_post')
-                        )
-                    } else {
-                        console.log(res.data.message);
-                    }
-                })
-            })
+        SendCredentials();
+        // TODO: エラー時の処理追加
+        if (response.status === 200) {
+            return (
+                navigation('/message_post')
+            )
+        } else {
+            console.log('ログインできませんでした。');
+        }
     }
 
     return (

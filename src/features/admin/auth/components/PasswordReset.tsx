@@ -54,7 +54,6 @@ export const AdminPasswordReset = () => {
     }
 
     const resetPassword = async () => {
-        console.log('test')
         if (validation()) {
             return;
         }
@@ -67,7 +66,7 @@ export const AdminPasswordReset = () => {
             }).then((res) => {
                 if (res.status === 200) {
                     return (
-                        navigation('/login')
+                        navigation('/admin/login')
                     );
                 } else {
                     alert(res.data.message)

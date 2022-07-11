@@ -46,7 +46,7 @@ export const AdminForgotPassword = () => {
             await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`)
                 .then(async () => {
                     SendEmail();
-                    console.log(response)
+                    // TODO: 送信後対応
                     if (response.status === 200) {
                         alert('メールを送信しました');
                     } else {

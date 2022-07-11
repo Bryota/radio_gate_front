@@ -11,7 +11,7 @@ import { MessagePost, MessagePostComplete, Messages, Message, SavedMessages, Sav
 import { RequestFunctions, RequestFunction, CreateRequestFunctionRequest, VoteRequestFunction } from '../features/request_function';
 import { Inquiry, DeveloperContact, HowToUse, NotFound } from '../features/static';
 
-import { AdminForgotPassword, AdminLogin, AdminPasswordReset, AdminPasswordUpdate } from '../features/admin/auth';
+import { AdminForgotPassword, AdminLogin, AdminPasswordReset } from '../features/admin/auth';
 import { AdminRequestFunctions, AdminRequestFunction, AdminCreateRequestFunction, AdminEditRequestFunction } from '../features/admin/request_function';
 import { AdminRequestFunctionRequests, AdminRequestFunctionRequest } from '../features/admin/request_function_request';
 import { AdminRadioStations, AdminCreateRadioStation, AdminEditRadioStation } from '../features/admin/radio_station';
@@ -85,7 +85,6 @@ export const AppRoutes = () => {
         { path: 'admin/forgot_password', element: <AdminForgotPassword /> },
         { path: 'admin/login', element: <AdminLogin /> },
         { path: 'admin/password_reset', element: <AdminPasswordReset /> },
-        { path: 'admin/password_update', element: <AdminPasswordUpdate /> },
     ];
 
     //機能リクエスト関連

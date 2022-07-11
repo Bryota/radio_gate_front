@@ -1,35 +1,27 @@
 import axios from '../../../../settings/Axios';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 
 import { AdminMainLayout, AdminSidebar } from '../../../../components/Layout';
 import { AdminPagehead } from '../../../../components/Pagehead';
 import { AdminButton } from '../../../../components/Elements';
 import { AdminRadioStationList } from './RadioStationList';
+import { useFetchApiData } from '../../../../hooks/admin/useFetchApiData';
 
-import { RadioStationsType } from '../../../../types/admin/';
+import { RadioStationsResponseType } from '../../../../types/listener';
 
 export const AdminRadioStations = () => {
-    const [radioStations, setRadioStations] = useState<RadioStationsType[]>([]);
     const navigation = useNavigate();
-
-    useEffect(() => {
-        const fetchRadioStations = async () => {
-            try {
-                const RadioStationsresponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-stations`);
-                setRadioStations(RadioStationsresponse.data.radio_stations)
-            } catch (err) {
-                console.log(err);
-            }
-        }
-        fetchRadioStations();
-    }, []);
+    const [currentPage, setCurrentPage] = useState<number>(1);
+    const { apiData: radioStations } = useFetchApiData<RadioStationsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-stations?page=${currentPage}`, currentPage);
 
     const click_handler = () => {
         return navigation('/admin/radio_station/create')
     }
 
-    const delete_radio_station = async (id: number) => {
+    console.log(radioStations)
+
+    const delete_radio_station = async (id: number | undefined) => {
         try {
             const RadioStationsresponse = await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/admin/radio-stations/${id}`);
             if (RadioStationsresponse.status === 200) {
@@ -60,7 +52,7 @@ export const AdminRadioStations = () => {
                     </div>
                     <div className="col-8">
                         {
-                            radioStations.map((radioStation, index) => {
+                            radioStations?.radio_stations.data.map((radioStation, index) => {
                                 return (
                                     <AdminRadioStationList
                                         key={radioStation.id}

@@ -86,13 +86,13 @@ export const AdminEditRadioProgram = () => {
                             key='name'
                             text='name'
                             value={radioProgram?.name}
-                            change_action={e => setName(e.target.value)}
+                            changeAction={e => setName(e.target.value)}
                         />
                         <AdminInput
                             key='email'
                             text='email'
                             value={radioProgram?.email}
-                            change_action={e => setEmail(e.target.value)}
+                            changeAction={e => setEmail(e.target.value)}
                         />
                         <AdminButton
                             text='更新'

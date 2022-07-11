@@ -55,7 +55,7 @@ export const AdminEditRadioStation = () => {
                             text='name'
                             value={radioStation?.name}
                             is_first_item={true}
-                            change_action={e => setName(e.target.value)}
+                            changeAction={e => setName(e.target.value)}
                         />
                         <AdminButton
                             text='更新'

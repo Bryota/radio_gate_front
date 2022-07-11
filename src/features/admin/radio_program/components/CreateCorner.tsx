@@ -63,7 +63,7 @@ export const AdminCreateCorner = () => {
                         <AdminInput
                             key='name'
                             text='name'
-                            change_action={e => setName(e.target.value)}
+                            changeAction={e => setName(e.target.value)}
                         />
                         <AdminButton
                             text='作成'

@@ -67,7 +67,7 @@ export const AdminEditCorner = () => {
                             key='name'
                             value={programCorner?.name}
                             text='name'
-                            change_action={e => setName(e.target.value)}
+                            changeAction={e => setName(e.target.value)}
                         />
                         <AdminButton
                             text='更新'

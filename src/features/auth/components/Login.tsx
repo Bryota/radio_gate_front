@@ -1,3 +1,4 @@
+import axios from '../../../settings/Axios';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -49,7 +50,9 @@ export const Login = () => {
         if (validation()) {
             return;
         }
-        SendCredentials();
+        axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`).then(() => {
+            SendCredentials();
+        });
         // TODO: エラー時の処理追加
         if (response.status === 200) {
             return (

@@ -66,7 +66,7 @@ export const PasswordReset = () => {
             }).then((res) => {
                 if (res.status === 200) {
                     return (
-                        navigation('/login')
+                        navigation('/admin/login')
                     );
                 } else {
                     alert(res.data.message)
@@ -76,6 +76,7 @@ export const PasswordReset = () => {
             console.log(err)
         }
     }
+
     return (
         <>
             <MainLayout>

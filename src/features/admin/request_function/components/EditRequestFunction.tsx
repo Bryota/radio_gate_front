@@ -53,7 +53,7 @@ export const AdminEditRequestFunction = () => {
                     key='name'
                     text='name'
                     value={name}
-                    change_action={e => setName(e.target.value)}
+                    changeAction={e => setName(e.target.value)}
                 />
                 <AdminTextarea
                     key='detail'

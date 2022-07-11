@@ -37,7 +37,7 @@ export const AdminCreateRadioStation = () => {
                             key='name'
                             text='name'
                             is_first_item={true}
-                            change_action={e => setName(e.target.value)}
+                            changeAction={e => setName(e.target.value)}
                         />
                         <AdminButton
                             text='作成'

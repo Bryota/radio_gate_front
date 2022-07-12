@@ -34,27 +34,30 @@ export const Messages = () => {
                 />
                 <div>
                     {
-                        messages?.listener_message.data.map(message => {
-                            if (message.radioProgram) {
-                                return (
-                                    <MessageList
-                                        id={message.id}
-                                        radioProgram={message.radioProgram?.name}
-                                        corner={message.programCorner ? message.programCorner?.name : message.subject}
-                                        postDate={message.posted_at}
-                                    />
-                                )
-                            } else {
-                                return (
-                                    <MessageList
-                                        id={message.id}
-                                        radioProgram={message.listenerMyProgram?.name}
-                                        corner={message.myProgramCorner ? message.myProgramCorner?.name : message.subject}
-                                        postDate={message.posted_at}
-                                    />
-                                )
-                            }
-                        })
+                        messages?.listener_message !== undefined ?
+                            messages?.listener_message.data.map(message => {
+                                if (message.radioProgram) {
+                                    return (
+                                        <MessageList
+                                            id={message.id}
+                                            radioProgram={message.radioProgram?.name}
+                                            corner={message.programCorner ? message.programCorner?.name : message.subject}
+                                            postDate={message.posted_at}
+                                        />
+                                    )
+                                } else {
+                                    return (
+                                        <MessageList
+                                            id={message.id}
+                                            radioProgram={message.listenerMyProgram?.name}
+                                            corner={message.myProgramCorner ? message.myProgramCorner?.name : message.subject}
+                                            postDate={message.posted_at}
+                                        />
+                                    )
+                                }
+                            })
+                            :
+                            <></>
                     }
                 </div>
                 <Pagination

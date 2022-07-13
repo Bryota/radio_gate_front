@@ -1,4 +1,3 @@
-import { useLocation, useNavigate } from 'react-router-dom';
 import { useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
@@ -7,6 +6,7 @@ import { Pagination } from '../../../components/Pagination';
 import { Loading, FlashMessage } from '../../../components/Elements';
 import { SavedMessageList } from './SavedMessageList';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+import { useFlashMessage } from '../../../hooks/useFlashMessage';
 
 import { MessagesResponseType } from '../../../types/listener';
 
@@ -14,10 +14,9 @@ import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
 export const SavedMessages = () => {
-    const location = useLocation();
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const { apiData: savedMessages, isLoading } = useFetchApiData<MessagesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved-messages?page=${currentPage}`);
+    const flashMessage = useFlashMessage();
 
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);
@@ -30,8 +29,8 @@ export const SavedMessages = () => {
     return (
         <>
             <MainLayout>
-                {isLoading ? <Loading /> : <></>}
-                {locationParams && locationParams.hasOwnProperty('flash_message') ? <FlashMessage message={locationParams.flash_message} /> : <></>}
+                {isLoading ? <Loading /> : null}
+                {flashMessage ? <FlashMessage message={flashMessage} /> : null}
                 <Pagehead
                     title="SavedMessages"
                     subtitle='一時保存一覧'

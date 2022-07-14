@@ -13,6 +13,7 @@ export const useFetchApiData = <T>(url: string, currentPage: number = 1) => {
         const fetchApiData = async () => {
             try {
                 const response = await axios.get(url);
+                console.log(response);
                 setApiData(response.data);
                 setIsLoading(false);
             } catch (err) {
@@ -29,6 +30,5 @@ export const useFetchApiData = <T>(url: string, currentPage: number = 1) => {
             navigation('/login');
         }
     }
-
     return { apiData, isLoading }
 }

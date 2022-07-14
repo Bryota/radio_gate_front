@@ -23,7 +23,7 @@ export const RadioStations = () => {
     const nextPagination = () => {
         setCurrentPage((pre_current_page) => pre_current_page + 1);
     }
-
+    console.log(radioStations)
     return (
         <>
             <MainLayout>

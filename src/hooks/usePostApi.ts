@@ -10,7 +10,7 @@ export const usePostApi = (url: string, payload: {}) => {
         axios.post(url, payload)
             .then(res => {
                 console.log(res)
-                setResponse({ data: res.data, status: res.status })
+                setResponse(() => ({ data: res.data, status: res.status }))
             })
     }, [url, payload])
 

@@ -27,30 +27,30 @@ export const Message = () => {
                     subtitle='投稿'
                 />
                 {
-                    message?.listener_message.radioProgram
+                    message?.listener_message.radio_program
                         ?
                         <SelectedMessage
-                            name={message?.listener_message.radioProgram?.name}
+                            name={message?.listener_message.radio_program?.name}
                             postDate={message?.listener_message.posted_at}
                         />
                         :
                         <SelectedMessage
-                            name={message?.listener_message.listenerMyProgram?.name}
+                            name={message?.listener_message.listener_my_program?.name}
                             postDate={message?.listener_message.posted_at}
                         />
                 }
                 <div>
                     {
-                        message?.listener_message.radioProgram
+                        message?.listener_message.radio_program
                             ?
                             <MessageItem
                                 itemName='コーナー/件名'
-                                value={message?.listener_message.programCorner ? message?.listener_message.programCorner?.name : message?.listener_message.subject}
+                                value={message?.listener_message.program_corner ? message?.listener_message.program_corner?.name : message?.listener_message.subject}
                             />
                             :
                             <MessageItem
                                 itemName='コーナー/件名'
-                                value={message?.listener_message.myProgramCorner ? message?.listener_message.myProgramCorner?.name : message?.listener_message.subject}
+                                value={message?.listener_message.my_program_corner ? message?.listener_message.my_program_corner?.name : message?.listener_message.subject}
                             />
                     }
                     <MessageItem

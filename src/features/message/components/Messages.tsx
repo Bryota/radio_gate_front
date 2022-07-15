@@ -23,7 +23,7 @@ export const Messages = () => {
     const nextPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage + 1);
     }
-    console.log(messages)
+
     return (
         <>
             <MainLayout>

@@ -34,13 +34,13 @@ export const Messages = () => {
                 />
                 <div>
                     {
-                        messages?.listener_message.data.map(message => {
-                            if (message.radioProgram) {
+                        messages?.listener_messages.data.map(message => {
+                            if (message.radio_program) {
                                 return (
                                     <MessageList
                                         id={message.id}
-                                        radioProgram={message.radioProgram?.name}
-                                        corner={message.programCorner ? message.programCorner?.name : message.subject}
+                                        radioProgram={message.radio_program?.name}
+                                        corner={message.program_corner ? message.program_corner?.name : message.subject}
                                         postDate={message.posted_at}
                                     />
                                 )
@@ -48,8 +48,8 @@ export const Messages = () => {
                                 return (
                                     <MessageList
                                         id={message.id}
-                                        radioProgram={message.listenerMyProgram?.name}
-                                        corner={message.myProgramCorner ? message.myProgramCorner?.name : message.subject}
+                                        radioProgram={message.listener_my_program?.name}
+                                        corner={message.my_program_corner ? message.my_program_corner?.name : message.subject}
                                         postDate={message.posted_at}
                                     />
                                 )

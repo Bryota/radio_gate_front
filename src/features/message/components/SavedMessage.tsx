@@ -27,30 +27,30 @@ export const SavedMessage = () => {
                     subtitle='一時保存'
                 />
                 {
-                    savedMessage?.listener_message.radioProgram
+                    savedMessage?.listener_message.radio_program
                         ?
                         <SelectedSavedMessage
                             id={savedMessage?.listener_message.id}
-                            name={savedMessage?.listener_message.radioProgram?.name}
+                            name={savedMessage?.listener_message.radio_program?.name}
                         />
                         :
                         <SelectedSavedMessage
                             id={savedMessage?.listener_message.id}
-                            name={savedMessage?.listener_message.listenerMyProgram?.name}
+                            name={savedMessage?.listener_message.listener_my_program?.name}
                         />
                 }
                 <div>
                     {
-                        savedMessage?.listener_message.radioProgram
+                        savedMessage?.listener_message.radio_program
                             ?
                             <MessageItem
                                 itemName='コーナー/件名'
-                                value={savedMessage?.listener_message.programCorner ? savedMessage?.listener_message.programCorner?.name : savedMessage?.listener_message.subject}
+                                value={savedMessage?.listener_message.program_corner ? savedMessage?.listener_message.program_corner?.name : savedMessage?.listener_message.subject}
                             />
                             :
                             <MessageItem
                                 itemName='コーナー/件名'
-                                value={savedMessage?.listener_message.myProgramCorner ? savedMessage?.listener_message.myProgramCorner?.name : savedMessage?.listener_message.subject}
+                                value={savedMessage?.listener_message.my_program_corner ? savedMessage?.listener_message.my_program_corner?.name : savedMessage?.listener_message.subject}
                             />
                     }
                     <MessageItem

@@ -21,8 +21,11 @@ export const CreateMessageTemplate = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
+        if (response.status === 201) {
+            navigation('/message_templates', { state: { flash_message: '新しいメッセージテンプレートを作成しました' } })
+        }
         authorized();
-    }, []);
+    }, [response]);
 
     const authorized = async () => {
         let authorized = await isAuthorized();
@@ -69,11 +72,6 @@ export const CreateMessageTemplate = () => {
             return;
         }
         CreateMessageTemplate();
-        if (response.status === 201) {
-            navigation('/message_templates', { state: { flash_message: '新しいメッセージテンプレートを作成しました' } })
-        } else {
-            navigation('/message_templates', { state: { flash_message: 'メッセージテンプレートの作成に失敗しました' } })
-        }
     }
 
     return (

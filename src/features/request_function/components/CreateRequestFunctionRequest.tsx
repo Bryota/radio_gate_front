@@ -22,8 +22,11 @@ export const CreateRequestFunctionRequest = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
+        if (response.status === 201) {
+            navigation('/request_functions', { state: { flash_message: '機能リクエストを申請しました' } })
+        }
         authorized();
-    }, []);
+    }, [response]);
 
     const authorized = async () => {
         let authorized = await isAuthorized();
@@ -65,11 +68,6 @@ export const CreateRequestFunctionRequest = () => {
             return;
         }
         CreateRequestFunctionRequest();
-        if (response.status === 201) {
-            navigation('/request_functions', { state: { flash_message: '機能リクエストを申請しました' } })
-        } else {
-            navigation('/request_functions', { state: { flash_message: '機能リクエストの申請に失敗しました' } })
-        }
     }
 
     return (

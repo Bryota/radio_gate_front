@@ -36,13 +36,16 @@ export const EditMyRadioProgram = () => {
     }, []);
 
     const validation = () => {
-        const validationCorners = corners?.map((corner, index) => {
-            return {
-                key: `corner${index}`,
-                value: corner.name,
-                type: 'require'
-            }
-        })
+        let validationCorners: { key: string; value: string; type: string; }[] | undefined = [];
+        if (corners) {
+            validationCorners = corners?.map((corner, index) => {
+                return {
+                    key: `corner${index}`,
+                    value: corner.name,
+                    type: 'require'
+                }
+            })
+        }
         const result = validationCheck(
             [
                 {

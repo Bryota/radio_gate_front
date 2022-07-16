@@ -1,14 +1,14 @@
 import { render, screen } from "@testing-library/react";
 import { rest } from "msw";
 import { setupServer } from 'msw/node';
-import { Messages } from '../../features/message';
+import { SavedMessages } from '../../features/message';
 import { BrowserRouter as Router } from 'react-router-dom';
 
 const server = setupServer(
     rest.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/authorized`, (req, res, ctx) => {
         return res(ctx.status(200), ctx.json({ status: 'success' }));
     }),
-    rest.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages?page=1`, (req, res, ctx) => {
+    rest.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/saved-messages?page=1`, (req, res, ctx) => {
         return res(ctx.status(200), ctx.json({
             listener_messages: {
                 data: [
@@ -26,7 +26,7 @@ const server = setupServer(
                         content: "投稿1",
                         listener_info_flag: 0,
                         tel_flag: 0,
-                        posted_at: new Date(),
+                        posted_at: null,
                         radio_program: {
                             id: 1,
                             radio_station_id: 1,
@@ -59,7 +59,7 @@ const server = setupServer(
                         content: "投稿2",
                         listener_info_flag: 0,
                         tel_flag: 0,
-                        posted_at: new Date(),
+                        posted_at: null,
                         radio_program: {
                             id: 2,
                             radio_station_id: 2,
@@ -92,7 +92,7 @@ const server = setupServer(
                         content: "投稿3",
                         listener_info_flag: 0,
                         tel_flag: 0,
-                        posted_at: new Date(),
+                        posted_at: null,
                         radio_program: {
                             id: 3,
                             radio_station_id: 3,
@@ -120,11 +120,11 @@ const server = setupServer(
 beforeAll(() => server.listen());
 afterEach(() => { server.resetHandlers() });
 
-describe('投稿一覧', (() => {
-    it('投稿が表示される', async () => {
+describe('一時保存一覧', (() => {
+    it('一時保存が表示される', async () => {
         render(
             <Router>
-                <Messages />
+                <SavedMessages />
             </Router>
         );
 

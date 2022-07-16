@@ -17,6 +17,7 @@ export const useFetchApiData = <T>(url: string, currentPage: number = 1) => {
                 setIsLoading(false);
             } catch (err) {
                 console.log(err);
+                navigation('/not_fount');
             }
         }
         fetchApiData();

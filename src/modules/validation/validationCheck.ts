@@ -12,7 +12,6 @@ type validatedArrayType = {
 
 export const validationCheck = (validationTargets: Array<validationTargetArrayType>) => {
     let validatedArray: Array<validatedArrayType> = [];
-    console.log(validationTargets)
     validationTargets.map(validationTarget => {
         if (validationTarget.type === 'require') {
             return addValidationResult(validationTarget.key, requireValidation(validationTarget.value), validatedArray);

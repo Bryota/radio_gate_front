@@ -25,7 +25,7 @@ export const EditMessageTemplate = () => {
     useEffect(() => {
         setName(messageTemplate?.message_template.name);
         setContent(messageTemplate?.message_template.content);
-    }, []);
+    }, [messageTemplate]);
 
     const validation = () => {
         const result = validationCheck(

@@ -1,27 +1,26 @@
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { ProfileItem } from './ProfileItem';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+import { useFlashMessage } from '../../../hooks/useFlashMessage';
 
 import { ProfileResponseType } from '../../../types/listener';
 
 import '../../../assets/css/components/pagination.css';
 
 export const Profile = () => {
-    const location = useLocation();
-    const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const navigation = useNavigate();
     const { apiData: profile, isLoading } = useFetchApiData<ProfileResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`);
+    const flashMessage = useFlashMessage();
 
     return (
         <>
             <MainLayout>
-                {isLoading ? <Loading /> : <></>}
-                {locationParams && locationParams.hasOwnProperty('flash_message') ? <FlashMessage message={locationParams.flash_message} /> : <></>}
+                {isLoading ? <Loading /> : null}
+                {flashMessage ? <FlashMessage message={flashMessage} /> : null}
                 <Pagehead
                     title="Profile"
                     subtitle='アカウント情報'

@@ -18,7 +18,7 @@ import '../../../assets/css/components/pagination.css';
 
 export const EditMyRadioProgram = () => {
     const urlParams = useParams<UrlParamsType>();
-    const [Id, setId] = useState<number | undefined>();
+    const [id, setId] = useState<number | undefined>();
     const [name, setName] = useState<string | undefined>('');
     const [email, setEmail] = useState<string | undefined>('');
     const [corners, setCorners] = useState<CornerType[] | undefined>([]);
@@ -33,16 +33,19 @@ export const EditMyRadioProgram = () => {
         setName(myRadioProgram?.listener_my_program.name);
         setEmail(myRadioProgram?.listener_my_program.email);
         setCorners(responseCorners?.my_program_corners.data);
-    }, []);
+    }, [myRadioProgram]);
 
     const validation = () => {
-        const validationCorners = corners?.map((corner, index) => {
-            return {
-                key: `corner${index}`,
-                value: corner.name,
-                type: 'require'
-            }
-        })
+        let validationCorners: { key: string; value: string; type: string; }[] | undefined = [];
+        if (corners) {
+            validationCorners = corners?.map((corner, index) => {
+                return {
+                    key: `corner${index}`,
+                    value: corner.name,
+                    type: 'require'
+                }
+            })
+        }
         const result = validationCheck(
             [
                 {
@@ -127,12 +130,12 @@ export const EditMyRadioProgram = () => {
             corners?.map(async (corner) => {
                 if (corner.id) {
                     await axios.put(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners/${corner.id}`, {
-                        'listener_my_program_id': Id,
+                        'listener_my_program_id': id,
                         'name': corner.name
                     });
                 } else {
                     await axios.post(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners`, {
-                        'listener_my_program_id': Id,
+                        'listener_my_program_id': id,
                         'name': corner.name
                     })
                 }

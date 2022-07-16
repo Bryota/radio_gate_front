@@ -72,6 +72,12 @@ export const MessagePost = () => {
     const navigation = useNavigate();
 
     useEffect(() => {
+        if (myRadioProgramPostResponse.status === 201 || radioProgramPostResponse.status === 201) {
+            navigation('/message_post/complete', { state: { radio_program_id: radioProgramId, is_my_radio_program: isMyRadioProgram } });
+        }
+        if (myRadioProgramSaveResponse.status === 201 || radioProgramSaveResponse.status === 201) {
+            navigation('/saved_messages', { state: { flash_message: 'メッセージを一時保存しました' } });
+        }
         authorized();
         if (isMyRadioProgram) {
             fetchMyRadioPrograms();
@@ -84,7 +90,7 @@ export const MessagePost = () => {
         if (firstRender) {
             firstRenderingAction();
         }
-    }, [isMyRadioProgram]);
+    }, [isMyRadioProgram, myRadioProgramPostResponse, radioProgramPostResponse, myRadioProgramSaveResponse, radioProgramSaveResponse]);
 
     const authorized = async () => {
         let authorized = await isAuthorized();
@@ -144,7 +150,7 @@ export const MessagePost = () => {
     const fetchMessageTemplates = async () => {
         try {
             const messageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates`);
-            setMessageTemplates(messageTemplatesResponse.data.message_templates);
+            setMessageTemplates(messageTemplatesResponse.data.message_templates.data);
         } catch (err) {
             console.log(err);
         }
@@ -246,20 +252,12 @@ export const MessagePost = () => {
         setContent(messageTemplate?.content);
     }
 
-    const sendMessage = async () => {
+    const sendMessage = () => {
         try {
-            let MessagePostResponse;
             if (isMyRadioProgram) {
                 postMessageToMyRadioProgram();
-                MessagePostResponse = myRadioProgramPostResponse;
             } else {
                 PostMessageToRadioProgram();
-                MessagePostResponse = radioProgramPostResponse;
-            }
-            if (MessagePostResponse.status === 201) {
-                navigation('/message_post/complete', { state: { radio_program_id: radioProgramId, is_my_radio_program: isMyRadioProgram } })
-            } else {
-                alert('投稿に失敗しました。')
             }
         } catch (err) {
             console.log(err)
@@ -268,18 +266,10 @@ export const MessagePost = () => {
 
     const saveMessage = async () => {
         try {
-            let MessageSaveResponse;
             if (isMyRadioProgram) {
                 saveMessageToMyRadioProgram();
-                MessageSaveResponse = myRadioProgramSaveResponse;
             } else {
                 saveMessageToRadioProgram();
-                MessageSaveResponse = radioProgramSaveResponse;
-            }
-            if (MessageSaveResponse.status === 201) {
-                navigation('/saved_messages', { state: { flash_message: 'メッセージを一時保存しました' } })
-            } else {
-                alert('保存に失敗しました。');
             }
         } catch (err) {
             console.log(err)

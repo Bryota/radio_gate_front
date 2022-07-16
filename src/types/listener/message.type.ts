@@ -12,22 +12,22 @@ export type MessageType = {
     telFlag: boolean
     createdAt: string
     updatedAt: string
-    listenerMyProgram?: {
+    listener_my_program?: {
         name?: string
     }
-    myProgramCorner?: {
+    my_program_corner?: {
         name?: string
     }
-    radioProgram?: {
+    radio_program?: {
         name?: string
     }
-    programCorner?: {
+    program_corner?: {
         name?: string
     }
 }
 
 export type MessagesResponseType = {
-    listener_message: {
+    listener_messages: {
         data: MessageType[]
     }
     isLoading: boolean

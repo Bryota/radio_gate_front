@@ -25,7 +25,7 @@ export const EditMessageTemplate = () => {
     useEffect(() => {
         setName(messageTemplate?.message_template.name);
         setContent(messageTemplate?.message_template.content);
-    }, []);
+    }, [messageTemplate]);
 
     const validation = () => {
         const result = validationCheck(
@@ -69,7 +69,7 @@ export const EditMessageTemplate = () => {
                 name,
                 content
             });
-            navigation(`message_template/${urlParams.id}`, { state: { flash_message: 'メッセージテンプレートを更新しました' } })
+            navigation(`/message_template/${urlParams.id}`, { state: { flash_message: 'メッセージテンプレートを更新しました' } })
         } catch (err) {
             console.log(err)
         }

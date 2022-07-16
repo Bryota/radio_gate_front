@@ -1,5 +1,5 @@
 import axios from '../../../settings/Axios';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
@@ -17,6 +17,12 @@ export const Login = () => {
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const { response, postApi: SendCredentials } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/login`, { email, password });
     const navigation = useNavigate();
+
+    useEffect(() => {
+        if (response.status === 200) {
+            return navigation('/message_post');
+        }
+    }, [response])
 
     const validation = () => {
         const result = validationCheck(
@@ -53,14 +59,6 @@ export const Login = () => {
         axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/sanctum/csrf-cookie`).then(() => {
             SendCredentials();
         });
-        // TODO: エラー時の処理追加
-        if (response.status === 200) {
-            return (
-                navigation('/message_post')
-            )
-        } else {
-            console.log('ログインできませんでした。');
-        }
     }
 
     return (

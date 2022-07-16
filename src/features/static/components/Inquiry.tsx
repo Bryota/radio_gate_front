@@ -77,7 +77,6 @@ export const Inquiry = () => {
             content
         }).then(res => {
             if (res.status === 200) {
-                console.log(res)
                 navigation('/message_post', { state: { flash_message: 'お問い合わせを送信しました' } })
             } else {
                 navigation('/message_post', { state: { flash_message: 'お問い合わせの送信に失敗しました' } })

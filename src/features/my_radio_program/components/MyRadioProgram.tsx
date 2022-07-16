@@ -1,4 +1,4 @@
-import { useParams, useLocation } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import { useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
@@ -8,6 +8,7 @@ import { Loading, FlashMessage } from '../../../components/Elements';
 import { CornerList } from './CornerList';
 import { SelectedMyRadioProgram } from './SelectedMyRadioProgram';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
+import { useFlashMessage } from '../../../hooks/useFlashMessage';
 
 import { UrlParamsType } from '../../../types/common';
 import { MyRadioProgramResponseType, MyProgramCornersResponseType } from '../../../types/listener';
@@ -16,12 +17,11 @@ import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
 
 export const MyRadioProgram = () => {
-    const location = useLocation();
     const urlParams = useParams<UrlParamsType>();
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const [locationParams, setLocationParams] = useState<{ flash_message: string }>(location.state as { flash_message: string });
     const { apiData: myRadioProgram } = useFetchApiData<MyRadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs/${urlParams.id}`);
     const { apiData: corners, isLoading } = useFetchApiData<MyProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?page=${currentPage}&listener_my_program=${urlParams.id}`);
+    const flashMessage = useFlashMessage();
 
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);
@@ -34,8 +34,8 @@ export const MyRadioProgram = () => {
     return (
         <>
             <MainLayout>
-                {isLoading ? <Loading /> : <></>}
-                {locationParams && locationParams.hasOwnProperty('flash_message') ? <FlashMessage message={locationParams.flash_message} /> : <></>}
+                {isLoading ? <Loading /> : null}
+                {flashMessage ? <FlashMessage message={flashMessage} /> : null}
                 <Pagehead
                     title="My Radio Program"
                     subtitle='マイラジオ番組'

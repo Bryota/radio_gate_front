@@ -1,6 +1,6 @@
 import axios from '../../../settings/Axios';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
@@ -20,6 +20,12 @@ export const VoteRequestFunction = () => {
     const navigation = useNavigate();
     const { apiData: requestFunction, isLoading } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${urlParams.id}`);
     const { response, postApi: UpdateRequestFunctionPoint } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${requestFunction?.request_function.id}/point`, { point });
+
+    useEffect(() => {
+        if (response.status === 201) {
+            navigation('/request_functions', { state: { flash_message: '機能リクエストに投票しました' } })
+        }
+    }, [response])
 
     const validation = () => {
         const result = validationCheck(
@@ -44,11 +50,6 @@ export const VoteRequestFunction = () => {
             return;
         }
         UpdateRequestFunctionPoint();
-        if (response.status === 201) {
-            navigation('/request_functions', { state: { flash_message: '機能リクエストに投票しました' } })
-        } else {
-            navigation('/request_functions', { state: { flash_message: '機能リクエストの投票に失敗しました' } })
-        }
     }
 
     return (

@@ -6,6 +6,7 @@ import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { ProfileItem } from './ProfileItem';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import { useFlashMessage } from '../../../hooks/useFlashMessage';
+import { nullToNoSetting } from '../../../modules/display/nullToNoSetting';
 
 import { ProfileResponseType } from '../../../types/listener';
 
@@ -28,28 +29,28 @@ export const Profile = () => {
                 <InnerBox>
                     <ProfileItem
                         label="氏名"
-                        value={profile?.listener.last_name + '　' + profile?.listener.first_name}
+                        value={nullToNoSetting(profile?.listener.full_name)}
                         is_first_item={true}
                     />
                     <ProfileItem
                         label="氏名かな"
-                        value={profile?.listener.last_name_kana + '　' + profile?.listener.first_name_kana}
+                        value={nullToNoSetting(profile?.listener.full_name_kana)}
                     />
                     <ProfileItem
                         label="ラジオネーム"
-                        value={profile?.listener.radio_name}
+                        value={nullToNoSetting(profile?.listener.radio_name)}
                     />
                     <ProfileItem
                         label="郵便番号"
-                        value={'〒' + profile?.listener.post_code}
+                        value={'〒' + nullToNoSetting(profile?.listener.post_code)}
                     />
                     <ProfileItem
                         label="住所"
-                        value={`${profile?.listener.prefecture}${profile?.listener.city}${profile?.listener.house_number}${profile?.listener.building}${profile?.listener.room_number}`}
+                        value={nullToNoSetting(profile?.listener.address)}
                     />
                     <ProfileItem
                         label="電話番号"
-                        value={profile?.listener.tel}
+                        value={nullToNoSetting(profile?.listener.tel)}
                     />
                     <ProfileItem
                         label="メールアドレス"

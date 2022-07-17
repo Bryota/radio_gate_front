@@ -38,7 +38,7 @@ const requireValidation = (value: string = '') => {
 }
 
 const integerValidation = (value: string = '') => {
-    if (value == '' || Number.isNaN(value)) {
+    if (value == '' || !isNaN(Number(value))) {
         return null
     } else {
         return '数値で入力してください。';

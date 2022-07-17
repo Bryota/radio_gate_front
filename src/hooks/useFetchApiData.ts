@@ -9,27 +9,20 @@ export const useFetchApiData = <T>(url: string, currentPage: number = 1) => {
     const navigation = useNavigate();
 
     useEffect(() => {
-        authorized();
         const fetchApiData = async () => {
             try {
+                if (!await isAuthorized()) { return navigation('/login'); }
+
                 const response = await axios.get(url);
                 setApiData(response.data);
                 setIsLoading(false);
             } catch (err) {
                 console.log(err);
-                navigation('/not_fount');
+                return navigation('/not_fount');
             }
         }
         fetchApiData();
     }, [currentPage]);
-
-
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
 
     return { apiData, isLoading }
 }

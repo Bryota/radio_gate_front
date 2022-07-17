@@ -15,5 +15,6 @@
     100% {
         background-color: rgba(168, 206, 48, 0.0);
         opacity: 0;
+        visibility: hidden;
     }
 }

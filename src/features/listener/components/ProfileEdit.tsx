@@ -37,9 +37,9 @@ export const ProfileEdit = () => {
         setLastName(profile?.listener.last_name);
         setFirstName(profile?.listener.first_name);
         setLastNameKana(profile?.listener.last_name_kana);
-        setFirstNameKana(profile?.listener.last_name_kana);
+        setFirstNameKana(profile?.listener.first_name_kana);
         setRadioName(profile?.listener.radio_name);
-        setPostCode(profile?.listener.post_code);
+        setPostCode(profile?.listener.post_code ? profile?.listener.post_code : undefined);
         setPrefecture(profile?.listener.prefecture);
         setCity(profile?.listener.city);
         setHouseNumber(profile?.listener.house_number);

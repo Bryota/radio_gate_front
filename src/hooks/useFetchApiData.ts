@@ -8,21 +8,18 @@ export const useFetchApiData = <T>(url: string, currentPage: number = 1) => {
     const [isLoading, setIsLoading] = useState<boolean>(true);
     const navigation = useNavigate();
 
-    useEffect(() => {
-        const fetchApiData = async () => {
-            try {
-                if (!await isAuthorized()) { return navigation('/login'); }
+    const fetchApiData = async () => {
+        try {
+            if (!await isAuthorized()) { return navigation('/login'); }
 
-                const response = await axios.get(url);
-                setApiData(response.data);
-                setIsLoading(false);
-            } catch (err) {
-                console.log(err);
-                return navigation('/not_fount');
-            }
+            const response = await axios.get(url);
+            setApiData(response.data);
+            setIsLoading(false);
+        } catch (err) {
+            console.log(err);
+            return navigation('/not_fount');
         }
-        fetchApiData();
-    }, [currentPage]);
+    }
 
-    return { apiData, isLoading }
+    return { apiData, isLoading, fetchApiData }
 }

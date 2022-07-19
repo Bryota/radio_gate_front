@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
@@ -16,9 +16,14 @@ export const RadioStations = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [type, setType] = useState<string>('');
     const [keyword, setKeyword] = useState<string>('');
-    const { apiData: radioStations, isLoading } = useFetchApiData<RadioStationsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-stations?page=${currentPage}`, currentPage);
+    const { apiData: radioStations, isLoading, fetchApiData } = useFetchApiData<RadioStationsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-stations?page=${currentPage}&type=${type}&keyword=${keyword}`, currentPage);
+
+    useEffect(() => {
+        fetchApiData();
+    }, [currentPage, type]);
 
     const searchKeyword = async () => {
+        await fetchApiData();
     }
 
     const prevPagination = () => {
@@ -39,15 +44,15 @@ export const RadioStations = () => {
                 />
                 <div>
                     <div className='border-0 text-start p-0 m-0'>
-                        <input id="type-all" type="radio" name="type" value="FM" defaultChecked={true} />
+                        <input id="type-all" type="radio" name="type" value="FM" defaultChecked={true} onChange={() => setType('')} />
                         <label className="radio-inline__label" htmlFor="type-all">
                             ALL
                         </label>
-                        <input id="type-am" type="radio" name="type" value="AM" />
+                        <input id="type-am" type="radio" name="type" value="AM" onChange={() => setType('AM')} />
                         <label className="radio-inline__label" htmlFor="type-am">
                             AM
                         </label>
-                        <input id="type-fm" type="radio" name="type" value="FM" />
+                        <input id="type-fm" type="radio" name="type" value="FM" onChange={() => setType('FM')} />
                         <label className="radio-inline__label" htmlFor="type-fm">
                             FM
                         </label>

@@ -5,6 +5,7 @@ import { Pagehead } from '../../../components/Pagehead';
 import { Pagination } from '../../../components/Pagination';
 import { Loading } from '../../../components/Elements';
 import { RadioStationList } from './RadioStationList';
+import { SearchField } from './SearchField';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
 
 import { RadioStationsResponseType } from '../../../types/listener';
@@ -22,7 +23,13 @@ export const RadioStations = () => {
         fetchApiData();
     }, [currentPage, type]);
 
+    const setTypeAndResetCurrentPage = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setCurrentPage(1);
+        setType(e.target.value);
+    }
+
     const searchKeyword = async () => {
+        setCurrentPage(1);
         await fetchApiData();
     }
 
@@ -42,26 +49,12 @@ export const RadioStations = () => {
                     title="Radio Station"
                     subtitle='ラジオ局一覧'
                 />
-                <div>
-                    <div className='border-0 text-start p-0 m-0'>
-                        <input id="type-all" type="radio" name="type" value="FM" defaultChecked={true} onChange={() => setType('')} />
-                        <label className="radio-inline__label" htmlFor="type-all">
-                            ALL
-                        </label>
-                        <input id="type-am" type="radio" name="type" value="AM" onChange={() => setType('AM')} />
-                        <label className="radio-inline__label" htmlFor="type-am">
-                            AM
-                        </label>
-                        <input id="type-fm" type="radio" name="type" value="FM" onChange={() => setType('FM')} />
-                        <label className="radio-inline__label" htmlFor="type-fm">
-                            FM
-                        </label>
-                    </div>
-                    <div className='mt-4'>
-                        <input type="search" name="keyword" id="keyword" className='search-keyword__input' value={keyword} onChange={(e) => setKeyword(e.target.value)} />
-                        <button className='search-keyword__button' onClick={searchKeyword}>検索</button>
-                    </div>
-                </div>
+                <SearchField
+                    changeType={(e) => setTypeAndResetCurrentPage(e)}
+                    keyword={keyword}
+                    changeKeyword={e => setKeyword(e.target.value)}
+                    searchKeyword={() => searchKeyword()}
+                />
                 <div>
                     {
                         radioStations?.radio_stations.data.map((RadioStation) => {

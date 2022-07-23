@@ -1,4 +1,4 @@
-export type ProfileType = {
+export type ProfileResponseType = {
     id: number
     last_name?: string
     first_name?: string
@@ -16,10 +16,6 @@ export type ProfileType = {
     room_number?: string
     tel?: string
     email: string
-}
-
-export type ProfileResponseType = {
-    listener: ProfileType
     isLoading: boolean
 }
 

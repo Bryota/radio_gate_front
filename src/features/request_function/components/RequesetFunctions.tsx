@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
@@ -17,9 +17,13 @@ import '../../../assets/css/components/pagination.css';
 export const RequestFunctions = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const navigation = useNavigate();
-    const { apiData: requestFunctions, isLoading } = useFetchApiData<RequestFunctionsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions?page=${currentPage}`, currentPage);
+    const { apiData: requestFunctions, isLoading, fetchApiData: fetchRequestFunctions } = useFetchApiData<RequestFunctionsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions?page=${currentPage}`, currentPage);
     const flashMessage = useFlashMessage();
 
+    useEffect(() => {
+        fetchRequestFunctions();
+    }, []);
+    console.log(requestFunctions)
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);
     }
@@ -47,7 +51,7 @@ export const RequestFunctions = () => {
                 />
                 <div>
                     {
-                        requestFunctions?.request_functions.map(requestFunction => {
+                        requestFunctions?.data.map(requestFunction => {
                             return (
                                 <RequestFunctionList
                                     key={requestFunction.id}

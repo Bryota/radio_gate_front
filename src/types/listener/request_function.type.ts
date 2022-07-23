@@ -7,11 +7,15 @@ export type RequestFunctionType = {
 }
 
 export type RequestFunctionsResponseType = {
-    request_functions: RequestFunctionType[]
+    data: RequestFunctionType[]
     isLoading: boolean
 }
 
 export type RequestFunctionResponseType = {
-    request_function: RequestFunctionType
+    id: number
+    name: string
+    detail?: string
+    point: number
+    is_voted: boolean
     isLoading: boolean
 }

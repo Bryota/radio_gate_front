@@ -52,7 +52,7 @@ export const AdminRadioStations = () => {
                     </div>
                     <div className="col-8">
                         {
-                            radioStations?.radio_stations.data.map((radioStation, index) => {
+                            radioStations?.data.map((radioStation, index) => {
                                 return (
                                     <AdminRadioStationList
                                         key={radioStation.id}

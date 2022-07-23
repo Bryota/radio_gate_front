@@ -23,8 +23,8 @@ export const EditMessageTemplate = () => {
     const { apiData: messageTemplate, isLoading } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${urlParams.id}`);
 
     useEffect(() => {
-        setName(messageTemplate?.message_template.name);
-        setContent(messageTemplate?.message_template.content);
+        setName(messageTemplate?.name);
+        setContent(messageTemplate?.content);
     }, [messageTemplate]);
 
     const validation = () => {

@@ -27,14 +27,36 @@ export type MessageType = {
 }
 
 export type MessagesResponseType = {
-    listener_messages: {
-        data: MessageType[]
-    }
+    data: MessageType[]
     isLoading: boolean
 }
 
 export type MessageResponseType = {
-    listener_message: MessageType
+    id: number
+    radioProgramId: string
+    programCornerId: string
+    listenerMyProgramId: string
+    myProgramCornerId: string
+    subject?: string
+    content: string
+    radioName?: string
+    posted_at: string
+    listenerInfoFlag: boolean
+    telFlag: boolean
+    createdAt: string
+    updatedAt: string
+    listener_my_program?: {
+        name?: string
+    }
+    my_program_corner?: {
+        name?: string
+    }
+    radio_program?: {
+        name?: string
+    }
+    program_corner?: {
+        name?: string
+    }
     isLoading: boolean
 }
 

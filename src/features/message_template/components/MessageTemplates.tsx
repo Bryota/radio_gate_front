@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
@@ -17,8 +17,12 @@ import '../../../assets/css/components/pagination.css';
 export const MessageTemplates = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const navigation = useNavigate();
-    const { apiData: messageTemplates, isLoading } = useFetchApiData<MessageTemplatesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates?page=${currentPage}`, currentPage);
+    const { apiData: messageTemplates, isLoading, fetchApiData: fetchMessageTemplates } = useFetchApiData<MessageTemplatesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates?page=${currentPage}`, currentPage);
     const flashMessage = useFlashMessage();
+
+    useEffect(() => {
+        fetchMessageTemplates();
+    }, []);
 
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);
@@ -44,7 +48,7 @@ export const MessageTemplates = () => {
                 />
                 <div>
                     {
-                        messageTemplates?.message_templates.data.map(messageTemplate => {
+                        messageTemplates?.data.map(messageTemplate => {
                             return (
                                 <MessageTemplateList
                                     key={messageTemplate.id}

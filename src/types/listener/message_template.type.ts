@@ -5,13 +5,13 @@ export type MessageTemplateType = {
 }
 
 export type MessageTemplatesResponseType = {
-    message_templates: {
-        data: MessageTemplateType[]
-    }
+    data: MessageTemplateType[]
     isLoading: boolean
 }
 
 export type MessageTemplateResponseType = {
-    message_template: MessageTemplateType
+    id?: number
+    name?: string
+    content?: string
     isLoading: boolean
 }

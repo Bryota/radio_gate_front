@@ -57,7 +57,7 @@ export const RadioStations = () => {
                 />
                 <div>
                     {
-                        radioStations?.radio_stations.data.map((RadioStation) => {
+                        radioStations?.data.map((RadioStation) => {
                             return (
                                 <RadioStationList
                                     key={RadioStation.id}

@@ -19,7 +19,7 @@ export const VoteRequestFunction = () => {
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
     const { apiData: requestFunction, isLoading } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${urlParams.id}`);
-    const { response, postApi: UpdateRequestFunctionPoint } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${requestFunction?.request_function.id}/point`, { point });
+    const { response, postApi: UpdateRequestFunctionPoint } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${requestFunction?.id}/point`, { point });
 
     useEffect(() => {
         if (response.status === 201) {
@@ -61,7 +61,7 @@ export const VoteRequestFunction = () => {
                     subtitle='機能リクエスト投票'
                 />
                 <SelectedRequestFunction
-                    name={requestFunction?.request_function.name}
+                    name={requestFunction?.name}
                 />
                 <InnerBox>
                     <div className='row form-input_item'>

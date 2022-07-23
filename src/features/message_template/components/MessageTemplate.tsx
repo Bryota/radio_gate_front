@@ -11,12 +11,16 @@ import { UrlParamsType } from '../../../types/common';
 import { MessageTemplateResponseType } from '../../../types/listener';
 
 import '../../../assets/css/elements/radio.css';
+import { useEffect } from 'react';
 
 export const MessageTemplate = () => {
     const urlParams = useParams<UrlParamsType>();
     const navigation = useNavigate();
-    const { apiData: messageTemplate, isLoading } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${urlParams.id}`);
+    const { apiData: messageTemplate, isLoading, fetchApiData: fetchMessageTemplate } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${urlParams.id}`);
 
+    useEffect(() => {
+        fetchMessageTemplate();
+    }, [])
     const deleteMessageTemplate = async () => {
         try {
             await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${urlParams.id}`);
@@ -37,11 +41,11 @@ export const MessageTemplate = () => {
                     subtitle='メッセージテンプレート'
                 />
                 <SelectedMessageTemplate
-                    name={messageTemplate?.message_template.name}
+                    name={messageTemplate?.name}
                 />
                 <div>
                     <p className='h3 mb-4'>本文</p>
-                    <InnerBox>{messageTemplate?.message_template.content}</InnerBox>
+                    <InnerBox>{messageTemplate?.content}</InnerBox>
                 </div>
                 <Button
                     text='編集する'

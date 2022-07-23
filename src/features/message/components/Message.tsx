@@ -12,11 +12,16 @@ import { UrlParamsType } from '../../../types/common';
 import { MessageResponseType } from '../../../types/listener';
 
 import '../../../assets/css/elements/radio.css';
+import { useEffect } from 'react';
 
 export const Message = () => {
     const urlParams = useParams<UrlParamsType>();
     const navigation = useNavigate();
-    const { apiData: message, isLoading } = useFetchApiData<MessageResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages/${urlParams.id}`);
+    const { apiData: message, isLoading, fetchApiData: fetchMessage } = useFetchApiData<MessageResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages/${urlParams.id}`);
+
+    useEffect(() => {
+        fetchMessage();
+    }, [])
 
     return (
         <>
@@ -27,47 +32,47 @@ export const Message = () => {
                     subtitle='投稿'
                 />
                 {
-                    message?.listener_message.radio_program
+                    message?.radio_program
                         ?
                         <SelectedMessage
-                            name={message?.listener_message.radio_program?.name}
-                            postDate={message?.listener_message.posted_at}
+                            name={message?.radio_program?.name}
+                            postDate={message?.posted_at}
                         />
                         :
                         <SelectedMessage
-                            name={message?.listener_message.listener_my_program?.name}
-                            postDate={message?.listener_message.posted_at}
+                            name={message?.listener_my_program?.name}
+                            postDate={message?.posted_at}
                         />
                 }
                 <div>
                     {
-                        message?.listener_message.radio_program
+                        message?.radio_program
                             ?
                             <MessageItem
                                 itemName='コーナー/件名'
-                                value={message?.listener_message.program_corner ? message?.listener_message.program_corner?.name : message?.listener_message.subject}
+                                value={message?.program_corner ? message?.program_corner?.name : message?.subject}
                             />
                             :
                             <MessageItem
                                 itemName='コーナー/件名'
-                                value={message?.listener_message.my_program_corner ? message?.listener_message.my_program_corner?.name : message?.listener_message.subject}
+                                value={message?.my_program_corner ? message?.my_program_corner?.name : message?.subject}
                             />
                     }
                     <MessageItem
                         itemName='ラジオネーム'
-                        value={message?.listener_message.radioName}
+                        value={message?.radioName}
                     />
                     <MessageItem
                         itemName='本名・住所を記載したかどうか'
-                        value={message?.listener_message.listenerInfoFlag ? 'はい' : 'いいえ'}
+                        value={message?.listenerInfoFlag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         itemName='電話番号を記載したかどうか'
-                        value={message?.listener_message.telFlag ? 'はい' : 'いいえ'}
+                        value={message?.telFlag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         itemName='本文'
-                        value={message?.listener_message.content}
+                        value={message?.content}
                     />
                 </div>
                 <Button

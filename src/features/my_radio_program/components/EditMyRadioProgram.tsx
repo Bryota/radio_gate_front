@@ -29,9 +29,9 @@ export const EditMyRadioProgram = () => {
     const { apiData: responseCorners, isLoading } = useFetchApiData<MyProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?page=${currentPage}&listener_my_program=${urlParams.id}`);
 
     useEffect(() => {
-        setId(myRadioProgram?.listener_my_program.id);
-        setName(myRadioProgram?.listener_my_program.name);
-        setEmail(myRadioProgram?.listener_my_program.email);
+        setId(myRadioProgram?.id);
+        setName(myRadioProgram?.name);
+        setEmail(myRadioProgram?.email);
         setCorners(responseCorners?.my_program_corners.data);
     }, [myRadioProgram]);
 

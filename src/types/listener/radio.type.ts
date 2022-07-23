@@ -4,9 +4,7 @@ export type RadioStationType = {
 }
 
 export type RadioStationsResponseType = {
-    radio_stations: {
-        data: RadioStationType[]
-    }
+    data: RadioStationType[]
     isLoading: boolean
 }
 
@@ -19,9 +17,12 @@ export type RadioProgramType = {
     id?: number
     name?: string
     email?: string
+    program_corners?: ProgramCornersType[]
+    my_program_corners?: ProgramCornersType[]
 }
 
 export type RadioProgramsResponseType = {
+    radio_station_name: string
     radio_programs: {
         data: RadioProgramType[]
     }
@@ -29,7 +30,11 @@ export type RadioProgramsResponseType = {
 }
 
 export type RadioProgramResponseType = {
-    radio_program: RadioProgramType
+    id?: number
+    name?: string
+    email?: string
+    program_corners?: ProgramCornersType[]
+    my_program_corners?: ProgramCornersType[]
     isLoading: boolean
 }
 
@@ -40,6 +45,7 @@ export type RadioProgramsUrlParamsType = {
 export type ProgramCornersType = {
     id: number
     radio_program_id: number
+    listener_my_program_id: number
     name: string
 }
 
@@ -57,14 +63,16 @@ export type CornerType = {
 }
 
 export type MyRadioProgramsResponseType = {
-    listener_my_programs: {
-        data: RadioProgramType[]
-    }
+    data: RadioProgramType[]
     isLoading: boolean
 }
 
 export type MyRadioProgramResponseType = {
-    listener_my_program: RadioProgramType
+    id?: number
+    name?: string
+    email?: string
+    program_corners?: ProgramCornersType[]
+    my_program_corners?: ProgramCornersType[]
     isLoading: boolean
 }
 

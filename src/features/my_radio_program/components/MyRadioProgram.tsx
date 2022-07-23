@@ -1,5 +1,5 @@
 import { useParams } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
@@ -11,7 +11,7 @@ import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import { useFlashMessage } from '../../../hooks/useFlashMessage';
 
 import { UrlParamsType } from '../../../types/common';
-import { MyRadioProgramResponseType, MyProgramCornersResponseType } from '../../../types/listener';
+import { MyRadioProgramResponseType } from '../../../types/listener';
 
 import '../../../assets/css/elements/radio.css';
 import '../../../assets/css/components/pagination.css';
@@ -19,9 +19,12 @@ import '../../../assets/css/components/pagination.css';
 export const MyRadioProgram = () => {
     const urlParams = useParams<UrlParamsType>();
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const { apiData: myRadioProgram } = useFetchApiData<MyRadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs/${urlParams.id}`);
-    const { apiData: corners, isLoading } = useFetchApiData<MyProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?page=${currentPage}&listener_my_program=${urlParams.id}`);
+    const { apiData: myRadioProgram, isLoading, fetchApiData: fetchMyRadioProgram } = useFetchApiData<MyRadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs/${urlParams.id}`);
     const flashMessage = useFlashMessage();
+
+    useEffect(() => {
+        fetchMyRadioProgram();
+    }, [])
 
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);
@@ -41,20 +44,20 @@ export const MyRadioProgram = () => {
                     subtitle='マイラジオ番組'
                 />
                 <SelectedMyRadioProgram
-                    id={myRadioProgram?.listener_my_program.id}
-                    name={myRadioProgram?.listener_my_program.name}
-                    email={myRadioProgram?.listener_my_program.email}
+                    id={myRadioProgram?.id}
+                    name={myRadioProgram?.name}
+                    email={myRadioProgram?.email}
                 />
                 <div className="row">
                     <h2>コーナー一覧</h2>
                 </div>
                 <div>
-                    {corners?.my_program_corners.data.map(corner => {
+                    {myRadioProgram?.my_program_corners?.map(corner => {
                         return (
                             <CornerList
                                 key={corner.id}
                                 id={corner.id}
-                                programId={corner.programId}
+                                programId={corner.listener_my_program_id}
                                 name={corner.name}
                             />
                         )

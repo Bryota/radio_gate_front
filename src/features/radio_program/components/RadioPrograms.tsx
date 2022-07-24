@@ -37,7 +37,7 @@ export const RadioPrograms = () => {
     const nextPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage + 1);
     }
-
+    console.log(radioPrograms)
     return (
         <>
             <MainLayout>

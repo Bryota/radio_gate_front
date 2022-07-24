@@ -15,6 +15,7 @@ const server = setupServer(
     }),
     rest.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs?page=1&radio_station=1`, (req, res, ctx) => {
         return res(ctx.status(200), ctx.json({
+            radio_station_name: 'ラジオ局1',
             radio_programs: {
                 data: [
                     {

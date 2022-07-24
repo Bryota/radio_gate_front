@@ -10,28 +10,26 @@ const server = setupServer(
     }),
     rest.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-stations?page=1`, (req, res, ctx) => {
         return res(ctx.status(200), ctx.json({
-            radio_stations: {
-                data: [
-                    {
-                        id: 1,
-                        name: 'ラジオ局1',
-                        created_at: new Date(),
-                        updated_at: new Date()
-                    },
-                    {
-                        id: 2,
-                        name: 'ラジオ局2',
-                        created_at: new Date(),
-                        updated_at: new Date()
-                    },
-                    {
-                        id: 3,
-                        name: 'ラジオ局3',
-                        created_at: new Date(),
-                        updated_at: new Date()
-                    },
-                ]
-            }
+            data: [
+                {
+                    id: 1,
+                    name: 'ラジオ局1',
+                    created_at: new Date(),
+                    updated_at: new Date()
+                },
+                {
+                    id: 2,
+                    name: 'ラジオ局2',
+                    created_at: new Date(),
+                    updated_at: new Date()
+                },
+                {
+                    id: 3,
+                    name: 'ラジオ局3',
+                    created_at: new Date(),
+                    updated_at: new Date()
+                },
+            ]
         }));
     })
 )

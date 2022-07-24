@@ -10,34 +10,32 @@ const server = setupServer(
     }),
     rest.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates?page=1`, (req, res, ctx) => {
         return res(ctx.status(200), ctx.json({
-            message_templates: {
-                data: [
-                    {
-                        id: 1,
-                        name: 'メッセージテンプレート1',
-                        listener_id: 1,
-                        content: '本文1',
-                        created_at: new Date(),
-                        updated_at: new Date()
-                    },
-                    {
-                        id: 2,
-                        name: 'メッセージテンプレート2',
-                        listener_id: 1,
-                        content: '本文2',
-                        created_at: new Date(),
-                        updated_at: new Date()
-                    },
-                    {
-                        id: 3,
-                        name: 'メッセージテンプレート3',
-                        listener_id: 1,
-                        content: '本文3',
-                        created_at: new Date(),
-                        updated_at: new Date()
-                    },
-                ]
-            }
+            data: [
+                {
+                    id: 1,
+                    name: 'メッセージテンプレート1',
+                    listener_id: 1,
+                    content: '本文1',
+                    created_at: new Date(),
+                    updated_at: new Date()
+                },
+                {
+                    id: 2,
+                    name: 'メッセージテンプレート2',
+                    listener_id: 1,
+                    content: '本文2',
+                    created_at: new Date(),
+                    updated_at: new Date()
+                },
+                {
+                    id: 3,
+                    name: 'メッセージテンプレート3',
+                    listener_id: 1,
+                    content: '本文3',
+                    created_at: new Date(),
+                    updated_at: new Date()
+                },
+            ]
         }));
     })
 )

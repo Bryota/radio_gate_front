@@ -10,7 +10,7 @@ const server = setupServer(
     }),
     rest.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions?page=1`, (req, res, ctx) => {
         return res(ctx.status(200), ctx.json({
-            request_functions: [
+            data: [
                 {
                     id: 1,
                     name: '機能リクエスト1',

@@ -10,34 +10,32 @@ const server = setupServer(
     }),
     rest.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs?page=1`, (req, res, ctx) => {
         return res(ctx.status(200), ctx.json({
-            listener_my_programs: {
-                data: [
-                    {
-                        id: 1,
-                        name: 'マイラジオ番組1',
-                        email: 'test1@example.com',
-                        radio_station_id: 1,
-                        created_at: new Date(),
-                        updated_at: new Date()
-                    },
-                    {
-                        id: 2,
-                        name: 'マイラジオ番組2',
-                        email: 'test2@example.com',
-                        radio_station_id: 1,
-                        created_at: new Date(),
-                        updated_at: new Date()
-                    },
-                    {
-                        id: 3,
-                        name: 'マイラジオ番組3',
-                        email: 'test3@example.com',
-                        radio_station_id: 1,
-                        created_at: new Date(),
-                        updated_at: new Date()
-                    },
-                ]
-            }
+            data: [
+                {
+                    id: 1,
+                    name: 'マイラジオ番組1',
+                    email: 'test1@example.com',
+                    radio_station_id: 1,
+                    created_at: new Date(),
+                    updated_at: new Date()
+                },
+                {
+                    id: 2,
+                    name: 'マイラジオ番組2',
+                    email: 'test2@example.com',
+                    radio_station_id: 1,
+                    created_at: new Date(),
+                    updated_at: new Date()
+                },
+                {
+                    id: 3,
+                    name: 'マイラジオ番組3',
+                    email: 'test3@example.com',
+                    radio_station_id: 1,
+                    created_at: new Date(),
+                    updated_at: new Date()
+                },
+            ]
         }));
     })
 )

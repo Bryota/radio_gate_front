@@ -9,7 +9,7 @@ import { Register, Login, ForgotPassword, ForgotPasswordComplete, PasswordReset,
 import { Profile, ProfileEdit } from '../features/listener';
 import { MessagePost, MessagePostComplete, Messages, Message, SavedMessages, SavedMessage } from '../features/message';
 import { RequestFunctions, RequestFunction, CreateRequestFunctionRequest, VoteRequestFunction } from '../features/request_function';
-import { Inquiry, DeveloperContact, HowToUse, NotFound } from '../features/static';
+import { Inquiry, DeveloperContact, HowToUse, NotFound, ServerError } from '../features/static';
 
 import { AdminForgotPassword, AdminLogin, AdminPasswordReset } from '../features/admin/auth';
 import { AdminRequestFunctions, AdminRequestFunction, AdminCreateRequestFunction, AdminEditRequestFunction } from '../features/admin/request_function';
@@ -76,6 +76,7 @@ export const AppRoutes = () => {
         { path: '/inquery', element: <Inquiry /> },
         { path: '/developer_contact', element: <DeveloperContact /> },
         { path: '/how_to_use', element: <HowToUse /> },
+        { path: '/server_error', element: <ServerError /> },
         { path: '/*', element: <NotFound /> },
     ];
 

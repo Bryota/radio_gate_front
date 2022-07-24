@@ -1,6 +1,6 @@
 import axios from '../settings/Axios';
 import { useNavigate } from 'react-router-dom';
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import { isAuthorized } from '../modules/auth/isAuthorized';
 
 export const useFetchApiData = <T>(url: string, currentPage: number = 1) => {
@@ -14,10 +14,12 @@ export const useFetchApiData = <T>(url: string, currentPage: number = 1) => {
 
             const response = await axios.get(url);
             setApiData(response.data);
+
             setIsLoading(false);
-        } catch (err) {
+        } catch (err: any) {
             console.log(err);
-            return navigation('/not_fount');
+            if (err.response.status === 404) { return navigation('/not_fount'); }
+            return navigation('/server_error');
         }
     }
 

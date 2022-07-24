@@ -20,11 +20,15 @@ export const EditMessageTemplate = () => {
     const [content, setContent] = useState<string | undefined>('');
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
-    const { apiData: messageTemplate, isLoading } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${urlParams.id}`);
+    const { apiData: messageTemplate, isLoading, fetchApiData: fetchMessageTemplate } = useFetchApiData<MessageTemplateResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${urlParams.id}`);
 
     useEffect(() => {
-        setName(messageTemplate?.message_template.name);
-        setContent(messageTemplate?.message_template.content);
+        fetchMessageTemplate();
+    }, []);
+
+    useEffect(() => {
+        setName(messageTemplate?.name);
+        setContent(messageTemplate?.content);
     }, [messageTemplate]);
 
     const validation = () => {

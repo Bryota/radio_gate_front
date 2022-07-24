@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
@@ -17,9 +17,12 @@ import '../../../assets/css/components/pagination.css';
 export const MyRadioPrograms = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const navigation = useNavigate();
-    const { apiData: myRadioPrograms, isLoading } = useFetchApiData<MyRadioProgramsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs?page=${currentPage}`, currentPage);
+    const { apiData: myRadioPrograms, isLoading, fetchApiData: fetchMyRadioPrograms } = useFetchApiData<MyRadioProgramsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs?page=${currentPage}`, currentPage);
     const flashMessage = useFlashMessage();
 
+    useEffect(() => {
+        fetchMyRadioPrograms();
+    }, [])
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);
     }
@@ -27,6 +30,7 @@ export const MyRadioPrograms = () => {
     const nextPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage + 1);
     }
+
     return (
         <>
             <MainLayout>
@@ -43,7 +47,7 @@ export const MyRadioPrograms = () => {
                     clickAction={() => navigation('/my_radio_program/create')}
                 />
                 <div>
-                    {myRadioPrograms?.listener_my_programs.data.map(myRadioProgram => {
+                    {myRadioPrograms?.data.map(myRadioProgram => {
                         return (
                             <MyRadioProgramList
                                 key={myRadioProgram.id}

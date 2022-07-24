@@ -12,11 +12,16 @@ import { UrlParamsType } from '../../../types/common';
 import { MessageResponseType } from '../../../types/listener';
 
 import '../../../assets/css/elements/radio.css';
+import { useEffect } from 'react';
 
 export const SavedMessage = () => {
     const urlParams = useParams<UrlParamsType>();
     const navigation = useNavigate();
-    const { apiData: savedMessage, isLoading } = useFetchApiData<MessageResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages/${urlParams.id}`);
+    const { apiData: savedMessage, isLoading, fetchApiData: fetchSaveMessage } = useFetchApiData<MessageResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages/${urlParams.id}`);
+
+    useEffect(() => {
+        fetchSaveMessage();
+    }, []);
 
     return (
         <>
@@ -27,48 +32,48 @@ export const SavedMessage = () => {
                     subtitle='一時保存'
                 />
                 {
-                    savedMessage?.listener_message.radio_program
+                    savedMessage?.radio_program
                         ?
                         <SelectedSavedMessage
-                            id={savedMessage?.listener_message.id}
-                            name={savedMessage?.listener_message.radio_program?.name}
+                            id={savedMessage?.id}
+                            name={savedMessage?.radio_program?.name}
                         />
                         :
                         <SelectedSavedMessage
-                            id={savedMessage?.listener_message.id}
-                            name={savedMessage?.listener_message.listener_my_program?.name}
+                            id={savedMessage?.id}
+                            name={savedMessage?.listener_my_program?.name}
                         />
                 }
                 <div>
                     {
-                        savedMessage?.listener_message.radio_program
+                        savedMessage?.radio_program
                             ?
                             <MessageItem
                                 itemName='コーナー/件名'
-                                value={savedMessage?.listener_message.program_corner ? savedMessage?.listener_message.program_corner?.name : savedMessage?.listener_message.subject}
+                                value={savedMessage?.program_corner ? savedMessage?.program_corner?.name : savedMessage?.subject}
                             />
                             :
                             <MessageItem
                                 itemName='コーナー/件名'
-                                value={savedMessage?.listener_message.my_program_corner ? savedMessage?.listener_message.my_program_corner?.name : savedMessage?.listener_message.subject}
+                                value={savedMessage?.my_program_corner ? savedMessage?.my_program_corner?.name : savedMessage?.subject}
                             />
                     }
                     <MessageItem
                         itemName='ラジオネーム'
-                        value={savedMessage?.listener_message.radioName}
+                        value={savedMessage?.radioName}
                     />
                     {/* # TODO: API側も変更する */}
                     <MessageItem
                         itemName='本名・住所を記載したかどうか'
-                        value={savedMessage?.listener_message.listenerInfoFlag ? 'はい' : 'いいえ'}
+                        value={savedMessage?.listenerInfoFlag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         itemName='電話番号を記載したかどうか'
-                        value={savedMessage?.listener_message.telFlag ? 'はい' : 'いいえ'}
+                        value={savedMessage?.telFlag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         itemName='本文'
-                        value={savedMessage?.listener_message.content}
+                        value={savedMessage?.content}
                     />
                 </div>
                 <Button

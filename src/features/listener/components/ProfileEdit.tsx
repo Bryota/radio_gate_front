@@ -31,21 +31,25 @@ export const ProfileEdit = () => {
     const [tel, setTel] = useState<string | undefined>('');
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
-    const { apiData: profile, isLoading } = useFetchApiData<ProfileResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`);
+    const { apiData: profile, isLoading, fetchApiData: fetchListener } = useFetchApiData<ProfileResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`);
 
     useEffect(() => {
-        setLastName(profile?.listener.last_name);
-        setFirstName(profile?.listener.first_name);
-        setLastNameKana(profile?.listener.last_name_kana);
-        setFirstNameKana(profile?.listener.last_name_kana);
-        setRadioName(profile?.listener.radio_name);
-        setPostCode(profile?.listener.post_code);
-        setPrefecture(profile?.listener.prefecture);
-        setCity(profile?.listener.city);
-        setHouseNumber(profile?.listener.house_number);
-        setBuilding(profile?.listener.building);
-        setRoomNumber(profile?.listener.room_number);
-        setTel(profile?.listener.tel);
+        fetchListener();
+    }, []);
+
+    useEffect(() => {
+        setLastName(profile?.last_name);
+        setFirstName(profile?.first_name);
+        setLastNameKana(profile?.last_name_kana);
+        setFirstNameKana(profile?.first_name_kana);
+        setRadioName(profile?.radio_name);
+        setPostCode(profile?.post_code ? profile?.post_code : undefined);
+        setPrefecture(profile?.prefecture);
+        setCity(profile?.city);
+        setHouseNumber(profile?.house_number);
+        setBuilding(profile?.building);
+        setRoomNumber(profile?.room_number);
+        setTel(profile?.tel);
     }, [profile]);
 
     const validation = () => {

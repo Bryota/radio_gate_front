@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import { MainLayout } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
@@ -14,7 +14,11 @@ import '../../../assets/css/components/pagination.css';
 
 export const Messages = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
-    const { apiData: messages, isLoading } = useFetchApiData<MessagesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages?page=${currentPage}`);
+    const { apiData: messages, isLoading, fetchApiData: fetchMessages } = useFetchApiData<MessagesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages?page=${currentPage}`);
+
+    useEffect(() => {
+        fetchMessages();
+    }, []);
 
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);
@@ -34,7 +38,7 @@ export const Messages = () => {
                 />
                 <div>
                     {
-                        messages?.listener_messages.data.map(message => {
+                        messages?.data.map(message => {
                             if (message.radio_program) {
                                 return (
                                     <MessageList

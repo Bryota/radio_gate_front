@@ -6,15 +6,21 @@ import { Button, Loading, FlashMessage } from '../../../components/Elements';
 import { ProfileItem } from './ProfileItem';
 import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import { useFlashMessage } from '../../../hooks/useFlashMessage';
+import { nullToNoSetting } from '../../../modules/display/nullToNoSetting';
 
 import { ProfileResponseType } from '../../../types/listener';
 
 import '../../../assets/css/components/pagination.css';
+import { useEffect } from 'react';
 
 export const Profile = () => {
     const navigation = useNavigate();
-    const { apiData: profile, isLoading } = useFetchApiData<ProfileResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`);
+    const { apiData: profile, isLoading, fetchApiData: fetchListener } = useFetchApiData<ProfileResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener`);
     const flashMessage = useFlashMessage();
+
+    useEffect(() => {
+        fetchListener();
+    }, []);
 
     return (
         <>
@@ -28,32 +34,32 @@ export const Profile = () => {
                 <InnerBox>
                     <ProfileItem
                         label="氏名"
-                        value={profile?.listener.last_name + '　' + profile?.listener.first_name}
+                        value={nullToNoSetting(profile?.full_name)}
                         is_first_item={true}
                     />
                     <ProfileItem
                         label="氏名かな"
-                        value={profile?.listener.last_name_kana + '　' + profile?.listener.first_name_kana}
+                        value={nullToNoSetting(profile?.full_name_kana)}
                     />
                     <ProfileItem
                         label="ラジオネーム"
-                        value={profile?.listener.radio_name}
+                        value={nullToNoSetting(profile?.radio_name)}
                     />
                     <ProfileItem
                         label="郵便番号"
-                        value={'〒' + profile?.listener.post_code}
+                        value={'〒' + nullToNoSetting(profile?.post_code)}
                     />
                     <ProfileItem
                         label="住所"
-                        value={`${profile?.listener.prefecture}${profile?.listener.city}${profile?.listener.house_number}${profile?.listener.building}${profile?.listener.room_number}`}
+                        value={nullToNoSetting(profile?.address)}
                     />
                     <ProfileItem
                         label="電話番号"
-                        value={profile?.listener.tel}
+                        value={nullToNoSetting(profile?.tel)}
                     />
                     <ProfileItem
                         label="メールアドレス"
-                        value={profile?.listener.email}
+                        value={profile?.email}
                     />
                 </InnerBox>
                 <Button

@@ -25,14 +25,16 @@ export const EditMyRadioProgram = () => {
     const [currentPage, setCurrentPage] = useState<number>(1);
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
-    const { apiData: myRadioProgram } = useFetchApiData<MyRadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs/${urlParams.id}`);
-    const { apiData: responseCorners, isLoading } = useFetchApiData<MyProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?page=${currentPage}&listener_my_program=${urlParams.id}`);
+    const { apiData: myRadioProgram, isLoading, fetchApiData: fetchMyRadioProgram } = useFetchApiData<MyRadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs/${urlParams.id}`);
+    useEffect(() => {
+        fetchMyRadioProgram();
+    }, []);
 
     useEffect(() => {
         setId(myRadioProgram?.id);
         setName(myRadioProgram?.name);
         setEmail(myRadioProgram?.email);
-        setCorners(responseCorners?.my_program_corners.data);
+        setCorners(myRadioProgram?.my_program_corners);
     }, [myRadioProgram]);
 
     const validation = () => {

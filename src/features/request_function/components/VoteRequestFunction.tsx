@@ -18,13 +18,14 @@ export const VoteRequestFunction = () => {
     const urlParams = useParams<UrlParamsType>();
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
-    const { apiData: requestFunction, isLoading } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${urlParams.id}`);
+    const { apiData: requestFunction, isLoading, fetchApiData: fetchRequestFunction } = useFetchApiData<RequestFunctionResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${urlParams.id}`);
     const { response, postApi: UpdateRequestFunctionPoint } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/request-functions/${requestFunction?.id}/point`, { point });
 
     useEffect(() => {
         if (response.status === 201) {
             navigation('/request_functions', { state: { flash_message: '機能リクエストに投票しました' } })
         }
+        fetchRequestFunction();
     }, [response])
 
     const validation = () => {

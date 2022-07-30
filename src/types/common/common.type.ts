@@ -15,6 +15,7 @@ export type FormInputType = {
     type?: string
     isFirstItem?: boolean
     validationMessages?: Array<validatedArrayType>
+    data_testid?: string
     changeAction?: (event: React.ChangeEvent<HTMLInputElement>) => void
     deleteAction?: (id: number) => void
     deleteFormAction?: (id: number) => void

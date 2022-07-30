@@ -88,12 +88,14 @@ export const CreateMessageTemplate = () => {
                         is_first_item={true}
                         changeAction={e => setName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
+                        data_testid='message-template-input-name'
                     />
                     <Textarea
                         key='content'
                         text='本文'
                         changeAction={e => setContent(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'content')}
+                        data_testid='message-template-input-content'
                     />
                 </InnerBox>
                 <Button

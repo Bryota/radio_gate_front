@@ -83,12 +83,14 @@ export const CreateRequestFunctionRequest = () => {
                         text='タイトル'
                         changeAction={e => setName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
+                        data_testid='request-function-request-input-name'
                     />
                     <Textarea
                         key='detail'
                         text='詳細'
                         changeAction={e => setDetail(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'detail')}
+                        data_testid='request-function-request-input-detail'
                     />
                 </InnerBox>
                 <Button

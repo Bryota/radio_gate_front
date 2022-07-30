@@ -95,6 +95,7 @@ export const EditMessageTemplate = () => {
                         is_first_item={true}
                         changeAction={e => setName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
+                        data_testid='message-template-input-name'
                     />
                     <Textarea
                         key='content'
@@ -102,6 +103,7 @@ export const EditMessageTemplate = () => {
                         value={content}
                         changeAction={e => setContent(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'content')}
+                        data_testid='message-template-input-content'
                     />
                 </InnerBox>
                 <Button

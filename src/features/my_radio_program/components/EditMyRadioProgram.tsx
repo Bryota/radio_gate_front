@@ -29,7 +29,7 @@ export const EditMyRadioProgram = () => {
     useEffect(() => {
         fetchMyRadioProgram();
     }, []);
-    console.log(myRadioProgram)
+
     useEffect(() => {
         setId(myRadioProgram?.id);
         setName(myRadioProgram?.name);

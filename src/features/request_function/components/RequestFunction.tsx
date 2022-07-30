@@ -19,7 +19,7 @@ export const RequestFunction = () => {
 
     useEffect(() => {
         fetchRequestFunction();
-    });
+    }, []);
 
     return (
         <>

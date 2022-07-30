@@ -141,6 +141,7 @@ export const CreateMyRadioProgram = () => {
                         is_first_item={true}
                         changeAction={e => setName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
+                        data_testid='my-radio-program-input-name'
                     />
                     <Input
                         key='email'
@@ -148,6 +149,7 @@ export const CreateMyRadioProgram = () => {
                         type='email'
                         changeAction={e => setEmail(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
+                        data_testid='my-radio-program-input-email'
                     />
                     <p className="text-left mt-5 h3">番組コーナー</p>
                     {
@@ -161,6 +163,7 @@ export const CreateMyRadioProgram = () => {
                                     validationMessages={validationMessages.filter(validationMessage => validationMessage.key === `corner${index}`)}
                                     changeAction={e => changeCorner(e.target.value, index)}
                                     deleteFormAction={() => { deleteCornerForm(index) }}
+                                    data_testid='my-radio-program-input-corner'
                                 />
                             )
                         })
@@ -170,12 +173,14 @@ export const CreateMyRadioProgram = () => {
                         type='get'
                         line_left={true}
                         clickAction={addCorner}
+                        data_testid='my-radio-program-button-add-corner'
                     />
                 </InnerBox>
                 <Button
                     text='作成する'
                     type='post'
                     clickAction={createMyRadioProgram}
+                    data_testid='my-radio-program-button-create'
                 />
             </MainLayout>
         </>

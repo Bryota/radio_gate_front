@@ -198,6 +198,7 @@ export const ProfileEdit = () => {
                         text='姓'
                         changeAction={e => setLastName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'lastName')}
+                        data_testid='profile-input-last-name'
                     />
                     <Input
                         key='firstName'
@@ -205,6 +206,7 @@ export const ProfileEdit = () => {
                         text='名'
                         changeAction={e => setFirstName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'firstName')}
+                        data_testid='profile-input-first-name'
                     />
                     <Input
                         key='lastNameKana'
@@ -212,6 +214,7 @@ export const ProfileEdit = () => {
                         text='姓かな'
                         changeAction={e => setLastNameKana(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'lastNameKana')}
+                        data_testid='profile-input-last-name-kana'
                     />
                     <Input
                         key='firstNameKana'
@@ -219,6 +222,7 @@ export const ProfileEdit = () => {
                         text='名かな'
                         changeAction={e => setFirstNameKana(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'firstNameKana')}
+                        data_testid='profile-input-first-name-kana'
                     />
                     <Input
                         key='radioName'
@@ -226,6 +230,7 @@ export const ProfileEdit = () => {
                         text='ラジオネーム'
                         changeAction={e => setRadioName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'radioName')}
+                        data_testid='profile-input-radio-name'
                     />
                     <Input
                         key='postCode'
@@ -235,6 +240,7 @@ export const ProfileEdit = () => {
                         searchAddressByPostCode={(postCode => searchAddressByPostCode(postCode))}
                         changeAction={e => setPostCode(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'postCode')}
+                        data_testid='profile-input-post-code'
                     />
                     <Input
                         key='prefecture'
@@ -242,6 +248,7 @@ export const ProfileEdit = () => {
                         text='都道府県'
                         changeAction={e => setPrefecture(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'prefecture')}
+                        data_testid='profile-input-prefecture'
                     />
                     <Input
                         key='city'
@@ -249,6 +256,7 @@ export const ProfileEdit = () => {
                         text='市区町村'
                         changeAction={e => setCity(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'city')}
+                        data_testid='profile-input-city'
                     />
                     <Input
                         key='houseNumber'
@@ -256,6 +264,7 @@ export const ProfileEdit = () => {
                         text='番地'
                         changeAction={e => setHouseNumber(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'houseNumber')}
+                        data_testid='profile-input-house-number'
                     />
                     <Input
                         key='building'
@@ -263,6 +272,7 @@ export const ProfileEdit = () => {
                         text='建物'
                         changeAction={e => setBuilding(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'building')}
+                        data_testid='profile-input-building'
                     />
                     <Input
                         key='roomNumber'
@@ -270,6 +280,7 @@ export const ProfileEdit = () => {
                         text='部屋番号'
                         changeAction={e => setRoomNumber(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'roomNumber')}
+                        data_testid='profile-input-room-number'
                     />
                     <Input
                         key='tel'
@@ -277,12 +288,14 @@ export const ProfileEdit = () => {
                         text='電話番号'
                         changeAction={e => setTel(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'tel')}
+                        data_testid='profile-input-tel'
                     />
                 </InnerBox>
                 <Button
                     text='更新する'
                     type='post'
                     clickAction={editProfile}
+                    data_testid='profile-button-edit'
                 />
             </MainLayout>
         </>

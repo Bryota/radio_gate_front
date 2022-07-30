@@ -76,6 +76,7 @@ export const Login = () => {
                         is_first_item={true}
                         changeAction={e => setEmail(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
+                        data_testid='login-input-email'
                     />
                     <Input
                         key='password'
@@ -83,6 +84,7 @@ export const Login = () => {
                         type="password"
                         changeAction={e => setPassword(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'password')}
+                        data_testid='login-input-password'
                     />
                 </InnerBox>
                 <Button

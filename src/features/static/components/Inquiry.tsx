@@ -40,6 +40,11 @@ export const Inquiry = () => {
                 {
                     key: 'email',
                     value: email,
+                    type: 'email'
+                },
+                {
+                    key: 'email',
+                    value: email,
                     type: 'max|150'
                 },
                 {
@@ -99,6 +104,7 @@ export const Inquiry = () => {
                         changeAction={e => setEmail(e.target.value)}
                         is_first_item={true}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
+                        data_testid='inquery-input-email'
                     />
                     <Input
                         key='type'
@@ -106,6 +112,7 @@ export const Inquiry = () => {
                         changeAction={e => setType(e.target.value)}
                         value={type}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'type')}
+                        data_testid='inquery-input-type'
                     />
                     <Textarea
                         key='content'
@@ -113,6 +120,7 @@ export const Inquiry = () => {
                         changeAction={e => setContent(e.target.value)}
                         value={content}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'content')}
+                        data_testid='inquery-input-content'
                     />
                 </InnerBox>
                 <Button

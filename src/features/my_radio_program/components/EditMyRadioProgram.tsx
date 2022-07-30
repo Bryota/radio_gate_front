@@ -175,6 +175,7 @@ export const EditMyRadioProgram = () => {
                         is_first_item={true}
                         changeAction={e => setName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'name')}
+                        data_testid='my-radio-program-input-name'
                     />
                     <Input
                         key='email'
@@ -183,6 +184,7 @@ export const EditMyRadioProgram = () => {
                         type='email'
                         changeAction={e => setEmail(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
+                        data_testid='my-radio-program-input-email'
                     />
                     <p className="text-left mt-5 h3">番組コーナー</p>
                     {
@@ -197,6 +199,7 @@ export const EditMyRadioProgram = () => {
                                     changeAction={e => changeCorner(e.target.value, index)}
                                     deleteAction={(id) => { deleteCorner(id) }}
                                     deleteFormAction={() => { deleteCornerForm(index) }}
+                                    data_testid='my-radio-program-input-corner'
                                 />
                             )
                         })
@@ -212,6 +215,7 @@ export const EditMyRadioProgram = () => {
                     text='更新する'
                     type='post'
                     clickAction={editMyRadioProgram}
+                    data_testid='my-radio-program-button-edit'
                 />
                 <Button
                     text='削除する'

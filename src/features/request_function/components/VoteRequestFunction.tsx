@@ -70,7 +70,7 @@ export const VoteRequestFunction = () => {
                             <label htmlFor='point'>ポイント</label>
                         </div>
                         <div className='col-8 position-relative'>
-                            <select id='point' className='position-absolute w-100 border-0 underline-green' defaultValue={point} onChange={e => setPoint(e.target.value)} >
+                            <select id='point' className='position-absolute w-100 border-0 underline-green' defaultValue={point} data-testid='request-function-vote' onChange={e => setPoint(e.target.value)} >
                                 <option hidden>選択してください</option>
                                 <option value='1'>1</option>
                                 <option value='3'>3</option>

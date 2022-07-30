@@ -216,6 +216,7 @@ export const Register = () => {
                         is_first_item={true}
                         changeAction={e => setEmail(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
+                        data_testid='register-input-email'
                     />
                     <Input
                         key='password'
@@ -224,34 +225,39 @@ export const Register = () => {
                         type="password"
                         changeAction={e => setPassword(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'password')}
+                        data_testid='register-input-password'
                     />
                     <Input
-                        key='first_name'
+                        key='last_name'
                         value={lastName}
                         text='姓'
                         changeAction={e => setLastName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'lastName')}
+                        data_testid='register-input-last-name'
                     />
                     <Input
-                        key='last_name'
+                        key='first_name'
                         value={firstName}
                         text='名'
                         changeAction={e => setFirstName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'firstName')}
+                        data_testid='register-input-first-name'
                     />
                     <Input
-                        key='first_name_kana'
+                        key='last_name_kana'
                         value={lastNameKana}
                         text='姓かな'
                         changeAction={e => setLastNameKana(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'lastNameKana')}
+                        data_testid='register-input-last-name-kana'
                     />
                     <Input
-                        key='last_name_kana'
+                        key='first_name_kana'
                         value={firstNameKana}
                         text='名かな'
                         changeAction={e => setFirstNameKana(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'firstNameKana')}
+                        data_testid='register-input-first-name-kana'
                     />
                     <Input
                         key='radio_name'
@@ -259,6 +265,7 @@ export const Register = () => {
                         text='ラジオネーム'
                         changeAction={e => setRadioName(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'radioName')}
+                        data_testid='register-input-radio-name'
                     />
                     <Input
                         key='post_code'
@@ -268,6 +275,7 @@ export const Register = () => {
                         searchAddressByPostCode={(postCode => searchAddressByPostCode(postCode))}
                         changeAction={e => setPostCode(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'postCode')}
+                        data_testid='register-input-post-code'
                     />
                     <Input
                         key='prefecture'
@@ -275,6 +283,7 @@ export const Register = () => {
                         text='都道府県'
                         changeAction={e => setPrefecture(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'prefecture')}
+                        data_testid='register-input-prefecture'
                     />
                     <Input
                         key='city'
@@ -282,6 +291,7 @@ export const Register = () => {
                         text='市区町村'
                         changeAction={e => setCity(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'city')}
+                        data_testid='register-input-city'
                     />
                     <Input
                         key='house_number'
@@ -289,6 +299,7 @@ export const Register = () => {
                         text='番地'
                         changeAction={e => setHouseNumber(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'houseNumber')}
+                        data_testid='register-input-house-number'
                     />
                     <Input
                         key='building'
@@ -296,6 +307,7 @@ export const Register = () => {
                         text='建物'
                         changeAction={e => setBuilding(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'building')}
+                        data_testid='register-input-building'
                     />
                     <Input
                         key='room_number'
@@ -303,6 +315,7 @@ export const Register = () => {
                         text='部屋番号'
                         changeAction={e => setRoomNumber(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'roomNumber')}
+                        data_testid='register-input-room-number'
                     />
                     <Input
                         key='tel'
@@ -310,12 +323,14 @@ export const Register = () => {
                         text='電話番号'
                         changeAction={e => setTel(e.target.value)}
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'tel')}
+                        data_testid='register-input-tel'
                     />
                 </InnerBox>
                 <Button
                     text='始める'
                     type='post'
                     clickAction={registerAccount}
+                    data_testid='register-button'
                 />
                 <div className='text-center pb-5'>
                     <a href="/login">ログインの方はこちら</a>

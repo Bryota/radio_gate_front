@@ -15,12 +15,15 @@ export const Login = () => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
+    const [invalidCredentials, setInvalidCredentials] = useState<boolean>(false);
     const { response, postApi: SendCredentials } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/login`, { email, password });
     const navigation = useNavigate();
 
     useEffect(() => {
         if (response.status === 200) {
             return navigation('/message_post');
+        } else {
+            setInvalidCredentials(true);
         }
     }, [response])
 
@@ -53,6 +56,8 @@ export const Login = () => {
     }
 
     const Login = async () => {
+        setInvalidCredentials(false);
+        setValidationMessages([]);
         if (validation()) {
             return;
         }
@@ -69,6 +74,7 @@ export const Login = () => {
                     subtitle='ログイン'
                 />
                 <InnerBox>
+                    {invalidCredentials ? <p className='mb-4 color-accent'>メールアドレスかパスワードが異なっています。</p> : <></>}
                     <Input
                         key='email'
                         text='メールアドレス'

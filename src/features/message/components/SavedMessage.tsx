@@ -60,16 +60,16 @@ export const SavedMessage = () => {
                     }
                     <MessageItem
                         itemName='ラジオネーム'
-                        value={savedMessage?.radioName}
+                        value={savedMessage?.radio_name}
                     />
                     {/* # TODO: API側も変更する */}
                     <MessageItem
                         itemName='本名・住所を記載したかどうか'
-                        value={savedMessage?.listenerInfoFlag ? 'はい' : 'いいえ'}
+                        value={savedMessage?.listener_info_flag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         itemName='電話番号を記載したかどうか'
-                        value={savedMessage?.telFlag ? 'はい' : 'いいえ'}
+                        value={savedMessage?.tel_flag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         itemName='本文'

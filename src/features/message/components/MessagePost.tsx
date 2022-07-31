@@ -335,7 +335,7 @@ export const MessagePost = () => {
                     <Input
                         key='radio_name'
                         text='ラジオネーム'
-                        value='ハイキングベアー'
+                        value={radioName}
                         changeAction={e => setRadioName(e.target.value)}
                     />
                     <CheckBox

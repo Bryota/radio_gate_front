@@ -11,7 +11,7 @@ export const MessagePostComplete = () => {
     const location = useLocation();
     const navigation = useNavigate();
     const [radioProgram, setRadioProgram] = useState<{ radio_program_id: string, is_my_radio_program: boolean }>(location.state as { radio_program_id: string, is_my_radio_program: boolean })
-    const [radioProgramName, setRadioProgramName] = useState<string>();
+    const [radioProgramName, setRadioProgramName] = useState<string>('');
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     useEffect(() => {
@@ -20,11 +20,11 @@ export const MessagePostComplete = () => {
             try {
                 if (radioProgram.is_my_radio_program) {
                     const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs/${radioProgram.radio_program_id}`);
-                    setRadioProgramName(RadioProgramResponse.data.listener_my_program.name);
+                    setRadioProgramName(RadioProgramResponse.data.name);
                     setIsLoading(false);
                 } else {
                     const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${radioProgram.radio_program_id}`);
-                    setRadioProgramName(RadioProgramResponse.data.radio_program.name);
+                    setRadioProgramName(RadioProgramResponse.data.name);
                     setIsLoading(false);
                 }
             } catch (err) {
@@ -33,6 +33,7 @@ export const MessagePostComplete = () => {
         }
         fetchRadioProgramName();
     }, []);
+
     const authorized = async () => {
         let authorized = await isAuthorized();
         if (!authorized) {

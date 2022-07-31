@@ -156,6 +156,15 @@ export const MessagePost = () => {
         }
     }
 
+    const fetchMessageTemplateContent = async (id: number) => {
+        try {
+            const messageTemplatesReponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${id}`);
+            setContent(messageTemplatesReponse.data.content);
+        } catch (err) {
+            console.log(err);
+        }
+    }
+
     const fetchRadioProgramFromParams = async () => {
         try {
             const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${getParams.get('radio_program')}`);
@@ -247,10 +256,7 @@ export const MessagePost = () => {
     }
 
     const showMessageTemplate = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        const messageTemplate = messageTemplates.find(messageTemplate => {
-            return (messageTemplate.id === Number(e.target.value))
-        });
-        setContent(messageTemplate?.content);
+        fetchMessageTemplateContent(Number(e.target.value));
     }
 
     const sendMessage = () => {

@@ -9,8 +9,10 @@ export const usePostApi = (url: string, payload: {}) => {
     const postApi = useCallback(() => {
         axios.post(url, payload)
             .then(res => {
-                console.log(res)
-                setResponse(() => ({ data: res.data, status: res.status }))
+                setResponse(() => ({ data: res.data, status: res.status }));
+            })
+            .catch(res => {
+                setResponse(() => ({ data: res.response.data, status: res.response.status }));
             })
     }, [url, payload])
 

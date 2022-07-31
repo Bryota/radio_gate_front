@@ -39,10 +39,10 @@ export type MessageResponseType = {
     myProgramCornerId: string
     subject?: string
     content: string
-    radioName?: string
+    radio_name?: string
     posted_at: string
-    listenerInfoFlag: boolean
-    telFlag: boolean
+    listener_info_flag: boolean
+    tel_flag: boolean
     createdAt: string
     updatedAt: string
     listener_my_program?: {

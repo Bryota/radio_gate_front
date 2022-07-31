@@ -60,15 +60,15 @@ export const Message = () => {
                     }
                     <MessageItem
                         itemName='ラジオネーム'
-                        value={message?.radioName}
+                        value={message?.radio_name}
                     />
                     <MessageItem
                         itemName='本名・住所を記載したかどうか'
-                        value={message?.listenerInfoFlag ? 'はい' : 'いいえ'}
+                        value={message?.listener_info_flag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         itemName='電話番号を記載したかどうか'
-                        value={message?.telFlag ? 'はい' : 'いいえ'}
+                        value={message?.tel_flag ? 'はい' : 'いいえ'}
                     />
                     <MessageItem
                         itemName='本文'

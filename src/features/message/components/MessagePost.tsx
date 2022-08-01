@@ -167,8 +167,8 @@ export const MessagePost = () => {
 
     const fetchRadioProgramFromParams = async () => {
         try {
-            const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${getParams.get('radio_program')}`);
-            fetchRadioProgramRelatedWithRadioStation(RadioProgramsResponse.data.radio_program.radio_station_id);
+            const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${getParams.get('radio_program')}`);
+            fetchRadioProgramRelatedWithRadioStation(RadioProgramResponse.data.radio_station_id);
             fetchCorner(String(getParams.get('radio_program')))
         } catch (err) {
             console.log(err);
@@ -178,7 +178,7 @@ export const MessagePost = () => {
     const fetchMyRadioProgramFromParams = async () => {
         try {
             const MyRadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs`);
-            setRadioPrograms(MyRadioProgramsResponse.data.listener_my_programs.data);
+            setRadioPrograms(MyRadioProgramsResponse.data.data);
             setRadioProgramId(String(getParams.get('my_radio_program')));
             const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?listener_my_program=${String(getParams.get('my_radio_program'))}`);
             setCorners(ConrernsResponse.data.data);

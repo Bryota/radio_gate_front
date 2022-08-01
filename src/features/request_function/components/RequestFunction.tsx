@@ -36,13 +36,25 @@ export const RequestFunction = () => {
                     <p className='h3 mb-4'>詳細</p>
                     <InnerBox>{requestFunction?.detail}</InnerBox>
                 </div>
-                <Button
-                    text='投票する'
-                    type='post'
-                    clickAction={() => {
-                        return navigation(`/request_function/${requestFunction?.id}/vote`)
-                    }}
-                />
+                {
+                    requestFunction?.is_voted ?
+                        <Button
+                            text='投票済み'
+                            type='post'
+                            disable={true}
+                            clickAction={() => {
+                                return navigation(`/request_function/${requestFunction?.id}/vote`)
+                            }}
+                        />
+                        :
+                        <Button
+                            text='投票する'
+                            type='post'
+                            clickAction={() => {
+                                return navigation(`/request_function/${requestFunction?.id}/vote`)
+                            }}
+                        />
+                }
                 <Button
                     text='機能リクエスト一覧'
                     type='get'

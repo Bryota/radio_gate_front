@@ -19,6 +19,12 @@
     transform: translateY(4px);
 }
 
+.button.bg-disable {
+    box-shadow: none;
+    transform: translateX(4px);
+    transform: translateY(4px);
+}
+
 .admin-button {
     border-radius: unset;
 }

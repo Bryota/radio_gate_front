@@ -5,7 +5,7 @@ import { useNavigate } from 'react-router-dom';
 import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button } from '../../../components/Elements';
-import { Input, Textarea } from '../../../components/Form';
+import { Input, Textarea, Select } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { validationCheck } from '../../../modules/validation/validationCheck';
 
@@ -17,6 +17,7 @@ export const Inquiry = () => {
     const [content, setContent] = useState<string>('');
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
     const navigation = useNavigate();
+    const INQUERYTYPE = ['機能関連', '運営関連', 'その他'];
 
     useEffect(() => {
         authorized();
@@ -106,14 +107,19 @@ export const Inquiry = () => {
                         validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'email')}
                         data_testid='inquery-input-email'
                     />
-                    <Input
-                        key='type'
-                        text='問い合わせ種別'
-                        changeAction={e => setType(e.target.value)}
-                        value={type}
-                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'type')}
-                        data_testid='inquery-input-type'
-                    />
+                    <div className='row form-input_item'>
+                        <div className='col-4'>
+                            <label htmlFor='point'>問い合わせ種別</label>
+                        </div>
+                        <div className='col-8 position-relative'>
+                            <select id='point' className='position-absolute w-100 border-0 underline-green' data-testid='inquery-input-type' defaultValue={''} onChange={e => setType(e.target.value)} >
+                                <option hidden>選択してください</option>
+                                <option value='機能関連'>機能関連</option>
+                                <option value='運営関連'>運営関連</option>
+                                <option value='その他'>その他</option>
+                            </select>
+                        </div>
+                    </div>
                     <Textarea
                         key='content'
                         text='詳細'

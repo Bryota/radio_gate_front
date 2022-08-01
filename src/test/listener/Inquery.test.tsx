@@ -27,10 +27,10 @@ describe('お問い合わせ', (() => {
         const inputContent: any = screen.getByTestId('inquery-input-content');
 
         await userEvent.type(inputEmail, 'test@example.com');
-        await userEvent.type(inputType, '機能に関する質問');
+        await userEvent.selectOptions(inputType, ['機能関連']);
         await userEvent.type(inputContent, 'お問い合わせ本文');
         expect(inputEmail.value).toBe("test@example.com");
-        expect(inputType.value).toBe("機能に関する質問");
+        expect(inputType.value).toBe("機能関連");
         expect(inputContent.value).toBe("お問い合わせ本文");
         await userEvent.click(screen.getByRole('button'));
     })
@@ -44,7 +44,7 @@ describe('お問い合わせ', (() => {
 
         const inputType: any = screen.getByTestId('inquery-input-type');
         const inputContent: any = screen.getByTestId('inquery-input-content');
-        await userEvent.type(inputType, '機能に関する質問');
+        await userEvent.selectOptions(inputType, ['機能関連']);
         await userEvent.type(inputContent, 'お問い合わせ本文');
         await userEvent.click(screen.getByRole('button'));
 
@@ -63,28 +63,11 @@ describe('お問い合わせ', (() => {
         const inputContent: any = screen.getByTestId('inquery-input-content');
 
         await userEvent.type(inputEmail, 'test');
-        await userEvent.type(inputType, '機能に関する質問');
+        await userEvent.selectOptions(inputType, ['機能関連']);
         await userEvent.type(inputContent, 'お問い合わせ本文');
         await userEvent.click(screen.getByRole('button'));
 
         expect(await screen.findByText(/メールアドレスの形式が異なっています。/)).toBeInTheDocument();
-    })
-
-    it('問い合わせ種別を入れないとバリデーションメッセージが表示される', async () => {
-        render(
-            <Router>
-                <Inquiry />
-            </Router>
-        )
-
-        const inputEmail: any = screen.getByTestId('inquery-input-email');
-        const inputContent: any = screen.getByTestId('inquery-input-content');
-
-        await userEvent.type(inputEmail, 'test@example.com');
-        await userEvent.type(inputContent, 'お問い合わせ本文');
-        await userEvent.click(screen.getByRole('button'));
-
-        expect(await screen.findByText(/必須項目です。/)).toBeInTheDocument();
     })
 
     it('詳細を入れないとバリデーションメッセージが表示される', async () => {
@@ -98,7 +81,7 @@ describe('お問い合わせ', (() => {
         const inputType: any = screen.getByTestId('inquery-input-type');
 
         await userEvent.type(inputEmail, 'test@example.com');
-        await userEvent.type(inputType, '機能に関する質問');
+        await userEvent.selectOptions(inputType, ['機能関連']);
         await userEvent.click(screen.getByRole('button'));
 
         expect(await screen.findByText(/必須項目です。/)).toBeInTheDocument();

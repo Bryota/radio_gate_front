@@ -29,6 +29,7 @@ export type MessageType = {
 export type MessagesResponseType = {
     data: MessageType[]
     isLoading: boolean
+    last_page: number
 }
 
 export type MessageResponseType = {

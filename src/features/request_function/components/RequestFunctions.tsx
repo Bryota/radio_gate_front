@@ -23,7 +23,7 @@ export const RequestFunctions = () => {
     useEffect(() => {
         fetchRequestFunctions();
     }, []);
-    console.log(requestFunctions)
+
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);
     }
@@ -66,6 +66,7 @@ export const RequestFunctions = () => {
                 </div>
                 <Pagination
                     currentPage={currentPage}
+                    lastPage={requestFunctions?.last_page}
                     prevAction={prevPagination}
                     nextAction={nextPagination}
                 />

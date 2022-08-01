@@ -70,6 +70,7 @@ export const RadioStations = () => {
                 </div>
                 <Pagination
                     currentPage={currentPage}
+                    lastPage={radioStations?.last_page}
                     prevAction={prevPagination}
                     nextAction={nextPagination}
                 />

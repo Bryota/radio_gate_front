@@ -9,6 +9,7 @@ export type RequestFunctionType = {
 export type RequestFunctionsResponseType = {
     data: RequestFunctionType[]
     isLoading: boolean
+    last_page: number
 }
 
 export type RequestFunctionResponseType = {

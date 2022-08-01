@@ -27,6 +27,7 @@ export const MessageTemplates = () => {
     const prevPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage - 1);
     }
+
     const nextPagination = () => {
         setCurrentPage((preCurrentPage) => preCurrentPage + 1);
     }
@@ -61,6 +62,7 @@ export const MessageTemplates = () => {
                 </div>
                 <Pagination
                     currentPage={currentPage}
+                    lastPage={messageTemplates?.last_page}
                     prevAction={prevPagination}
                     nextAction={nextPagination}
                 />

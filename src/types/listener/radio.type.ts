@@ -6,6 +6,7 @@ export type RadioStationType = {
 export type RadioStationsResponseType = {
     data: RadioStationType[]
     isLoading: boolean
+    last_page: number
 }
 
 export type RadioStationNameResponseType = {
@@ -25,6 +26,7 @@ export type RadioProgramsResponseType = {
     radio_station_name: string
     radio_programs: {
         data: RadioProgramType[]
+        last_page: number
     }
     isLoading: boolean
 }
@@ -65,6 +67,7 @@ export type CornerType = {
 export type MyRadioProgramsResponseType = {
     data: RadioProgramType[]
     isLoading: boolean
+    last_page: number
 }
 
 export type MyRadioProgramResponseType = {

@@ -63,6 +63,7 @@ export const Messages = () => {
                 </div>
                 <Pagination
                     currentPage={currentPage}
+                    lastPage={messages?.last_page}
                     prevAction={prevPagination}
                     nextAction={nextPagination}
                 />

@@ -7,6 +7,7 @@ export type MessageTemplateType = {
 export type MessageTemplatesResponseType = {
     data: MessageTemplateType[]
     isLoading: boolean
+    last_page: number
 }
 
 export type MessageTemplateResponseType = {

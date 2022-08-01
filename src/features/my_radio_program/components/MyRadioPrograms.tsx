@@ -59,6 +59,7 @@ export const MyRadioPrograms = () => {
                 </div>
                 <Pagination
                     currentPage={currentPage}
+                    lastPage={myRadioPrograms?.last_page}
                     prevAction={prevPagination}
                     nextAction={nextPagination}
                 />

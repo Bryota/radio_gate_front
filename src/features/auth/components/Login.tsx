@@ -22,7 +22,7 @@ export const Login = () => {
     useEffect(() => {
         if (response.status === 200) {
             return navigation('/message_post');
-        } else {
+        } else if (response.status === 500) {
             setInvalidCredentials(true);
         }
     }, [response])

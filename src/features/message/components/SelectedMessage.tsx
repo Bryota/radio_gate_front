@@ -12,7 +12,7 @@ export const SelectedMessage = ({ name, postDate }: SelectedMessageType): JSX.El
                     <p className='font-40'>{name}</p>
                 </div>
                 <p className='mt-2 ps-3 font-20'>
-                    <Moment format='YYYY年MM月DD日 hh時mm分'>
+                    <Moment format='YYYY年MM月DD日 HH時mm分'>
                         {postDate}
                     </Moment>
                     <span className='mx-4'>投稿済み</span>

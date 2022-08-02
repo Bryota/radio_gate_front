@@ -102,7 +102,7 @@ export const EditMyRadioProgram = () => {
 
     const deleteCorner = async (id: number) => {
         try {
-            await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners/${id}`);
+            await axios.delete(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners/${id}?listener_my_program=${urlParams.id}`);
             return (
                 navigation('/my_radio_programs', { state: { flash_message: 'コーナーを削除しました' } })
             )

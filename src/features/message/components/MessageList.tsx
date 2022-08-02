@@ -11,7 +11,7 @@ export const MessageList = ({ id, radioProgram, corner, postDate }: MessageListT
                     <p>{corner}</p>
                 </div>
                 <p className="col-4 font-20">
-                    <Moment format='YYYY年MM月DD日 hh時mm分'>
+                    <Moment format='YYYY年MM月DD日 HH時mm分'>
                         {postDate}
                     </Moment>
                 </p>

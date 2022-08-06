@@ -22,9 +22,9 @@ describe('お問い合わせ', (() => {
             </Router>
         );
 
-        const inputEmail: any = screen.getByTestId('inquery-input-email');
-        const inputType: any = screen.getByTestId('inquery-input-type');
-        const inputContent: any = screen.getByTestId('inquery-input-content');
+        const inputEmail: any = screen.getByTestId('inquiry-input-email');
+        const inputType: any = screen.getByTestId('inquiry-input-type');
+        const inputContent: any = screen.getByTestId('inquiry-input-content');
 
         await userEvent.type(inputEmail, 'test@example.com');
         await userEvent.selectOptions(inputType, ['機能関連']);
@@ -42,8 +42,8 @@ describe('お問い合わせ', (() => {
             </Router>
         )
 
-        const inputType: any = screen.getByTestId('inquery-input-type');
-        const inputContent: any = screen.getByTestId('inquery-input-content');
+        const inputType: any = screen.getByTestId('inquiry-input-type');
+        const inputContent: any = screen.getByTestId('inquiry-input-content');
         await userEvent.selectOptions(inputType, ['機能関連']);
         await userEvent.type(inputContent, 'お問い合わせ本文');
         await userEvent.click(screen.getByRole('button'));
@@ -58,9 +58,9 @@ describe('お問い合わせ', (() => {
             </Router>
         )
 
-        const inputEmail: any = screen.getByTestId('inquery-input-email');
-        const inputType: any = screen.getByTestId('inquery-input-type');
-        const inputContent: any = screen.getByTestId('inquery-input-content');
+        const inputEmail: any = screen.getByTestId('inquiry-input-email');
+        const inputType: any = screen.getByTestId('inquiry-input-type');
+        const inputContent: any = screen.getByTestId('inquiry-input-content');
 
         await userEvent.type(inputEmail, 'test');
         await userEvent.selectOptions(inputType, ['機能関連']);
@@ -77,8 +77,8 @@ describe('お問い合わせ', (() => {
             </Router>
         )
 
-        const inputEmail: any = screen.getByTestId('inquery-input-email');
-        const inputType: any = screen.getByTestId('inquery-input-type');
+        const inputEmail: any = screen.getByTestId('inquiry-input-email');
+        const inputType: any = screen.getByTestId('inquiry-input-type');
 
         await userEvent.type(inputEmail, 'test@example.com');
         await userEvent.selectOptions(inputType, ['機能関連']);

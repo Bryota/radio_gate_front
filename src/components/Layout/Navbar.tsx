@@ -50,7 +50,7 @@ export const Navbar = (): JSX.Element => {
                     </a>
                 </div>
                 <div className="text-left mb-4">
-                    <a href="/inquery" className="d-flex">
+                    <a href="/inquiry" className="d-flex">
                         <img src={ContactIcon} alt="" className='navbar-icon' />
                         <p>お問い合わせ</p>
                     </a>

@@ -80,7 +80,7 @@ export const DeveloperContact = () => {
         }).then(res => {
             if (res.status === 200) {
                 console.log(res)
-                navigation('/developer_contact', { state: { flash_message: '開発者コンタクトを送信しました' } })
+                navigation('/developer_contact/complete')
             } else {
                 navigation('/developer_contact', { state: { flash_message: '開発者コンタクトの送信に失敗しました' } })
             }

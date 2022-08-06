@@ -191,7 +191,6 @@ export const MessagePost = () => {
         setRadioStationId(radio_station_id);
         try {
             const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs?radio_station=${radio_station_id}`);
-            console.log(RadioProgramsResponse)
             setRadioPrograms(RadioProgramsResponse.data.radio_programs.data);
         } catch (err) {
             console.log(err);
@@ -216,33 +215,33 @@ export const MessagePost = () => {
     const fetchSavedMessage = async () => {
         try {
             const SavedMessageResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages/${getParams.get('saved_message')}`);
-            if (SavedMessageResponse.data.listener_message.radio_program_id) {
-                const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${SavedMessageResponse.data.listener_message.radio_program_id}`);
-                fetchRadioProgramRelatedWithRadioStation(RadioProgramsResponse.data.radio_program.radio_station_id);
-                setRadioProgramId(String(SavedMessageResponse.data.listener_message.radio_program_id));
-                fetchCorner(SavedMessageResponse.data.listener_message.radio_program_id);
-                if (SavedMessageResponse.data.listener_message.program_corner_id) {
-                    setProgramCornerId(String(SavedMessageResponse.data.listener_message.program_corner_id));
+            if (SavedMessageResponse.data.radio_program_id) {
+                const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${SavedMessageResponse.data.radio_program_id}`);
+                fetchRadioProgramRelatedWithRadioStation(RadioProgramResponse.data.radio_station_id);
+                setRadioProgramId(String(SavedMessageResponse.data.radio_program_id));
+                fetchCorner(SavedMessageResponse.data.radio_program_id);
+                if (SavedMessageResponse.data.program_corner_id) {
+                    setProgramCornerId(String(SavedMessageResponse.data.program_corner_id));
                 }
             }
-            if (SavedMessageResponse.data.listener_message.listener_my_program_id) {
+            if (SavedMessageResponse.data.listener_my_program_id) {
                 setIsMyRadioProgram(true);
                 const MyRadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs`);
-                setRadioPrograms(MyRadioProgramsResponse.data.listener_my_programs.data);
-                setRadioProgramId(SavedMessageResponse.data.listener_message.listener_my_program_id);
-                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?listener_my_program=${SavedMessageResponse.data.listener_message.listener_my_program_id}`);
-                setCorners(ConrernsResponse.data.my_program_corners.data);
-                if (SavedMessageResponse.data.listener_message.my_program_corner_id) {
-                    setProgramCornerId(String(SavedMessageResponse.data.listener_message.my_program_corner_id));
+                setRadioPrograms(MyRadioProgramsResponse.data.data);
+                setRadioProgramId(SavedMessageResponse.data.listener_my_program_id);
+                const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?listener_my_program=${SavedMessageResponse.data.listener_my_program_id}`);
+                setCorners(ConrernsResponse.data.data);
+                if (SavedMessageResponse.data.my_program_corner_id) {
+                    setProgramCornerId(String(SavedMessageResponse.data.my_program_corner_id));
                 }
             }
-            if (SavedMessageResponse.data.listener_message.subject) {
-                setSubject(SavedMessageResponse.data.listener_message.subject);
+            if (SavedMessageResponse.data.subject) {
+                setSubject(SavedMessageResponse.data.subject);
             }
-            setRadioName(SavedMessageResponse.data.listener_message.radio_name);
-            setContent(SavedMessageResponse.data.listener_message.content);
-            setIsSentListenerinfo(SavedMessageResponse.data.listener_message.listener_info_flag);
-            setIsSentTel(SavedMessageResponse.data.listener_message.tel_flag);
+            setRadioName(SavedMessageResponse.data.radio_name);
+            setContent(SavedMessageResponse.data.content);
+            setIsSentListenerinfo(SavedMessageResponse.data.listener_info_flag);
+            setIsSentTel(SavedMessageResponse.data.tel_flag);
         } catch (err) {
             console.log(err);
         }

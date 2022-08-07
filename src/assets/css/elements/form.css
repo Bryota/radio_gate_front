@@ -128,3 +128,13 @@ input[type="radio"]:checked+label {
     width: 100%;
     height: 50px;
 }
+
+@media screen and (max-width: 480px) {
+    input[type="radio"]+label {
+        width: 25%;
+    }
+
+    .search-keyword__input {
+        width: 65%;
+    }
+}

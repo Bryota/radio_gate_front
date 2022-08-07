@@ -8,7 +8,9 @@ import { Button, Loading } from '../../../components/Elements';
 import { Input, CheckBox, Textarea, Select } from '../../../components/Form';
 import { isAuthorized } from '../../../modules/auth/isAuthorized';
 import { usePostApi } from '../../../hooks/usePostApi';
+import { validationCheck } from '../../../modules/validation/validationCheck';
 
+import { validatedArrayType } from '../../../types/common';
 import { SelectItemType } from '../../../types/common';
 
 import '../../../assets/css/components/pagination.css';
@@ -32,6 +34,9 @@ export const MessagePost = () => {
     const [radioName, setRadioName] = useState<string>();
     const [firstRender, setFirstRender] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(true);
+    const navigation = useNavigate();
+    const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
+
     const { response: myRadioProgramPostResponse, postApi: postMessageToMyRadioProgram } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages`, {
         listener_my_program_id: radioProgramId,
         my_program_corner_id: programCornerId,
@@ -69,8 +74,6 @@ export const MessagePost = () => {
         tel_flag: isSentTel
     });
 
-    const navigation = useNavigate();
-
     useEffect(() => {
         if (myRadioProgramPostResponse.status === 201 || radioProgramPostResponse.status === 201) {
             navigation('/message_post/complete', { state: { radio_program_id: radioProgramId, is_my_radio_program: isMyRadioProgram } });
@@ -96,6 +99,102 @@ export const MessagePost = () => {
         let authorized = await isAuthorized();
         if (!authorized) {
             navigation('/login');
+        }
+    }
+
+    const validation = () => {
+        let result = [];
+        if (isMyRadioProgram) {
+            if (programCornerId) {
+                result = validationCheck(
+                    [
+                        {
+                            key: 'radio_program',
+                            value: radioProgramId,
+                            type: 'require'
+                        },
+                        {
+                            key: 'content',
+                            value: content,
+                            type: 'require'
+                        }
+                    ]
+                )
+            } else {
+                result = validationCheck(
+                    [
+                        {
+                            key: 'radio_program',
+                            value: radioProgramId,
+                            type: 'require'
+                        },
+                        {
+                            key: 'subject',
+                            value: subject,
+                            type: 'require'
+                        },
+                        {
+                            key: 'content',
+                            value: content,
+                            type: 'require'
+                        }
+                    ]
+                )
+            }
+        } else {
+            if (programCornerId) {
+                result = validationCheck(
+                    [
+                        {
+                            key: 'radio_station',
+                            value: radioStationId,
+                            type: 'require'
+                        },
+                        {
+                            key: 'radio_program',
+                            value: radioProgramId,
+                            type: 'require'
+                        },
+                        {
+                            key: 'content',
+                            value: content,
+                            type: 'require'
+                        }
+                    ]
+                )
+            } else {
+                result = validationCheck(
+                    [
+                        {
+                            key: 'radio_station',
+                            value: radioStationId,
+                            type: 'require'
+                        },
+                        {
+                            key: 'radio_program',
+                            value: radioProgramId,
+                            type: 'require'
+                        },
+                        {
+                            key: 'subject',
+                            value: subject,
+                            type: 'require'
+                        },
+                        {
+                            key: 'content',
+                            value: content,
+                            type: 'require'
+                        }
+                    ]
+                )
+            }
+        }
+
+        if (result.length) {
+            setValidationMessages(result);
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -247,6 +346,11 @@ export const MessagePost = () => {
         }
     }
 
+    const toggleIsMyRadioProgram = () => {
+        setIsMyRadioProgram(!isMyRadioProgram);
+        setValidationMessages([]);
+    }
+
     const toggleMessageTemplate = () => {
         setIsUsedMessageTemplate(!isUsedMessageTemplate);
         if (isUsedMessageTemplate) {
@@ -259,6 +363,9 @@ export const MessagePost = () => {
     }
 
     const sendMessage = () => {
+        if (validation()) {
+            return;
+        }
         try {
             if (isMyRadioProgram) {
                 postMessageToMyRadioProgram();
@@ -271,6 +378,9 @@ export const MessagePost = () => {
     }
 
     const saveMessage = async () => {
+        if (validation()) {
+            return;
+        }
         try {
             if (isMyRadioProgram) {
                 saveMessageToMyRadioProgram();
@@ -296,7 +406,7 @@ export const MessagePost = () => {
                         text='マイラジオ番組を使用する'
                         is_first_item={true}
                         checked={isMyRadioProgram}
-                        changeAction={() => setIsMyRadioProgram(!isMyRadioProgram)}
+                        changeAction={() => toggleIsMyRadioProgram()}
                     />
                     {
                         isMyRadioProgram
@@ -308,6 +418,7 @@ export const MessagePost = () => {
                                 items={radioStations}
                                 text='ラジオ局'
                                 selected_id={Number(radioStationId)}
+                                validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'radio_station')}
                                 changeAction={e => fetchRadioProgramRelatedWithRadioStation(e.target.value)}
                             />
                     }
@@ -316,6 +427,7 @@ export const MessagePost = () => {
                         items={radioPrograms}
                         text='番組'
                         selected_id={Number(radioProgramId)}
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'radio_program')}
                         changeAction={e => fetchCorner(e.target.value)}
                     />
                     <Select
@@ -334,6 +446,7 @@ export const MessagePost = () => {
                             <Input
                                 key='subject'
                                 text='件名'
+                                validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'subject')}
                                 changeAction={e => setSubject(e.target.value)}
                             />
                     }
@@ -365,6 +478,7 @@ export const MessagePost = () => {
                         key='content'
                         value={content}
                         text='本文'
+                        validationMessages={validationMessages.filter(validationMessage => validationMessage.key === 'content')}
                         changeAction={e => setContent(e.target.value)}
                     />
                     <CheckBox

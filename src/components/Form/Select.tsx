@@ -1,5 +1,9 @@
-import { isTemplateMiddle } from 'typescript'
 import '../../assets/css/elements/form.css'
+
+type validatedArrayType = {
+    key: string,
+    message: string
+}
 
 type itemType = {
     id: number
@@ -15,10 +19,11 @@ type FormSelectType = {
     text: string,
     items?: itemType[]
     selected_id?: number
+    validationMessages?: Array<validatedArrayType>
     changeAction?: (event: React.ChangeEvent<HTMLSelectElement>) => void
 }
 
-export const Select = ({ key, value = '', items, text, selected_id, changeAction = () => { } }: FormSelectType): JSX.Element => {
+export const Select = ({ key, value = '', items, text, selected_id, validationMessages = [], changeAction = () => { } }: FormSelectType): JSX.Element => {
     return (
         <div className='row form-input_item'>
             <div className='col-4'>
@@ -42,6 +47,13 @@ export const Select = ({ key, value = '', items, text, selected_id, changeAction
                     }
                 </select>
             </div>
+            {
+                validationMessages.map(validationMessage => {
+                    return (
+                        <p className='mt-2 color-accent'>{validationMessage.message}</p>
+                    )
+                })
+            }
         </div>
     )
 }

@@ -28,3 +28,25 @@
 .navbar-icon {
     width: 30px;
 }
+
+.navbar-responsive {
+    background-color: #EBF9C1;
+    bottom: 0;
+    display: none;
+    position: fixed;
+    width: 100%;
+}
+
+.navbar-responsive p {
+    font-size: 8px;
+}
+
+@media screen and (max-width: 959px) {
+    .navbar {
+        display: none;
+    }
+
+    .navbar-responsive {
+        display: block;
+    }
+}

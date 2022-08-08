@@ -134,6 +134,11 @@ input[type="radio"]:checked+label {
         width: 25%;
     }
 
+    input[type="radio"]+label.radio-program-search {
+        margin-top: 10px;
+        width: 43%;
+    }
+
     .search-keyword__input {
         width: 65%;
     }

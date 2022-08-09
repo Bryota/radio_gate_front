@@ -9,7 +9,7 @@ export const MainLayout = ({ children }: { children?: React.ReactNode }): JSX.El
         <div className='bg-base bg-full d-flex'>
             <Navbar />
             <NavbarResponsive />
-            <div className='container pb-5 pb-lg-0'>
+            <div className='container pb-5 pb-lg-0 mb-4 mb-lg-0'>
                 {children}
             </div>
         </div>

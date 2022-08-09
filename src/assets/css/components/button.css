@@ -28,3 +28,15 @@
 .admin-button {
     border-radius: unset;
 }
+
+@media screen and (max-width: 959px) {
+    .button {
+        width: 75%;
+    }
+}
+
+@media screen and (max-width: 480px) {
+    .button {
+        width: 100%;
+    }
+}

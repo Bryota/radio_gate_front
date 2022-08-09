@@ -65,12 +65,12 @@ export const VoteRequestFunction = () => {
                     name={requestFunction?.name}
                 />
                 <InnerBox>
-                    <div className='row form-input_item'>
-                        <div className='col-4'>
+                    <div className='row mt-lg-3'>
+                        <div className='col-12 col-md-4'>
                             <label htmlFor='point'>ポイント</label>
                         </div>
-                        <div className='col-8 position-relative'>
-                            <select id='point' className='position-absolute w-100 border-0 underline-green' defaultValue={point} data-testid='request-function-vote' onChange={e => setPoint(e.target.value)} >
+                        <div className='col-12 col-md-8 mt-3 mt-md-0 position-relative'>
+                            <select id='point' className='w-100 border-0 underline-green' defaultValue={point} data-testid='request-function-vote' onChange={e => setPoint(e.target.value)} >
                                 <option hidden>選択してください</option>
                                 <option value='1'>1</option>
                                 <option value='3'>3</option>

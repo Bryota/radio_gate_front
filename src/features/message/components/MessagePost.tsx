@@ -125,7 +125,6 @@ export const MessagePost = () => {
     }, [radioProgramApiData]);
 
     useEffect(() => {
-        console.log(myProgramCornersApiData)
         setCorners(myProgramCornersApiData?.data);
     }, [myProgramCornersApiData]);
 

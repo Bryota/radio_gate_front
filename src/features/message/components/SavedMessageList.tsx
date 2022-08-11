@@ -4,7 +4,7 @@ export const SavedMessageList = ({ id, radioProgram, corner, postDate }: Message
     return (
         <>
             <div className='row align-items-center mt-4 p-2rem list-item'>
-                <div className="col-12 col-md-6 col-lg-7 row font-20">
+                <div className="col-12 col-md-6 col-lg-7 row font-20 font-md-15">
                     <p>{radioProgram}</p>
                     <p>{corner}</p>
                 </div>

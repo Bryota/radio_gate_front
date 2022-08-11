@@ -3,7 +3,7 @@ export const SelectedRequestFunction = ({ name }: { name?: string }): JSX.Elemen
         <>
             <div className='mb-5'>
                 <div className="row underline-green p-1rem">
-                    <p className='font-40'>{name}</p>
+                    <p className='font-40 font-md-30'>{name}</p>
                 </div>
             </div>
         </>

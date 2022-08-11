@@ -20,11 +20,11 @@ export const Textarea = ({ key, value = undefined, text, is_post_code = false, i
     return (
         <div className={is_first_item ? 'row mt-0 form-input_item' : 'row form-input_item'}>
             <div className='col-12 col-lg-4'>
-                <label htmlFor={key}>{text}</label>
+                <label htmlFor={key} className='font-md-15'>{text}</label>
                 {
                     validationMessages.map(validationMessage => {
                         return (
-                            <p className='mt-2 color-accent'>{validationMessage.message}</p>
+                            <p className='mt-2 color-accent font-md-15'>{validationMessage.message}</p>
                         )
                     })
                 }

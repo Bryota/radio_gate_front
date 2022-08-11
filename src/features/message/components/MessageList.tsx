@@ -10,7 +10,7 @@ export const MessageList = ({ id, radioProgram, corner, postDate }: MessageListT
                     <p>{radioProgram}</p>
                     <p>{corner}</p>
                 </div>
-                <p className="col-12 col-md-4 mt-3 mt-md-0 font-20">
+                <p className="col-12 col-md-4 mt-3 mt-md-0 font-20 font-md-15">
                     <Moment format='YYYY年MM月DD日 HH時mm分'>
                         {postDate}
                     </Moment>

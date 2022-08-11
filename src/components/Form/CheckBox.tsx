@@ -16,7 +16,7 @@ export const CheckBox = ({ label, text, is_first_item = false, checked = false, 
                 <label className='checkbox' htmlFor={label}></label>
             </div>
             <div className='col-12 col-md-8'>
-                <p className='font-20'>{text}</p>
+                <p className='font-20 font-md-15'>{text}</p>
             </div>
         </div>
     )

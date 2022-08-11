@@ -156,6 +156,18 @@ input {
     .inner-box {
         padding: 2rem;
     }
+
+    .font-md-30 {
+        font-size: 30px !important;
+    }
+
+    .font-md-20 {
+        font-size: 20px !important;
+    }
+
+    .font-md-15 {
+        font-size: 15px !important;
+    }
 }
 
 @media screen and (max-width: 480px) {

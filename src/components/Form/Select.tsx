@@ -27,7 +27,7 @@ export const Select = ({ key, value = '', items, text, selected_id, validationMe
     return (
         <div className='row form-input_item'>
             <div className='col-12 col-md-4'>
-                <label htmlFor={key}>{text}</label>
+                <label htmlFor={key} className='font-md-15'>{text}</label>
             </div>
             <div className='col-12 col-md-8 position-relative'>
                 <select id={key} className='w-100 border-0 underline-green' defaultValue={value} onChange={e => changeAction(e)} >
@@ -50,7 +50,7 @@ export const Select = ({ key, value = '', items, text, selected_id, validationMe
             {
                 validationMessages.map(validationMessage => {
                     return (
-                        <p className='mt-2 color-accent'>{validationMessage.message}</p>
+                        <p className='mt-2 color-accent font-md-15'>{validationMessage.message}</p>
                     )
                 })
             }

@@ -108,7 +108,7 @@ export const Inquiry = () => {
                     />
                     <div className='row form-input_item'>
                         <div className='col-12 col-lg-4'>
-                            <label htmlFor='point'>問い合わせ種別</label>
+                            <label htmlFor='point' className='font-md-15'>問い合わせ種別</label>
                         </div>
                         <div className='col-12 col-lg-8 mt-3 mt-lg-0 position-relative'>
                             <select id='point' className='w-100 border-0 underline-green' data-testid='inquiry-input-type' defaultValue={''} onChange={e => setType(e.target.value)} >

@@ -22,7 +22,7 @@ export const Input = ({ key, value = '', text, type = 'text', is_post_code = fal
     return (
         <div className={is_first_item ? 'row mt-0 form-input_item' : 'row form-input_item'}>
             <div className='col-12 col-lg-4'>
-                <label htmlFor={key}>{text}</label>
+                <label htmlFor={key} className='font-md-15'>{text}</label>
             </div>
             <div className='col-12 col-lg-8 position-relative'>
                 <input type={type} id={key} className='mt-lg-1 mt-3 underline-green' data-testid={data_testid} defaultValue={value} onChange={e => changeAction(e)} />
@@ -31,7 +31,7 @@ export const Input = ({ key, value = '', text, type = 'text', is_post_code = fal
             {
                 validationMessages.map(validationMessage => {
                     return (
-                        <p className='mt-2 color-accent'>{validationMessage.message}</p>
+                        <p className='mt-2 color-accent font-md-15'>{validationMessage.message}</p>
                     )
                 })
             }

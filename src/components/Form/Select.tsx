@@ -26,11 +26,11 @@ type FormSelectType = {
 export const Select = ({ key, value = '', items, text, selected_id, validationMessages = [], changeAction = () => { } }: FormSelectType): JSX.Element => {
     return (
         <div className='row form-input_item'>
-            <div className='col-4'>
+            <div className='col-12 col-md-4'>
                 <label htmlFor={key}>{text}</label>
             </div>
-            <div className='col-8 position-relative'>
-                <select id={key} className='position-absolute w-100 border-0 underline-green' defaultValue={value} onChange={e => changeAction(e)} >
+            <div className='col-12 col-md-8 position-relative'>
+                <select id={key} className='w-100 border-0 underline-green' defaultValue={value} onChange={e => changeAction(e)} >
                     <option hidden>選択してください</option>
                     {
                         items?.map(item => {

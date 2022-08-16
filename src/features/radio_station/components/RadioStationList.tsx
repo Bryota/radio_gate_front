@@ -8,7 +8,7 @@ export const RadioStationList = ({ id, name }: RadioStationType): JSX.Element =>
                     アイコン
                 </div>
                 <p className='col-md-8 font-25'>{name}</p>
-                <a href={`/radio_programs/${id}`} className='col-md-2 btn list-btn'>
+                <a href={`/radio_programs/${id}`} className='col-md-2 mt-2 mt-md-0 btn list-btn'>
                     番組一覧
                 </a>
             </div>

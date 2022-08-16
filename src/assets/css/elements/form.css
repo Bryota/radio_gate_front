@@ -130,6 +130,10 @@ input[type="radio"]:checked+label {
 }
 
 @media screen and (max-width: 480px) {
+    .form-input_item {
+        margin-top: 2rem;
+    }
+
     input[type="radio"]+label {
         width: 25%;
     }

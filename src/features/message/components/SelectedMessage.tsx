@@ -7,7 +7,7 @@ import '../../../assets/css/elements/radio.css';
 export const SelectedMessage = ({ name, postDate }: SelectedMessageType): JSX.Element => {
     return (
         <>
-            <div className='mb-5'>
+            <div className='mb-3 mb-md-5'>
                 <div className="underline-green p-1rem">
                     <p className='font-40 font-md-30'>{name}</p>
                 </div>

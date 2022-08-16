@@ -50,8 +50,8 @@ export const MessagePostComplete = () => {
                     subtitle='メッセージ投稿完了'
                 />
                 <div className='text-center mt-5 mb-4'>
-                    <p className='h4'>{`${radioProgramName}へのメッセージが投稿されました。`}</p>
-                    <p className='h4'>採用されることを願っています！</p>
+                    <p className='h4 font-md-15'>{`${radioProgramName}へのメッセージが投稿されました。`}</p>
+                    <p className='h4 font-md-15'>採用されることを願っています！</p>
                 </div>
                 <Button
                     text='投稿一覧'

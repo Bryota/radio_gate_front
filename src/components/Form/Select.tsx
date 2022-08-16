@@ -1,23 +1,17 @@
-import '../../assets/css/elements/form.css'
+import '../../assets/css/elements/form.css';
+import { SelectItemType } from '../../types/common';
+
 
 type validatedArrayType = {
     key: string,
     message: string
 }
 
-type itemType = {
-    id: number
-    name: string
-    content?: string
-    created_at: string
-    updated_at: string
-}
-
 type FormSelectType = {
     key: string,
     value?: string,
     text: string,
-    items?: itemType[]
+    items?: SelectItemType[]
     selected_id?: number
     validationMessages?: Array<validatedArrayType>
     changeAction?: (event: React.ChangeEvent<HTMLSelectElement>) => void

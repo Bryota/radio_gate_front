@@ -30,9 +30,9 @@ export const MessagePost = () => {
     const [radioPrograms, setRadioPrograms] = useState<SelectItemType[]>();
     const [corners, setCorners] = useState<SelectItemType[]>();
     const [messageTemplates, setMessageTemplates] = useState<SelectItemType[]>();
-    const [radioStationId, setRadioStationId] = useState<string>();
-    const [radioProgramId, setRadioProgramId] = useState<string>();
-    const [programCornerId, setProgramCornerId] = useState<string>();
+    const [radioStationId, setRadioStationId] = useState<string | undefined>();
+    const [radioProgramId, setRadioProgramId] = useState<string | undefined>();
+    const [programCornerId, setProgramCornerId] = useState<string | undefined>();
     const [subject, setSubject] = useState<string>();
     const [content, setContent] = useState<string>();
     const [radioName, setRadioName] = useState<string>();
@@ -99,6 +99,9 @@ export const MessagePost = () => {
             setRadioPrograms([]);
             fetchApiRadioStations();
         }
+        setRadioStationId(undefined);
+        setRadioProgramId(undefined);
+        setProgramCornerId(undefined);
         setCorners([]);
 
         // 初回レンダリング時のみ実行
@@ -270,6 +273,8 @@ export const MessagePost = () => {
         await setRadioStationId(radio_station_id);
         try {
             const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs?radio_station=${radio_station_id}`);
+            setCorners([]);
+            setProgramCornerId(undefined);
             setRadioPrograms(RadioProgramsResponse.data.radio_programs.data);
         } catch (err) {
             console.log(err);

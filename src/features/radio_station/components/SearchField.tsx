@@ -23,7 +23,7 @@ export const SearchField = ({ changeType, keyword, changeKeyword, searchKeyword 
                         FM
                     </label>
                 </div>
-                <div className='mt-4'>
+                <div className='mt-3 mt-md-4'>
                     <input type="search" name="keyword" id="keyword" className='search-keyword__input' value={keyword} onChange={(e) => changeKeyword(e)} />
                     <button className='search-keyword__button' onClick={searchKeyword}>検索</button>
                 </div>

@@ -420,7 +420,7 @@ export const MessagePost = () => {
                         selected_id={Number(programCornerId)}
                         changeAction={e => setProgramCornerId(e.target.value)}
                     />
-                    <span>※コーナーを選択した場合、コーナー名が件名になります</span>
+                    <span className='font-md-15 '>※コーナーを選択した場合、コーナー名が件名になります</span>
                     {
                         programCornerId
                             ?

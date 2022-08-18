@@ -18,3 +18,10 @@
         visibility: hidden;
     }
 }
+
+
+@media screen and (max-width: 959px) {
+    .flash_message {
+        bottom: 65px;
+    }
+}

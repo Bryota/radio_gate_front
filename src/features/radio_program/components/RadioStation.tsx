@@ -6,10 +6,10 @@ export const RadioStation = ({ name }: RadioStationType): JSX.Element => {
     return (
         <>
             <div className='row underline-green'>
-                <div className='col-2'>
+                <div className='col-md-2'>
                     アイコン
                 </div>
-                <p className='col-10 font-30'>{name}の番組一覧</p>
+                <p className='col-md-10 font-30'>{name}の番組一覧</p>
             </div>
         </>
     )

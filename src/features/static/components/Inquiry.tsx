@@ -107,11 +107,11 @@ export const Inquiry = () => {
                         data_testid='inquiry-input-email'
                     />
                     <div className='row form-input_item'>
-                        <div className='col-4'>
-                            <label htmlFor='point'>問い合わせ種別</label>
+                        <div className='col-12 col-lg-4'>
+                            <label htmlFor='point' className='font-md-15'>問い合わせ種別</label>
                         </div>
-                        <div className='col-8 position-relative'>
-                            <select id='point' className='position-absolute w-100 border-0 underline-green' data-testid='inquiry-input-type' defaultValue={''} onChange={e => setType(e.target.value)} >
+                        <div className='col-12 col-lg-8 mt-3 mt-lg-0 position-relative'>
+                            <select id='point' className='w-100 border-0 underline-green' data-testid='inquiry-input-type' defaultValue={''} onChange={e => setType(e.target.value)} >
                                 <option hidden>選択してください</option>
                                 <option value='機能関連'>機能関連</option>
                                 <option value='運営関連'>運営関連</option>

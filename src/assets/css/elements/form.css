@@ -102,7 +102,7 @@ input[type="radio"]:checked+label {
 }
 
 .search-keyword__input {
-    border-radius: 30px 0 0 30px;
+    border-radius: 30px;
     border: 1px solid #A8CE30;
     padding: 10px;
     outline: none;
@@ -114,10 +114,12 @@ input[type="radio"]:checked+label {
 }
 
 .search-keyword__button {
-    border-radius: 0 30px 30px 0;
+    border-radius: 30px;
     background-color: #A8CE30;
+    color: #000;
     border: none;
     padding: 11px 30px;
+    margin-left: 5px;
 }
 
 .admin-input {
@@ -127,4 +129,23 @@ input[type="radio"]:checked+label {
 .admin-input input {
     width: 100%;
     height: 50px;
+}
+
+@media screen and (max-width: 480px) {
+    .form-input_item {
+        margin-top: 2rem;
+    }
+
+    input[type="radio"]+label {
+        width: 25%;
+    }
+
+    input[type="radio"]+label.radio-program-search {
+        margin-top: 10px;
+        width: 43%;
+    }
+
+    .search-keyword__input {
+        width: 65%;
+    }
 }

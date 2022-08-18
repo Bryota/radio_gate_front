@@ -30,7 +30,7 @@ export const Textarea = ({ key, value = undefined, text, is_post_code = false, i
                 }
             </div>
             <div className='col-12 col-lg-8 mt-lg-1 mt-3 position-relative'>
-                <textarea rows={25} cols={50} id={key} defaultValue={value} data-testid={data_testid} onChange={e => changeAction(e)} />
+                <textarea rows={25} cols={50} id={key} defaultValue={value} data-testid={data_testid} onChange={e => changeAction(e)} className='p-3 p-md-0' />
                 {is_post_code && <button>自動入力</button>}
             </div>
         </div>

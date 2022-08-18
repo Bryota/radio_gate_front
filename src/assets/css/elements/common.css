@@ -16,6 +16,12 @@ input {
     border: none;
 }
 
+select {
+    background-color: #fff;
+    border-radius: 0px;
+    color: #000;
+}
+
 .bg-base {
     background-color: #FFFCE7;
 }

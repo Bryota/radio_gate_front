@@ -7,7 +7,7 @@ type FlashMessageType = {
 export const FlashMessage = ({ message }: FlashMessageType): JSX.Element => {
     return (
         <div className='text-center py-4 flash_message'>
-            <p className='text-white font-20 fw-bold'>{message}</p>
+            <p className='text-white font-20 font-md-15 fw-bold'>{message}</p>
         </div>
     )
 }

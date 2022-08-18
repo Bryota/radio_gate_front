@@ -6,18 +6,22 @@ import { MainLayout, InnerBox } from '../../../components/Layout';
 import { Pagehead } from '../../../components/Pagehead';
 import { Button, Loading } from '../../../components/Elements';
 import { Input, CheckBox, Textarea, Select } from '../../../components/Form';
-import { isAuthorized } from '../../../modules/auth/isAuthorized';
+import { useFetchApiData } from '../../../hooks/useFetchApiData';
 import { usePostApi } from '../../../hooks/usePostApi';
 import { validationCheck } from '../../../modules/validation/validationCheck';
 
 import { validatedArrayType } from '../../../types/common';
 import { SelectItemType } from '../../../types/common';
+import { RadioStationsResponseType, RadioProgramResponseType, MyRadioProgramsResponseType, MyProgramCornersResponseType, MessageTemplatesResponseType } from '../../../types/listener';
 
 import '../../../assets/css/components/pagination.css';
 
 export const MessagePost = () => {
     const search = useLocation().search;
     const getParams = new URLSearchParams(search);
+    const navigation = useNavigate();
+
+    // useStateの設定
     const [isMyRadioProgram, setIsMyRadioProgram] = useState<boolean>(false);
     const [isUsedMessageTemplate, setIsUsedMessageTemplate] = useState<boolean>(false);
     const [isSentListenerinfo, setIsSentListenerinfo] = useState<boolean>(false);
@@ -25,18 +29,25 @@ export const MessagePost = () => {
     const [radioStations, setRadioStations] = useState<SelectItemType[]>();
     const [radioPrograms, setRadioPrograms] = useState<SelectItemType[]>();
     const [corners, setCorners] = useState<SelectItemType[]>();
-    const [messageTemplates, setMessageTemplates] = useState<SelectItemType[]>([]);
-    const [radioStationId, setRadioStationId] = useState<string>();
-    const [radioProgramId, setRadioProgramId] = useState<string>();
-    const [programCornerId, setProgramCornerId] = useState<string>();
+    const [messageTemplates, setMessageTemplates] = useState<SelectItemType[]>();
+    const [radioStationId, setRadioStationId] = useState<string | undefined>();
+    const [radioProgramId, setRadioProgramId] = useState<string | undefined>();
+    const [programCornerId, setProgramCornerId] = useState<string | undefined>();
     const [subject, setSubject] = useState<string>();
     const [content, setContent] = useState<string>();
     const [radioName, setRadioName] = useState<string>();
     const [firstRender, setFirstRender] = useState<boolean>(true);
     const [isLoading, setIsLoading] = useState<boolean>(true);
-    const navigation = useNavigate();
     const [validationMessages, setValidationMessages] = useState<validatedArrayType[]>([]);
 
+    // useFetchApiDataの設定
+    const { apiData: radioStationsApiData, fetchApiData: fetchApiRadioStations } = useFetchApiData<RadioStationsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-stations`);
+    const { apiData: radioProgramApiData, fetchApiData: fetchApiRadioProgram } = useFetchApiData<RadioProgramResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${getParams.get('radio_program')}`);
+    const { apiData: myRadioProgramsApiData, fetchApiData: fetchApiMyRadioPrograms } = useFetchApiData<MyRadioProgramsResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs`);
+    const { apiData: myProgramCornersApiData, fetchApiData: fetchApiMyProgramCorners } = useFetchApiData<MyProgramCornersResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?listener_my_program=${String(getParams.get('my_radio_program'))}`);
+    const { apiData: messageTemplatesApiData, fetchApiData: fetchApiMessageTemplates } = useFetchApiData<MessageTemplatesResponseType>(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates`);
+
+    // usePostApiの設定
     const { response: myRadioProgramPostResponse, postApi: postMessageToMyRadioProgram } = usePostApi(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-messages`, {
         listener_my_program_id: radioProgramId,
         my_program_corner_id: programCornerId,
@@ -74,6 +85,7 @@ export const MessagePost = () => {
         tel_flag: isSentTel
     });
 
+    // useEffectの設定
     useEffect(() => {
         if (myRadioProgramPostResponse.status === 201 || radioProgramPostResponse.status === 201) {
             navigation('/message_post/complete', { state: { radio_program_id: radioProgramId, is_my_radio_program: isMyRadioProgram } });
@@ -81,12 +93,15 @@ export const MessagePost = () => {
         if (myRadioProgramSaveResponse.status === 201 || radioProgramSaveResponse.status === 201) {
             navigation('/saved_messages', { state: { flash_message: 'メッセージを一時保存しました' } });
         }
-        authorized();
         if (isMyRadioProgram) {
-            fetchMyRadioPrograms();
+            fetchApiMyRadioPrograms();
         } else {
-            fetchRadioStations();
+            setRadioPrograms([]);
+            fetchApiRadioStations();
         }
+        setRadioStationId(undefined);
+        setRadioProgramId(undefined);
+        setProgramCornerId(undefined);
         setCorners([]);
 
         // 初回レンダリング時のみ実行
@@ -95,13 +110,28 @@ export const MessagePost = () => {
         }
     }, [isMyRadioProgram, myRadioProgramPostResponse, radioProgramPostResponse, myRadioProgramSaveResponse, radioProgramSaveResponse]);
 
-    const authorized = async () => {
-        let authorized = await isAuthorized();
-        if (!authorized) {
-            navigation('/login');
-        }
-    }
+    useEffect(() => {
+        setRadioStations(radioStationsApiData?.data);
+    }, [radioStationsApiData]);
 
+    useEffect(() => {
+        setRadioPrograms(myRadioProgramsApiData?.data);
+    }, [myRadioProgramsApiData]);
+
+    useEffect(() => {
+        setMessageTemplates(messageTemplatesApiData?.data);
+    }, [messageTemplatesApiData]);
+
+    useEffect(() => {
+        fetchRadioProgramRelatedWithRadioStation(radioProgramApiData?.radio_station_id);
+        fetchCorner(String(getParams.get('radio_program')))
+    }, [radioProgramApiData]);
+
+    useEffect(() => {
+        setCorners(myProgramCornersApiData?.data);
+    }, [myProgramCornersApiData]);
+
+    // バリデーションの設定
     const validation = () => {
         let result = [];
         if (isMyRadioProgram) {
@@ -198,16 +228,17 @@ export const MessagePost = () => {
         }
     }
 
+    // 初回レンダリング時の処理
     const firstRenderingAction = async () => {
         await setRadioInfoFromGetParams();
-        await fetchMessageTemplates();
+        await fetchApiMessageTemplates();
         setFirstRender(false);
         setIsLoading(false);
     }
 
     const setRadioInfoFromGetParams = async () => {
         if (getParams.get('radio_program')) {
-            fetchRadioProgramFromParams();
+            fetchApiRadioProgram();
             if (getParams.get('program_corner')) {
                 setProgramCornerId(String(getParams.get('program_corner')));
             }
@@ -215,7 +246,9 @@ export const MessagePost = () => {
 
         if (getParams.get('my_radio_program')) {
             setIsMyRadioProgram(true);
-            fetchMyRadioProgramFromParams();
+            fetchApiMyRadioPrograms();
+            setRadioProgramId(String(getParams.get('my_radio_program')));
+            fetchApiMyProgramCorners();
             if (getParams.get('my_program_corner')) {
                 setProgramCornerId(String(getParams.get('my_program_corner')));
             }
@@ -227,34 +260,6 @@ export const MessagePost = () => {
     }
 
     // データ取得関連
-    const fetchRadioStations = async () => {
-        setRadioPrograms([]);
-        try {
-            const radioStationsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-stations`);
-            setRadioStations(radioStationsResponse.data.data);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    const fetchMyRadioPrograms = async () => {
-        try {
-            const radioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs`);
-            setRadioPrograms(radioProgramsResponse.data.data);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    const fetchMessageTemplates = async () => {
-        try {
-            const messageTemplatesResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates`);
-            setMessageTemplates(messageTemplatesResponse.data.data);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
     const fetchMessageTemplateContent = async (id: number) => {
         try {
             const messageTemplatesReponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/message-templates/${id}`);
@@ -264,32 +269,12 @@ export const MessagePost = () => {
         }
     }
 
-    const fetchRadioProgramFromParams = async () => {
-        try {
-            const RadioProgramResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs/${getParams.get('radio_program')}`);
-            fetchRadioProgramRelatedWithRadioStation(RadioProgramResponse.data.radio_station_id);
-            fetchCorner(String(getParams.get('radio_program')))
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    const fetchMyRadioProgramFromParams = async () => {
-        try {
-            const MyRadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/listener-my-programs`);
-            setRadioPrograms(MyRadioProgramsResponse.data.data);
-            setRadioProgramId(String(getParams.get('my_radio_program')));
-            const ConrernsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/my-program-corners?listener_my_program=${String(getParams.get('my_radio_program'))}`);
-            setCorners(ConrernsResponse.data.data);
-        } catch (err) {
-            console.log(err);
-        }
-    }
-
-    const fetchRadioProgramRelatedWithRadioStation = async (radio_station_id: string) => {
-        setRadioStationId(radio_station_id);
+    const fetchRadioProgramRelatedWithRadioStation = async (radio_station_id: string | undefined) => {
+        await setRadioStationId(radio_station_id);
         try {
             const RadioProgramsResponse = await axios.get(`${process.env.REACT_APP_RADIO_GATE_API_URL}/api/radio-programs?radio_station=${radio_station_id}`);
+            setCorners([]);
+            setProgramCornerId(undefined);
             setRadioPrograms(RadioProgramsResponse.data.radio_programs.data);
         } catch (err) {
             console.log(err);
@@ -346,6 +331,7 @@ export const MessagePost = () => {
         }
     }
 
+    // トグルボタンの処理
     const toggleIsMyRadioProgram = () => {
         setIsMyRadioProgram(!isMyRadioProgram);
         setValidationMessages([]);
@@ -358,10 +344,7 @@ export const MessagePost = () => {
         }
     }
 
-    const showMessageTemplate = (e: React.ChangeEvent<HTMLSelectElement>) => {
-        fetchMessageTemplateContent(Number(e.target.value));
-    }
-
+    // 送信処理
     const sendMessage = () => {
         if (validation()) {
             return;
@@ -469,7 +452,7 @@ export const MessagePost = () => {
                                 key='message_template'
                                 items={messageTemplates}
                                 text='テンプレート名'
-                                changeAction={e => showMessageTemplate(e)}
+                                changeAction={e => fetchMessageTemplateContent(Number(e.target.value))}
                             />
                             :
                             <></>

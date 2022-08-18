@@ -22,11 +22,11 @@ export type FormInputType = {
 }
 
 export type SelectItemType = {
-    id: number
-    name: string
+    id?: number
+    name?: string
     content?: string
-    created_at: string
-    updated_at: string
+    created_at?: string
+    updated_at?: string
 }
 
 export type ApiResponseType = {

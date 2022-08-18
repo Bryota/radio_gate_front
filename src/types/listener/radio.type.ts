@@ -35,6 +35,7 @@ export type RadioProgramResponseType = {
     id?: number
     name?: string
     email?: string
+    radio_station_id?: string
     program_corners?: ProgramCornersType[]
     my_program_corners?: ProgramCornersType[]
     isLoading: boolean
@@ -80,8 +81,6 @@ export type MyRadioProgramResponseType = {
 }
 
 export type MyProgramCornersResponseType = {
-    my_program_corners: {
-        data: CornerType[]
-    }
+    data: CornerType[]
     isLoading: boolean
 }
